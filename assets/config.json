@@ -1,8 +1,8 @@
 {
     "window": {
         "title": "MonsterWar",
-        "width": 1280,
-        "height": 720,
+        "width": 1600,
+        "height": 1216,
         "window_scale": 0.75,
         "logical_scale": 1.0,
         "resizable": true

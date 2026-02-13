@@ -50,8 +50,12 @@ void Config::fromJson(const nlohmann::json& j)
         window_width_ = window_config.value("width", window_width_);
         window_height_ = window_config.value("height", window_height_);
         window_resizable_ = window_config.value("resizable", window_resizable_);
+        window_scale_ = window_config.value("scale", window_scale_);
+        window_logical_scale_ = window_config.value("logical_scale", window_logical_scale_);
         spdlog::info("窗口标题已被设置为: {}", window_title_);
         spdlog::info("窗口大小已被设置为: {}x{}", window_width_, window_height_);
+        spdlog::info("窗口缩放已被设置为: {}", window_scale_);
+        spdlog::info("窗口逻辑缩放已被设置为: {}", window_logical_scale_);
         spdlog::info("窗口是否可调整大小已被设置为: {}", window_resizable_);
     }
     if (j.contains("graphics"))
@@ -135,7 +139,9 @@ nlohmann::ordered_json Config::toJson() const
             {"title", window_title_},
             {"width", window_width_},
             {"height", window_height_},
-            {"resizable", window_resizable_},
+            {"window_scale", window_scale_},
+            {"logical_scale", window_logical_scale_},
+            {"resizable", window_resizable_}
         }},
         {"graphics", {
             {"vsync", vsync_enabled_}   

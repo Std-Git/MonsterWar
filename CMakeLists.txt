@@ -39,6 +39,8 @@ set(SOURCES
     src/engine/core/game_state.cpp
     src/engine/core/time.cpp
     src/engine/input/input_manager.cpp
+    src/engine/loader/basic_entity_builder.cpp
+    src/engine/loader/level_loader.cpp
     src/engine/render/camera.cpp
     src/engine/render/renderer.cpp
     src/engine/render/text_renderer.cpp
@@ -46,6 +48,9 @@ set(SOURCES
     src/engine/resource/texture_manager.cpp
     src/engine/resource/audio_manager.cpp
     src/engine/resource/font_manager.cpp
+    src/engine/system/animation_system.cpp
+    src/engine/system/movement_system.cpp
+    src/engine/system/render_system.cpp
     src/engine/ui/state/ui_hover_state.cpp
     src/engine/ui/state/ui_normal_state.cpp
     src/engine/ui/state/ui_pressed_state.cpp
@@ -56,7 +61,6 @@ set(SOURCES
     src/engine/ui/ui_label.cpp
     src/engine/ui/ui_manager.cpp
     src/engine/ui/ui_panel.cpp
-    # >src/engine/scene/level_loader.cpp
     src/engine/scene/scene.cpp
     src/engine/scene/scene_manager.cpp
     src/game/scene/game_scene.cpp)

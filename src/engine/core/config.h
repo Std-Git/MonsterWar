@@ -23,6 +23,8 @@ namespace engine::core
         int window_width_ = 1280;
         int window_height_ = 720;
         bool window_resizable_ = true;
+        float window_scale_ = 1.0f;
+        float window_logical_scale_ = 1.0f;
 
         // 图形设置
         bool vsync_enabled_ = true; ///< @brief 是否启用垂直同步

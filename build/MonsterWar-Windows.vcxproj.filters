@@ -25,6 +25,12 @@
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\input\input_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\loader\basic_entity_builder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\loader\level_loader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\render\camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -44,6 +50,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\resource\font_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\system\animation_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\system\movement_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\system\render_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\ui\state\ui_hover_state.cpp">

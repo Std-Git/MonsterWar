@@ -14,11 +14,6 @@ namespace engine::ui
     class UIManager;
 }
 
-namespace engine::object
-{
-    class GameObject;
-}
-
 namespace engine::scene
 {
 
@@ -37,8 +32,6 @@ protected:
     entt::registry registry_;                               ///< @brief ECS注册表
 
     bool is_initialized_;               ///< @brief 场景是否已初始化(当前场景很可能未被删除,因此需要初始化标志避免重复初始化)
-    std::vector<std::unique_ptr<engine::object::GameObject>> game_objects_;         ///< @brief 场景中的游戏对象
-    std::vector<std::unique_ptr<engine::object::GameObject>> pending_additions_;    ///< @brief 待添加的游戏对象 (延迟添加)
 
 public:
     /**
@@ -84,7 +77,6 @@ public:
     entt::registry& getRegistry() { return registry_; }                                 ///< @brief 获取 ECS 注册表引用
 
     engine::core::Context& getContext() const { return context_; }                      ///< @brief 获取上下文引用
-    std::vector<std::unique_ptr<engine::object::GameObject>>& getGameObjects() { return game_objects_; } ///< @brief 获取游戏对象容器
 };
 
 }   // namespace engine::scene

@@ -15,7 +15,7 @@ namespace engine::component
  */
 struct AnimationFrame
 {
-    entine::utils::Rect src_rect_{};    ///< @brief 帧源矩形
+    engine::utils::Rect src_rect_{};    ///< @brief 帧源矩形
     float duration_ms_{100.0f};         ///< @brief 帧间隔 (ms)
     AnimationFrame(engine::utils::Rect src_rect, float duration_ms = 100.0f) 
         : src_rect_(std::move(src_rect)), duration_ms_(duration_ms) {}
@@ -78,7 +78,7 @@ struct AnimationComponent
                        size_t current_frame_index = 0,
                        float current_time_ms = 0.0f,
                        float speed = 1.0f) :
-                       aniamtions_(std::move(animations)),
+                       animations_(std::move(animations)),
                        current_animation_id_(current_animation_id),
                        current_frame_index_(current_frame_index),
                        current_time_ms_(current_time_ms),

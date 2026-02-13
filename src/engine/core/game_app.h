@@ -101,6 +101,7 @@ namespace engine::core // 命名空间与文件路径一致
         [[nodiscard]] bool initDispatcher();
         [[nodiscard]] bool initConfig();
         [[nodiscard]] bool initSDL();
+        [[nodiscard]] bool initGameState();
         [[nodiscard]] bool initTime();
         [[nodiscard]] bool initResourceManager();
         [[nodiscard]] bool initAudioPlayer();
@@ -108,7 +109,6 @@ namespace engine::core // 命名空间与文件路径一致
         [[nodiscard]] bool initTextRenderer();
         [[nodiscard]] bool initCamera();
         [[nodiscard]] bool initInputManager();
-        [[nodiscard]] bool initGameState();
         [[nodiscard]] bool initContext();
         [[nodiscard]] bool initSceneManager();
 
