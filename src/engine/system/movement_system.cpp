@@ -7,7 +7,7 @@ namespace engine::system
 {
 void MovementSystem::update(entt::registry& registry, float delta_time)
 {
-    spdlog::trace("MovementSystem::update");
+    //spdlog::trace("MovementSystem::update");
     // 获取感兴趣的实体 view
     auto view = registry.view<engine::component::VelocityComponent, engine::component::TransformComponent>();
 

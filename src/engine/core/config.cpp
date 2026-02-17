@@ -50,7 +50,7 @@ void Config::fromJson(const nlohmann::json& j)
         window_width_ = window_config.value("width", window_width_);
         window_height_ = window_config.value("height", window_height_);
         window_resizable_ = window_config.value("resizable", window_resizable_);
-        window_scale_ = window_config.value("scale", window_scale_);
+        window_scale_ = window_config.value("window_scale", window_scale_);
         window_logical_scale_ = window_config.value("logical_scale", window_logical_scale_);
         spdlog::info("窗口标题已被设置为: {}", window_title_);
         spdlog::info("窗口大小已被设置为: {}x{}", window_width_, window_height_);

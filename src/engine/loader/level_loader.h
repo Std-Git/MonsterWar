@@ -42,6 +42,8 @@ namespace engine::loader
 
         std::unique_ptr<BasicEntityBuilder> entity_builder_; ///< @brief 实体生成器 (生成器模式)
 
+        int current_layer_ = 0;                     ///< @brief 当前图层序号 (用于 RenderComponent 决定渲染顺序)
+
     public:
         LevelLoader() = default;
         ~LevelLoader();
@@ -60,6 +62,7 @@ namespace engine::loader
         // getters and setters
         const glm::ivec2 &getMapSize() const { return map_size_; }
         const glm::ivec2 &getTileSize() const { return tile_size_; }
+        int getCurrentLayer() const { return current_layer_; }
 
     private:
         void loadImageLayer(const nlohmann::json &layer_json);  ///< @brief 加载图片图层
@@ -83,8 +86,7 @@ namespace engine::loader
         template <typename T>
         std::optional<T> getTileProperty(const nlohmann::json &tile_json, std::string_view property_name)
         {
-            if (!tile_json.contains("properties"))
-                return std::nullopt;
+            if (!tile_json.contains("properties")) return std::nullopt;
             const auto &properties = tile_json["properties"];
             for (const auto &property : properties)
             {

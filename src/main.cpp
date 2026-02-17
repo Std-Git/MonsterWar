@@ -1,4 +1,3 @@
-#define SDL_MAIN_HANDLED
 #include "engine/core/game_app.h"
 #include "engine/core/context.h"
 #include "game/scene/game_scene.h"
@@ -15,7 +14,7 @@ void setupInitialScene(engine::core::Context& context)
 
 int main(int /* argc */, char * /* argv */[])
 {
-    spdlog::set_level(spdlog::level::debug);
+    spdlog::set_level(spdlog::level::trace);
 
     engine::core::GameApp app;
     app.registerSceneSetup(setupInitialScene);

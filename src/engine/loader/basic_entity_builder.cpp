@@ -5,6 +5,7 @@
 #include "../component/name_component.h"
 #include "../component/sprite_component.h"
 #include "../component/transform_component.h"
+#include "../component/render_component.h"
 #include "../resource/resource_manager.h"
 #include <entt/entt.hpp>
 #include <spdlog/spdlog.h>
@@ -23,9 +24,9 @@ void BasicEntityBuilder::reset()
     tile_info_ = nullptr;
     index_ = -1;
     entity_id_ = entt::null;
-    position_ = glm::vec2(0, 0);
-    dst_size_ = glm::vec2(0, 0);
-    src_size_ = glm::vec2(0, 0);
+    position_ = glm::vec2(0.0f);
+    dst_size_ = glm::vec2(0.0f);
+    src_size_ = glm::vec2(0.0f);
 }
 
 BasicEntityBuilder *BasicEntityBuilder::configure(const nlohmann::json *object_json)
@@ -44,7 +45,7 @@ BasicEntityBuilder *BasicEntityBuilder::configure(const nlohmann::json *object_j
 BasicEntityBuilder *BasicEntityBuilder::configure(const nlohmann::json *object_json, const engine::component::TileInfo *tile_info)
 {
     reset();
-    if (!object_json_ || !tile_info_)
+    if (!object_json || !tile_info) // <bug>1: object_json 打作object_json_, tile_info 打作tile_info_
     {
         spdlog::error("配置生成器时, object_json 和 tile_info 不能为空");
         return nullptr;
@@ -55,6 +56,7 @@ BasicEntityBuilder *BasicEntityBuilder::configure(const nlohmann::json *object_j
     spdlog::trace("针对多图片集合的瓦片配置生成器完成");
     return this;
 }
+
 BasicEntityBuilder *BasicEntityBuilder::configure(int index, const engine::component::TileInfo *tile_info)
 {
     reset();
@@ -82,6 +84,7 @@ BasicEntityBuilder *BasicEntityBuilder::build()
     buildBase();
     buildSprite();
     buildTransform();
+    buildRender();
     buildAnimation();
     buildAudio();
     return this;
@@ -150,6 +153,14 @@ void BasicEntityBuilder::buildTransform()
 
     // 添加 TransformComponent
     registry_.emplace<component::TransformComponent>(entity_id_, position_, scale, rotation);
+}
+
+void BasicEntityBuilder::buildRender()
+{
+    spdlog::trace("构建 Render 组件");
+    int layer = level_loader_.getCurrentLayer();    // 确定图层
+    float depth = position_.y;                      // 确定深度 (默认 y 坐标)
+    registry_.emplace<engine::component::RenderComponent>(entity_id_, layer, depth);
 }
 
 void BasicEntityBuilder::buildAnimation()

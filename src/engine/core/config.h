@@ -20,8 +20,8 @@ namespace engine::core
         //  --- 默认配置值 --- (为了方便拓展，全部设置为公有)
         // 窗口设置
         std::string window_title_ = "MonsterWar";
-        int window_width_ = 1280;
-        int window_height_ = 720;
+        int window_width_ = 1600;
+        int window_height_ = 1216;
         bool window_resizable_ = true;
         float window_scale_ = 1.0f;
         float window_logical_scale_ = 1.0f;

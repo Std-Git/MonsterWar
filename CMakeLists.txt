@@ -5,10 +5,11 @@ project(MonsterWar VERSION 0.1.0 LANGUAGES C CXX)
 #设置C++标准
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 #设置编译选项
 if(MSVC)
-    add_compile_options(/W4)
+    add_compile_options(/W4 /utf-8)
 else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
@@ -39,8 +40,8 @@ set(SOURCES
     src/engine/core/game_state.cpp
     src/engine/core/time.cpp
     src/engine/input/input_manager.cpp
-    src/engine/loader/basic_entity_builder.cpp
     src/engine/loader/level_loader.cpp
+    src/engine/loader/basic_entity_builder.cpp
     src/engine/render/camera.cpp
     src/engine/render/renderer.cpp
     src/engine/render/text_renderer.cpp
@@ -50,6 +51,7 @@ set(SOURCES
     src/engine/resource/font_manager.cpp
     src/engine/system/animation_system.cpp
     src/engine/system/movement_system.cpp
+    src/engine/system/ysort_system.cpp
     src/engine/system/render_system.cpp
     src/engine/ui/state/ui_hover_state.cpp
     src/engine/ui/state/ui_normal_state.cpp

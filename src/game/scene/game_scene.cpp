@@ -3,6 +3,7 @@
 #include "../../engine/system/render_system.h"
 #include "../../engine/system/movement_system.h"
 #include "../../engine/system/animation_system.h"
+#include "../../engine/system/ysort_system.h"
 #include "../../engine/loader/level_loader.h"
 #include <unordered_map>
 #include <entt/core/hashed_string.hpp>
@@ -20,6 +21,7 @@ GameScene::GameScene(engine::core::Context &context)
     render_system_ = std::make_unique<engine::system::RenderSystem>();
     movement_system_ = std::make_unique<engine::system::MovementSystem>();
     animation_system_ = std::make_unique<engine::system::AnimationSystem>();
+    ysort_system_ = std::make_unique<engine::system::YSortSystem>();
 
     spdlog::info("GameScene 构造完成");
 }
@@ -43,6 +45,7 @@ void GameScene::update(float delta_time)
 {
     movement_system_->update(registry_, delta_time);
     animation_system_->update(registry_, delta_time);
+    ysort_system_->update(registry_);   // 调用顺序要在 MovementSystem 之后
 
     Scene::update(delta_time);
 }
@@ -63,7 +66,7 @@ bool GameScene::loadLevel()
 {
     engine::loader::LevelLoader level_loader;
     // 不调用 setEntityBuilder, 则使用默认的 BasicEntityBuilder
-    if (!level_loader.loadLevel("assets/maps/level1.tmj", this))
+    if (!level_loader.loadLevel("assets/maps/title.tmj", this))
     {
         spdlog::error("加载关卡失败");
         return false;

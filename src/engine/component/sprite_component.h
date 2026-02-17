@@ -33,7 +33,7 @@ struct Sprite
     Sprite(std::string texture_path, engine::utils::Rect source_rect, bool is_flipped = false)
         : texture_path_(std::move(texture_path)), src_rect_(std::move(source_rect)), is_flipped_(is_flipped) 
         {
-            texture_id_ = entt::hashed_string(texture_path.c_str());
+            texture_id_ = entt::hashed_string(texture_path_.c_str());   // <bug> bug3:texture_path_ 打作 texture_path
         }
     
     /**
@@ -71,5 +71,5 @@ struct SpriteComponent
             }
         }
 };
-}   // namespace engine::component
 
+}   // namespace engine::component

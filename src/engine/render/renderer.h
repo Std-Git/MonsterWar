@@ -30,6 +30,8 @@ private:
     SDL_Renderer* renderer_ = nullptr;                                  ///< @brief 指向 SDL_Renderer 的非拥有指针
     engine::resource::ResourceManager* resource_manager_ = nullptr;     ///< @brief 指向 ResourceManager 的非拥有指针
 
+    engine::utils::FColor background_color_ = {0.0f, 0.0f, 0.0f, 1.0f};     ///< @brief  清除背景的颜色 (默认为黑色),可调用 setBgColorFloat() 设置
+
 public:
     /**
      * @brief 构造函数
@@ -75,6 +77,8 @@ public:
 
     void setDrawColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255);             ///< @brief 设置绘制颜色，包装 SDL_SetRenderDrawColor 函数
     void setDrawColorFloat(float r, float g, float b, float a = 1.0f);       ///< @brief 设置绘制颜色，包装 SDL_SetRenderDrawColor 函数
+
+    void setBgColorFloat(float r, float g, float b, float a = 1.0f) { background_color_ = {r, g, b, a}; }   ///< @brief 设置背景颜色，使用
 
     SDL_Renderer* getSDLRenderer() const { return renderer_; }                 ///< @brief 获取 SDL_Renderer 指针
 

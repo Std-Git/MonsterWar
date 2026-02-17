@@ -25,10 +25,10 @@
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\input\input_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\loader\basic_entity_builder.cpp">
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\loader\level_loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\loader\level_loader.cpp">
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\loader\basic_entity_builder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\render\camera.cpp">
@@ -56,6 +56,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\system\movement_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\system\ysort_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\system\render_system.cpp">

@@ -83,6 +83,6 @@ struct AnimationComponent
                        current_frame_index_(current_frame_index),
                        current_time_ms_(current_time_ms),
                        speed_(speed) {}
-};  
+};
 
 }   // namespace engine::component
