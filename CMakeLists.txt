@@ -65,6 +65,11 @@ set(SOURCES
     src/engine/ui/ui_panel.cpp
     src/engine/scene/scene.cpp
     src/engine/scene/scene_manager.cpp
+    src/game/factory/blueprint_manager.cpp
+    src/game/factory/entity_factory.cpp
+    src/game/loader/entity_builder_mw.cpp
+    src/game/system/followpath_system.cpp
+    src/game/system/remove_dead_system.cpp
     src/game/scene/game_scene.cpp)
 
 # --- 添加 ImGui 开始 --- 

@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <string_view>
+#include <random>
 
 namespace engine::utils
 {
@@ -69,6 +70,33 @@ constexpr FColor parseHexColor(std::string_view hex_color)
         static_cast<float>(b) / 255.0f,
         static_cast<float>(a) / 255.0f,
     };
+}
+
+/**
+ * @brief 生成指定范围内的整数 [min, max]
+ * @param min 最小值
+ * @param max 最大值
+ * @return [min, max] 范围内的随机整数
+ */
+inline int randomInt(int min, int max)
+{
+    // static thread_local 表示该变量在每个线程中各自独立，互不影响，避免多线程下的竞争条件
+    static thread_local std::mt19937 generator{std::random_device{}()};
+    std::uniform_int_distribution<int> distribution(min, max);
+    return distribution(generator);
+}
+
+/**
+ * @brief 根据等级和稀有度修改属性
+ * @param base 基础属性
+ * @param level 等级
+ * @param rarity 稀有度
+ * @return 修改后的属性
+ */
+inline float statModify(float base, int level = 1, int rarity = 1)
+{
+    return base * (0.95f + 0.05f * level) * (0.9f + 0.1f * rarity);
+    //NOTE:未来可以改成数据驱动方便调整
 }
 
 }   // namespace engine::utils

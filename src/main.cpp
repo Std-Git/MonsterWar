@@ -14,7 +14,7 @@ void setupInitialScene(engine::core::Context& context)
 
 int main(int /* argc */, char * /* argv */[])
 {
-    spdlog::set_level(spdlog::level::trace);
+    spdlog::set_level(spdlog::level::debug);
 
     engine::core::GameApp app;
     app.registerSceneSetup(setupInitialScene);

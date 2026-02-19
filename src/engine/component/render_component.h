@@ -7,12 +7,14 @@ namespace engine::component
  */    
 struct RenderComponent
 {
+    static constexpr int MAIN_LAYER{10};    ///< @brief 主图层ID,默认为10
+
     int layer_{};    ///< @brief 图层 ID, 数字越小越先绘制
     float depth_{};  ///< @brief 在同一图层内的深度，数字越小越先绘制    
                     /* 可用于实现 y-sort 排序，也可设定其他渲染逻辑顺序 */
     //TODO: 未来可添加其他信息，比如透明度等
      
-    RenderComponent(int layer = 0, float depth = 0.0f) : layer_(layer), depth_(depth) {}
+    RenderComponent(int layer = MAIN_LAYER, float depth = 0.0f) : layer_(layer), depth_(depth) {}
 
     // 重载比较运算符，用于排序
     bool operator<(const RenderComponent& other) const
