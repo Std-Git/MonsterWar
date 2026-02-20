@@ -10,6 +10,8 @@
 #include "../defs/tags.h"
 #include "../../engine/component/audio_component.h"
 #include "../component/stats_component.h"
+#include "../component/player_component.h"
+#include "../component/blocker_component.h"
 #include "../component/enemy_component.h"
 #include "../component/class_name_component.h"
 #include <entt/entity/registry.hpp>
@@ -26,7 +28,38 @@ EntityFactory::EntityFactory(entt::registry& registry,
     BlueprintManager& blueprint_manager)
     : registry_(registry), blueprint_manager_(blueprint_manager) {}
 
-entt::entity EntityFactory::createEnemyUnits(entt::id_type class_id, const glm::vec2& position, int target_waypoint_id, int level, int rarity)
+entt::entity EntityFactory::createPlayerUnit(entt::id_type class_id, const glm::vec2 &position, int level, int rarity)
+{
+    auto entity = registry_.create();
+    const auto& blueprint = blueprint_manager_.getPlayerClassBlueprint(class_id);
+    // --- 添加组件 ---
+    // 添加 Transform 组件
+    addTransformComponent(entity, position);
+
+    // 添加 Sprite 组件
+    addSpriteComponent(entity, blueprint.sprite_);
+
+    // 添加 Animation 组件
+    addAnimationComponent(entity, blueprint.animations_, blueprint.sprite_, "idle"_hs);
+
+    // 添加 Audio 组件
+    addAudioComponent(entity, blueprint.sounds_);
+
+    // 添加 Stats 组件
+    addStatsComponent(entity, blueprint.stats_, level, rarity);
+
+    // 添加 Player 组件
+    addPlayerComponent(entity, blueprint.player_, rarity);
+
+    // 补充其他必要组件
+    registry_.emplace<game::component::ClassNameComponent>(entity, class_id, blueprint.display_info_.name_);
+    registry_.emplace<engine::component::RenderComponent>(entity);      // 使用默认主图层
+    // 未来可添加其他组件
+
+    return entity;
+}
+
+entt::entity EntityFactory::createEnemyUnit(entt::id_type class_id, const glm::vec2 &position, int target_waypoint_id, int level, int rarity)
 {
     auto entity = registry_.create();
     const auto& blueprint = blueprint_manager_.getEnemyClassBlueprint(class_id);
@@ -40,7 +73,7 @@ entt::entity EntityFactory::createEnemyUnits(entt::id_type class_id, const glm::
     // 添加 Animation 组件
     addAnimationComponent(entity, blueprint.animations_, blueprint.sprite_, "walk"_hs);
 
-    // 添加 Audion 组件
+    // 添加 Audio 组件
     addAudioComponent(entity, blueprint.sounds_);
 
     // 添加 Stats 组件
@@ -124,6 +157,29 @@ void EntityFactory::addStatsComponent(entt::entity entity, const data::StatsBlue
         0.0f,
         level,
         rarity);
+}
+
+void EntityFactory::addPlayerComponent(entt::entity entity, const data::PlayerBlueprint &player, int rarity)
+{
+    auto cost = static_cast<int>(std::round(player.cost_ * (0.9f + 0.1f * rarity)));
+    registry_.emplace<game::component::PlayerComponent>(entity, cost);
+    // 添加类型标签(近战，远程，治疗)
+    if (player.type_ == game::defs::PlayerType::MELEE)
+    {
+        registry_.emplace<game::defs::MeleeUnitTag>(entity);    // 近战单位标签
+        // 进展类型添加阻挡者组件
+        registry_.emplace<game::component::BlockerComponent>(entity, player.block_);
+        spdlog::debug("Create melee player, {}", player.block_);
+    }
+    else if (player.type_ == game::defs::PlayerType::RANGED)    // 远程单位标签
+    {
+        registry_.emplace<game::defs::RangedUnitTag>(entity);
+        if (player.healer_)
+        {
+            registry_.emplace<game::defs::HealerTag>(entity);   // 治疗单位标签
+        }
+    }
+    // TODO:未来添加技能组件
 }
 
 void EntityFactory::addEnemyComponent(entt::entity entity, const data::EnemyBlueprint &enemy, int target_waypoint_id)

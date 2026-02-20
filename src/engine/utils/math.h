@@ -96,7 +96,18 @@ inline int randomInt(int min, int max)
 inline float statModify(float base, int level = 1, int rarity = 1)
 {
     return base * (0.95f + 0.05f * level) * (0.9f + 0.1f * rarity);
-    //NOTE:未来可以改成数据驱动方便调整
+    //NOTE:未来可以改成数据驱动方便调整 <next>
+}
+
+/**
+ * @brief 计算两点之间距离的平方 (避免开平方运算)
+ * @param a 点a
+ * @param b 点b
+ * @return 距离的平方
+ */
+inline float distanceSquared(const glm::vec2& a, const glm::vec2& b)
+{
+    return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
 }
 
 }   // namespace engine::utils

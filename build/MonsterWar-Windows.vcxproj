@@ -367,6 +367,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\loader\entity_builder_mw.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\followpath_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\remove_dead_system.cpp" />
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\block_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\scene\game_scene.cpp" />
     <ResourceCompile Include="D:\CMakeProgram\MonsterWar\resources.rc" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\external\imgui\imgui.cpp" />

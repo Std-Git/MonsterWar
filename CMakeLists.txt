@@ -70,6 +70,7 @@ set(SOURCES
     src/game/loader/entity_builder_mw.cpp
     src/game/system/followpath_system.cpp
     src/game/system/remove_dead_system.cpp
+    src/game/system/block_system.cpp
     src/game/scene/game_scene.cpp)
 
 # --- 添加 ImGui 开始 --- 
