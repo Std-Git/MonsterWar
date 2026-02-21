@@ -167,9 +167,8 @@ void EntityFactory::addPlayerComponent(entt::entity entity, const data::PlayerBl
     if (player.type_ == game::defs::PlayerType::MELEE)
     {
         registry_.emplace<game::defs::MeleeUnitTag>(entity);    // 近战单位标签
-        // 进展类型添加阻挡者组件
+        // 近战类型添加阻挡者组件
         registry_.emplace<game::component::BlockerComponent>(entity, player.block_);
-        spdlog::debug("Create melee player, {}", player.block_);
     }
     else if (player.type_ == game::defs::PlayerType::RANGED)    // 远程单位标签
     {
