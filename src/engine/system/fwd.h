@@ -7,6 +7,7 @@ namespace engine::system
 
 class RenderSystem;
 class AnimationSystem;
+class AudioSystem;
 class MovementSystem;
 class YSortSystem;
 

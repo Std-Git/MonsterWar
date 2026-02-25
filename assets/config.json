@@ -3,7 +3,7 @@
         "title": "MonsterWar",
         "width": 1600,
         "height": 1216,
-        "window_scale": 1.0,
+        "window_scale": 0.75,
         "logical_scale": 1.0,
         "resizable": true
     },
@@ -38,13 +38,13 @@
             "D",
             "Right"
         ],
-        "attack": [
-            "K",
-            "MouseLeft"
-        ],
         "move_left": [
             "A",
             "Left"
+        ],
+        "attack": [
+            "K",
+            "MouseLeft"
         ]
     }
 }

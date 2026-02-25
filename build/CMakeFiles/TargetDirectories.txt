@@ -1,3 +1,4 @@
 D:/CMakeProgram/MonsterWar/build/CMakeFiles/MonsterWar-Windows.dir
+D:/CMakeProgram/MonsterWar/build/CMakeFiles/PACKAGE.dir
 D:/CMakeProgram/MonsterWar/build/CMakeFiles/ALL_BUILD.dir
 D:/CMakeProgram/MonsterWar/build/CMakeFiles/ZERO_CHECK.dir

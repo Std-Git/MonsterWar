@@ -52,6 +52,15 @@ void AnimationSystem::update(float dt)
             anim_component.current_time_ms_ -= current_frame.duration_ms_;
             anim_component.current_frame_index_++;
 
+            // 检查是否要发送动画事件
+            if (current_animation.events_.find(anim_component.current_frame_index_) != current_animation.events_.end())
+            {
+                dispatcher_.enqueue(engine::utils::AnimationEvent{
+                    entity,
+                    current_animation.events_.at(anim_component.current_frame_index_),
+                    anim_component.current_animation_id_});
+            }
+
             // 处理动画播放完成
             if (anim_component.current_frame_index_ >= current_animation.frames_.size())
             {
@@ -60,7 +69,7 @@ void AnimationSystem::update(float dt)
                     anim_component.current_frame_index_ = 0;
                 } else {
                     // 动画播放完毕且不循环，停在最后一帧
-                    anim_component.current_frame_index_ = current_animation.frames_.size();
+                    anim_component.current_frame_index_ = current_animation.frames_.size() - 1; // <bug> bug6: 没有减1
                     // 发送动画播放完成事件
                     dispatcher_.enqueue(engine::utils::AnimationFinishedEvent{entity, anim_component.current_animation_id_});
                 }

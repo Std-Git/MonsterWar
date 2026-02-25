@@ -66,11 +66,12 @@ namespace engine::input
                 // 且有绑定回调函数
                 if (auto it = actions_to_func_.find(action_name_id); it != actions_to_func_.end())
                 {
-                    //it->second.at(static_cast<size_t>(state)).publish(); // 触发回调函数 (之前的做法)
-                    // collect 方法可以获取回调函数返回值，放入 lambda 函数的参数中
-                    // 而 lambda 函数的返回值为真时停止分发信号
-                    // 分发信号的顺序为 “后绑定先调用”
-                    it->second.at(static_cast<size_t>(state)).collect([](bool result) { return result; });
+                    // it->second.at(static_cast<size_t>(state)).publish(); // 触发回调函数 (之前的做法)
+                    //  collect 方法可以获取回调函数返回值，放入 lambda 函数的参数中
+                    //  而 lambda 函数的返回值为真时停止分发信号
+                    //  分发信号的顺序为 “后绑定先调用”
+                    it->second.at(static_cast<size_t>(state)).collect([](bool result)
+                                                                      { return result; });
                 }
             }
         }
@@ -101,9 +102,7 @@ namespace engine::input
                     updateActionState(action_name, is_down, is_repeat); // 更新 action 状态
                 }
             }
-            // 在点击时更新鼠标位置，同时更新逻辑位置
-            mouse_position_ = {event.button.x, event.button.y};
-            SDL_RenderCoordinatesFromWindow(sdl_renderer_, mouse_position_.x, mouse_position_.y, &logical_mouse_position_.x, &logical_mouse_position_.y);
+            // <bug> bug7：不应更新鼠标位置
             break;
         }
         case SDL_EVENT_MOUSE_BUTTON_DOWN:
@@ -127,16 +126,12 @@ namespace engine::input
             break;
         }
         case SDL_EVENT_MOUSE_MOTION: // 处理鼠标运动
-        {
             mouse_position_ = {event.button.x, event.button.y};
             SDL_RenderCoordinatesFromWindow(sdl_renderer_, mouse_position_.x, mouse_position_.y, &logical_mouse_position_.x, &logical_mouse_position_.y);
             break;
-        }
         case SDL_EVENT_QUIT:
-        {
             quit();
             break;
-        }
         default:
             break;
         }
@@ -212,7 +207,7 @@ namespace engine::input
         for (const auto &[action_name, key_names] : actions_to_keyname)
         {
             // 每个动作对应一个动作状态，初始化为 INACTIVE
-            auto action_name_id = entt::hashed_string(action_name.c_str());     // <bug> bug4: entt::hashed_string 打作 entt::id_type
+            auto action_name_id = entt::hashed_string(action_name.c_str()); // <bug> bug4: entt::hashed_string 打作 entt::id_type
             action_states_[action_name_id] = ActionState::INACTIVE;
             spdlog::trace("映射动作: {}", action_name);
             // 设置"按键 -> 动作" 的映射
