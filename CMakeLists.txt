@@ -356,6 +356,7 @@ src/game/system/attack_starter_system.cpp
 src/game/system/combat_resolve_system.cpp
 src/game/system/followpath_system.cpp
 src/game/system/orientation_system.cpp
+src/game/system/projectile_system.cpp
 src/game/system/remove_dead_system.cpp
 src/game/system/block_system.cpp
 src/game/system/set_target_system.cpp
