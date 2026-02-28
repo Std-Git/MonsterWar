@@ -354,7 +354,9 @@ src/game/system/animation_event_system.cpp
 src/game/system/animation_state_system.cpp
 src/game/system/attack_starter_system.cpp
 src/game/system/combat_resolve_system.cpp
+src/game/system/effect_system.cpp
 src/game/system/followpath_system.cpp
+src/game/system/health_bar_system.cpp
 src/game/system/orientation_system.cpp
 src/game/system/projectile_system.cpp
 src/game/system/remove_dead_system.cpp

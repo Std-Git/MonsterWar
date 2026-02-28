@@ -14,5 +14,7 @@ class ProjectileSystem;
 class RemoveDeadSystem;
 class SetTargetSystem;
 class TimerSystem;
+class EffectSystem;
+class HealthBarSystem;
 
 }   // namespace game::system

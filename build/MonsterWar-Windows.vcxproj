@@ -477,7 +477,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\animation_state_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\attack_starter_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\combat_resolve_system.cpp" />
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\effect_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\followpath_system.cpp" />
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\health_bar_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\orientation_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\projectile_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\remove_dead_system.cpp" />
