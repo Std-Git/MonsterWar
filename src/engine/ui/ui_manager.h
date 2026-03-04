@@ -1,6 +1,5 @@
 #pragma once
 #include <memory>
-#include <vector>
 #include <glm/vec2.hpp>
 
 namespace engine::core
@@ -38,8 +37,7 @@ namespace engine::ui
         void clearElements();                                  ///< @brief 清除所有 UI 元素, 通常用于重置 UI 状态
 
         // 核心循环方法
-        bool handleInput(engine::core::Context &); ///< @brief 处理输入事件，如果事件被处理则返回 true
-        void update(float delta_time, engine::core::Context &);
+        void update(float delta_time, engine::core::Context &); ///< @brief 更新所有 UI 元素
         void render(engine::core::Context &);
 
         // 禁止拷贝和移动构造/赋值

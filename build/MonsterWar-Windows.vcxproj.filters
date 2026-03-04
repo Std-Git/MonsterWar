@@ -103,6 +103,12 @@
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\engine\scene\scene_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\data\session_data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\data\ui_config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\factory\blueprint_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

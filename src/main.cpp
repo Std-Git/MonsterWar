@@ -5,6 +5,20 @@
 #include <spdlog/spdlog.h>
 #include <entt/signal/dispatcher.hpp>
 
+// 只在 Windows 平台上包含 Windows.h
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+
+// 在程序开始时设置控制台编码
+void initialize_environment()
+{
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+#endif
+}
+
 void setupInitialScene(engine::core::Context& context)
 {
     // GameApp 在调用 run 方法之前，先创建并设置初始场景
@@ -14,6 +28,7 @@ void setupInitialScene(engine::core::Context& context)
 
 int main(int /* argc */, char * /* argv */[])
 {
+    initialize_environment();
     spdlog::set_level(spdlog::level::debug);
 
     engine::core::GameApp app;

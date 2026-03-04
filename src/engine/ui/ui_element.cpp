@@ -12,30 +12,9 @@ UIElement::UIElement(glm::vec2 position, glm::vec2 size)
 {           // 这里面千万不能调用虚函数
 }
 
-bool UIElement::handleInput(engine::core::Context& context)
-{
-    //如果元素不可见，直接返回 false
-    if (!visible_) return false;
-
-    // 遍历所有子节点，并删除标记了移除的元素
-    for (auto it = children_.begin(); it != children_.end();)
-    {
-        if (*it && !(*it)->isNeedRemove())
-        {
-            if ((*it)->handleInput(context)) return true;
-            ++it;
-        }
-        else
-        {
-            it = children_.erase(it);
-        }
-    }
-    // 事件未被消耗(单次只能处理同一事件一次)，返回假
-    return false;
-}
-
 void UIElement::update(float delta_time, engine::core::Context& context)
 {
+    // 如果元素不可见，直接返回 false
     if (!visible_) return;
 
     // 遍历所有子节点，并删除标记了一处的元素
@@ -64,11 +43,15 @@ void UIElement::render(engine::core::Context& context)
     }
 }
 
-void UIElement::addChild(std::unique_ptr<UIElement> child)
+void UIElement::addChild(std::unique_ptr<UIElement> child, int order_index)
 {
     if (child)
     {
         child->setParent(this); // 设置父指针
+        if (order_index >= 0)
+        {
+            child->setOrderIndex(order_index);
+        }
         children_.push_back(std::move(child));
     }
 }
@@ -91,6 +74,23 @@ std::unique_ptr<UIElement> UIElement::removeChild(UIElement* child_ptr)
     return nullptr; // 未找到子元素
 }
 
+std::unique_ptr<UIElement> UIElement::removeChildById(entt::id_type id)
+{
+    auto it = std::find_if(children_.begin(), children_.end(),
+                           [id](const std::unique_ptr<UIElement>& p)
+                           {
+                               return p->getId() == id;
+                           });
+    if (it != children_.end())
+    {
+        std::unique_ptr<UIElement> removed_child = std::move(*it);
+        children_.erase(it);
+        removed_child->setParent(nullptr);       // 清除父指针
+        return removed_child;                    // 返回被移除的子元素(可以挂载到别处)
+    }
+    return nullptr; // 未找到子元素
+}
+
 void UIElement::removeAllChildren()
 {
     for (auto& child : children_)
@@ -100,6 +100,20 @@ void UIElement::removeAllChildren()
     children_.clear();
 }
 
+UIElement *UIElement::getChildById(entt::id_type id) const
+{
+    auto it = std::find_if(children_.begin(), children_.end(),
+                           [id](const std::unique_ptr<UIElement>& p)
+                           {
+                               return p->getId() == id;
+                           });
+    if (it != children_.end())
+    {
+        return it->get();
+    }
+    return nullptr; // 未找到子元素
+}
+
 glm::vec2 UIElement::getScreenPosition() const
 {
     if (parent_)
@@ -107,6 +121,13 @@ glm::vec2 UIElement::getScreenPosition() const
         return parent_->getScreenPosition() + position_;
     }
     return position_;   // 跟元素的位置已经是相对屏幕的绝对位置
+}
+
+void UIElement::sortChildrenByOrderIndex()
+{
+    // 使用 stable_sort 避免破坏原来相等元素的位置
+    std::stable_sort(children_.begin(), children_.end(), [](const std::unique_ptr<UIElement> &a, const std::unique_ptr<UIElement> &b)
+                     { return a->getOrderIndex() < b->getOrderIndex(); });
 }
 
 engine::utils::Rect UIElement::getBounds() const

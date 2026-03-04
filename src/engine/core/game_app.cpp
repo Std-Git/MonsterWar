@@ -100,10 +100,9 @@ namespace engine::core
     void GameApp::handleEvents()
     {
         // 处理并分发输入事件
-        input_manager_->update(); 
-
-        scene_manager_->handleInput();
+        input_manager_->update();
     }
+    
     void GameApp::update(float delta_time)
     {
         // 游戏逻辑更新

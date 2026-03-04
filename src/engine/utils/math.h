@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <string_view>
 #include <random>
+#include <algorithm>
 
 namespace engine::utils
 {

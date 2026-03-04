@@ -42,16 +42,7 @@ namespace engine::scene
         // 渲染 UI 管理器
         ui_manager_->render(context_);
     }
-
-    void Scene::handleInput()
-    {
-        if (!is_initialized_)
-            return;
-
-        // 处理 UI 管理器的输入
-        if (ui_manager_->handleInput(context_)) return; // 如果输入事件被 UI 处理则直接返回，不在处理游戏对象输入
-    }
-
+    
     void Scene::clean()
     {
         if (!is_initialized_)

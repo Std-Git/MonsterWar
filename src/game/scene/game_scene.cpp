@@ -20,6 +20,7 @@
 #include "../defs/tags.h"
 #include "../../engine/input/input_manager.h"
 #include "../../engine/core/context.h"
+#include "../../engine/core/game_state.h"
 #include "../../engine/render/camera.h"
 #include "../../engine/system/render_system.h"
 #include "../../engine/system/movement_system.h"
@@ -27,6 +28,11 @@
 #include "../../engine/system/ysort_system.h"
 #include "../../engine/system/audio_system.h"
 #include "../../engine/loader/level_loader.h"
+#include "../../engine/ui/ui_manager.h"
+#include "../../engine/ui/ui_panel.h"
+#include "../../engine/ui/ui_image.h"
+#include "../../engine/ui/ui_button.h"
+#include "../../engine/ui/ui_label.h"
 #include <entt/core/hashed_string.hpp>
 #include <entt/signal/sigh.hpp>
 #include <spdlog/spdlog.h>
@@ -47,11 +53,11 @@ namespace game::scene
 
     void GameScene::init()
     {
-        if (!loadLevel())
-        {
+        if (!initSessionData()) { spdlog::error("初始化session_data_失败"); return; }
+        if (!initUIConfig()) { spdlog::error("初始化UI配置失败"); return; }
+        if (!loadLevel()) {
             spdlog::error("加载关卡失败");
-            return;
-        }
+            return; }
         if (!initEventConnections())
         {
             spdlog::error("初始化事件连接失败");
@@ -72,7 +78,9 @@ namespace game::scene
             spdlog::error("初始化系统失败");
             return;
         }
+        testSessionData();
         createTestEnemy();
+        createUnitsPortraitUI();
         Scene::init();
     }
 
@@ -122,6 +130,34 @@ namespace game::scene
         input_manager.onAction("pause"_hs).disconnect<&GameScene::onClearAllPlayers>(this);
         input_manager.onAction("move_left"_hs).disconnect<&GameScene::onCreateTestPlayerHealer>(this);
         Scene::clean();
+    }
+
+    bool GameScene::initSessionData()
+    {
+        if (!session_data_) {
+            session_data_ = std::make_shared<game::data::SessionData>();
+            if (!session_data_->loadDefaultData())
+            {
+                spdlog::error("初始化session_data_失败");
+                return false;
+            }
+        }
+        level_number_ = session_data_->getLevelNumber();
+        return true;
+    }
+
+    bool GameScene::initUIConfig()
+    {
+        if (!ui_config_)
+        {
+            ui_config_ = std::make_shared<game::data::UIConfig>();
+            if (!ui_config_->loadFromFile("assets/data/ui_config.json"))
+            {
+                spdlog::error("加载 ui 配置失败");
+                return false;
+            }
+        }
+        return true;
     }
 
     bool GameScene::loadLevel()
@@ -207,10 +243,107 @@ namespace game::scene
         return true;
     }
 
+    void GameScene::createUnitsPortraitUI()
+    {
+        if (!ui_manager_->init(context_.getGameState().getLogicalSize())) return;
+
+        auto padding = ui_config_->getUnitPanelPadding();
+        auto& unit_map = session_data_->getUnitMap();
+        auto unit_num = unit_map.size();
+
+        //  -- 在屏幕下方创建一个panel UI 条，用于显示角色肖像 -- 
+        // 获取窗口大小和角色肖像框大小
+        auto window_size = context_.getGameState().getLogicalSize();
+        auto frame_size = ui_config_->getUnitPanelFrameSize();
+        // 根据角色数量，角色肖像框大小，间隔计算panel的位置和大小
+        auto pos = glm::vec2(0.0f, window_size.y - frame_size.y - 2 * padding);
+        auto size = glm::vec2(unit_num * frame_size.x + (unit_num - 1) * padding, frame_size.y + 2 * padding);
+        auto anchor_panel = std::make_unique<engine::ui::UIPanel>(pos, size);
+        // 设置背景色
+        anchor_panel->setBackgroundColor(engine::utils::FColor(0.1f, 0.1f, 0.1f, 0.1f));
+        // 设置ID, 以后即可根据ID找到该panel
+        anchor_panel->setId("unit_panel"_hs);
+
+        // 依次添加角色肖像，每个肖像由四部分依次叠加：portrait, frame, icon, cost, 可以通过一个frame_panel 定位(位于上层anchor_panel之中)
+        int index = 0;
+        for (auto& [name_id, unit_data] : unit_map)
+        {
+            auto portrait = ui_config_->getPortrait(name_id);
+            auto frame = ui_config_->getPortraitFrame(unit_data.rarity_);
+            auto icon = ui_config_->getIcon(unit_data.class_id_);
+            auto cost = blueprint_manager_->getPlayerClassBlueprint(unit_data.class_id_).player_.cost_;
+            cost = static_cast<int>(std::round(engine::utils::statModify(cost, 1, unit_data.rarity_))); // 只有稀有度对 cost 有影响
+
+            // 创建每个肖像的frame_panel
+            auto frame_pos = glm::vec2(padding + index * (frame_size.x + padding), padding);
+            auto frame_panel = std::make_unique<engine::ui::UIPanel>(frame_pos, frame_size);
+            frame_panel->setId(name_id);
+
+            // 依次添加四个元素，为了能够交互，将frame 设置为按钮，并绑定点击事件
+            frame_panel->addChild(std::make_unique<engine::ui::UIImage>(portrait, glm::vec2(0.0f, 0.0f), frame_size));
+            frame_panel->addChild(std::make_unique<engine::ui::UIButton>(context_,
+                frame, 
+                frame,
+                frame,
+                glm::vec2(0.0f, 0.0f),
+                frame_size
+                // TODO::添加点击事件回调函数
+            ));
+            frame_panel->addChild(std::make_unique<engine::ui::UIImage>(icon, glm::vec2(0.0f, 0.0f), frame_size / 2.0f));
+            frame_panel->addChild(std::make_unique<engine::ui::UILabel>(context_.getTextRenderer(),
+                std::to_string(cost),
+                ui_config_->getUnitPanelFontPath(),
+                ui_config_->getUnitPanelFontSize(),
+                engine::utils::FColor::yellow(),
+                ui_config_->getUnitPanelFontOffset()
+            ));
+            // 最后添加一个灰色的遮盖panel,cost 不足以支撑该角色出击时显示
+            auto cover_panel = std::make_unique<engine::ui::UIPanel>(glm::vec2(0.0f, 0.0f), frame_size);
+            cover_panel->setBackgroundColor(engine::utils::FColor(0.0f, 0.0f, 0.0f, 0.2f));
+            cover_panel->setId("cover_panel"_hs);
+            frame_panel->addChild(std::move(cover_panel));
+
+            // 将frame_panel 添加到anchor_panel中，并使用cost 作为排序键
+            anchor_panel->addChild(std::move(frame_panel), cost);
+            index++;
+        }
+
+        // 对anchor_panel 中的所有子元素(frame_panel) 进行排序
+        anchor_panel->sortChildrenByOrderIndex();
+        // 按顺序排列anchor_panel 中的子元素(frame_panel)的位置
+        arrangeUnitsPortraitUI(anchor_panel.get(), frame_size, padding);
+
+        ui_manager_->addElement(std::move(anchor_panel));
+    }
+
+    void GameScene::arrangeUnitsPortraitUI(engine::ui::UIElement *anchor_panel, const glm::vec2 &frame_size, float padding)
+    {
+        // 遍历panel 中的子元素(定位panel)，并依次设定位置
+        for (size_t i = 0; i < anchor_panel->getChildren().size(); i++)
+        {
+            auto& child = anchor_panel->getChildren()[i];
+            child->setPosition(glm::vec2(padding + i * (frame_size.x + padding), padding));
+        }
+        // 更新panel 的size
+        anchor_panel->setSize(glm::vec2(padding + anchor_panel->getChildren().size() * (frame_size.x + padding), 
+                                frame_size.y + 2 * padding));
+    }
+
     void GameScene::onEnemyArriveHome(const game::defs::EnemyArriveHomeEvent &)
     {
         spdlog::info("敌人到达基地");
         // TODO: 处理敌人到达基地的逻辑
+    }
+
+    void GameScene::testSessionData()
+    {
+        spdlog::info("关卡号：{}", level_number_);
+        spdlog::info("积分：{}", session_data_->getPoint());
+        spdlog::info("是否通关：{}", session_data_->isLevelClear());
+        for (auto& unit : session_data_->getUnitMap())
+        {
+            spdlog::info("角色名: {}, 职业: {}, 等级: {}, 稀有度: {}", unit.second.name_, unit.second.class_, unit.second.level_, unit.second.rarity_);
+        }
     }
 
     void GameScene::createTestEnemy()
