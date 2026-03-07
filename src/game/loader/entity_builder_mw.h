@@ -40,6 +40,7 @@ public:
 
 private:
     void buildPath();   ///< @brief 生成路径节点
+    void buildPlace();  ///< @brief 生成单位放置区域
 };
 
 }   // namespace game::loader

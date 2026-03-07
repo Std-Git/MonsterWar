@@ -481,6 +481,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\combat_resolve_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\effect_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\followpath_system.cpp" />
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\game_rule_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\health_bar_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\orientation_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\projectile_system.cpp" />
@@ -489,6 +490,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\set_target_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\timer_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\scene\game_scene.cpp" />
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\ui\units_portrait_ui.cpp" />
     <ResourceCompile Include="D:\CMakeProgram\MonsterWar\resources.rc" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\external\imgui\imgui.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\external\imgui\imgui_draw.cpp" />

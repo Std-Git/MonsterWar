@@ -16,5 +16,6 @@ class SetTargetSystem;
 class TimerSystem;
 class EffectSystem;
 class HealthBarSystem;
+class GameRuleSystem;
 
 }   // namespace game::system

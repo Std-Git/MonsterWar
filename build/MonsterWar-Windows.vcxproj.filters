@@ -136,6 +136,9 @@
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\followpath_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\game_rule_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\health_bar_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -158,6 +161,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\scene\game_scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\ui\units_portrait_ui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\external\imgui\imgui.cpp">
