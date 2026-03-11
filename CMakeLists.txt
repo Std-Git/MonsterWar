@@ -361,8 +361,10 @@ src/game/system/followpath_system.cpp
 src/game/system/game_rule_system.cpp
 src/game/system/health_bar_system.cpp
 src/game/system/orientation_system.cpp
+src/game/system/place_unit_system.cpp
 src/game/system/projectile_system.cpp
 src/game/system/remove_dead_system.cpp
+src/game/system/render_range_system.cpp
 src/game/system/block_system.cpp
 src/game/system/set_target_system.cpp
 src/game/system/timer_system.cpp

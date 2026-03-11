@@ -18,6 +18,8 @@
 #include "../system/effect_system.h"
 #include "../system/health_bar_system.h"
 #include "../system/game_rule_system.h"
+#include "../system/place_unit_system.h"
+#include "../system/render_range_system.h"
 #include "../ui/units_portrait_ui.h"
 #include "../defs/tags.h"
 #include "../../engine/input/input_manager.h"
@@ -31,10 +33,6 @@
 #include "../../engine/system/audio_system.h"
 #include "../../engine/loader/level_loader.h"
 #include "../../engine/ui/ui_manager.h"
-#include "../../engine/ui/ui_panel.h"
-#include "../../engine/ui/ui_image.h"
-#include "../../engine/ui/ui_button.h"
-#include "../../engine/ui/ui_label.h"
 #include <entt/core/hashed_string.hpp>
 #include <entt/signal/sigh.hpp>
 #include <spdlog/spdlog.h>
@@ -64,7 +62,6 @@ namespace game::scene
         if (!initRegistryContext())     { spdlog::error("初始化注册表上下文失败"); return; }
         if (!initUnitsPortraitUI())     { spdlog::error("初始化单位肖像UI失败"); return; }
         if (!initSystems())             { spdlog::error("初始化系统失败"); return; }
-        testSessionData();
         createTestEnemy();
         Scene::init();
     }
@@ -87,6 +84,7 @@ namespace game::scene
         projectile_system_->update(delta_time);
         movement_system_->update(registry_, delta_time);
         animation_system_->update(delta_time);
+        place_unit_system_->update(delta_time);
         ysort_system_->update(registry_); // 调用顺序要在 MovementSystem 之后
 
         // 场景中其他更新函数
@@ -103,6 +101,7 @@ namespace game::scene
         // 注意渲染顺序，保证正确的遮盖关系
         render_system_->update(registry_, renderer, camera);
         health_bar_system_->update(registry_, renderer, camera);
+        render_range_system_->update(registry_, renderer, camera);
 
         Scene::render();
     }
@@ -114,10 +113,7 @@ namespace game::scene
         // 断开所有事件连接
         dispatcher.disconnect(this);
         // 断开输入信号连接
-        input_manager.onAction("mouse_right"_hs).disconnect<&GameScene::onCreateTestPlayerMelee>(this);
-        input_manager.onAction("mouse_left"_hs).disconnect<&GameScene::onCreateTestPlayerRanged>(this);
         input_manager.onAction("pause"_hs).disconnect<&GameScene::onClearAllPlayers>(this);
-        input_manager.onAction("move_left"_hs).disconnect<&GameScene::onCreateTestPlayerHealer>(this);
         Scene::clean();
     }
 
@@ -132,6 +128,10 @@ namespace game::scene
             }
         }
         level_number_ = session_data_->getLevelNumber();
+        for (auto &unit : session_data_->getUnitMap())
+        {
+            spdlog::info("角色名: {}, 职业: {}, 等级: {}, 稀有度: {}", unit.second.name_, unit.second.class_, unit.second.level_, unit.second.rarity_);
+        }
         return true;
     }
 
@@ -177,10 +177,7 @@ namespace game::scene
     {
         auto &input_manager = context_.getInputManager();
         spdlog::info("初始化输入连接");
-        input_manager.onAction("mouse_right"_hs).connect<&GameScene::onCreateTestPlayerMelee>(this);
-        input_manager.onAction("mouse_left"_hs).connect<&GameScene::onCreateTestPlayerRanged>(this);
         input_manager.onAction("pause"_hs).connect<&GameScene::onClearAllPlayers>(this);
-        input_manager.onAction("move_left"_hs).connect<&GameScene::onCreateTestPlayerHealer>(this);
         return true;
     }
 
@@ -253,19 +250,10 @@ namespace game::scene
         effect_system_ = std::make_unique<game::system::EffectSystem>(registry_, dispatcher, *entity_factory_);
         health_bar_system_ = std::make_unique<game::system::HealthBarSystem>();
         game_rule_system_ = std::make_unique<game::system::GameRuleSystem>(registry_, dispatcher);
+        place_unit_system_ = std::make_unique<game::system::PlaceUnitSystem>(registry_, *entity_factory_, context_);
+        render_range_system_ = std::make_unique<game::system::RenderRangeSystem>();
         spdlog::info("系统初始化完成");
         return true;
-    }
-
-    void GameScene::testSessionData()
-    {
-        spdlog::info("关卡号：{}", level_number_);
-        spdlog::info("积分：{}", session_data_->getPoint());
-        spdlog::info("是否通关：{}", session_data_->isLevelClear());
-        for (auto& unit : session_data_->getUnitMap())
-        {
-            spdlog::info("角色名: {}, 职业: {}, 等级: {}, 稀有度: {}", unit.second.name_, unit.second.class_, unit.second.level_, unit.second.rarity_);
-        }
     }
 
     void GameScene::createTestEnemy()
@@ -282,44 +270,12 @@ namespace game::scene
         }
     }
 
-    bool GameScene::onCreateTestPlayerMelee()
-    {
-        auto position = context_.getInputManager().getLogicalMousePosition();
-        auto entity = entity_factory_->createPlayerUnit("warrior"_hs, position);
-        // 让玩家处于受伤状态 (治疗师不会锁定满血目标)
-        registry_.emplace<game::defs::InjuredTag>(entity);
-        auto &stats = registry_.get<game::component::StatsComponent>(entity);
-        stats.hp_ = stats.max_hp_ / 2;
-        spdlog::info("创建战士: 位置: {}, {}", position.x, position.y);
-        return true;
-    }
-
-    bool GameScene::onCreateTestPlayerRanged()
-    {
-        auto position = context_.getInputManager().getLogicalMousePosition();
-        auto entity = entity_factory_->createPlayerUnit("archer"_hs, position);
-        // 让玩家处于受伤状态 (治疗师不会锁定满血目标)
-        registry_.emplace<game::defs::InjuredTag>(entity);
-        auto &stats = registry_.get<game::component::StatsComponent>(entity);
-        stats.hp_ = stats.max_hp_ / 2;
-        spdlog::info("创建弓箭手: 位置: {}, {}", position.x, position.y);
-        return true;
-    }
-
-    bool GameScene::onCreateTestPlayerHealer()
-    {
-        auto position = context_.getInputManager().getLogicalMousePosition();
-        entity_factory_->createPlayerUnit("witch"_hs, position);
-        spdlog::info("创建治疗者: 位置: {}, {}", position.x, position.y);
-        return true;
-    }
-
     bool GameScene::onClearAllPlayers()
     {
         auto view = registry_.view<game::component::PlayerComponent>();
         for (auto entity : view)
         {
-            registry_.destroy(entity);
+            context_.getDispatcher().enqueue(game::defs::RemovePlayerUnitEvent{entity});
         }
         return true;
     }

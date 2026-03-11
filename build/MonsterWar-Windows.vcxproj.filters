@@ -145,10 +145,16 @@
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\orientation_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\place_unit_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\projectile_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\remove_dead_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\render_range_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\block_system.cpp">

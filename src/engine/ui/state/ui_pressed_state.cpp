@@ -33,7 +33,7 @@ void UIPressedState::enter()
 bool UIPressedState::onMouseReleased()
 {
     auto& input_manager = owner_->getContext().getInputManager();
-    auto mouse_pos = input_manager.getMousePosition();
+    auto mouse_pos = input_manager.getLogicalMousePosition();
     if (owner_->isPointInside(mouse_pos))
     {
         owner_->setNextState(std::make_unique<UIHoverState>(owner_));
