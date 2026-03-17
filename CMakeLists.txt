@@ -347,11 +347,13 @@ src/engine/ui/ui_manager.cpp
 src/engine/ui/ui_panel.cpp
 src/engine/scene/scene.cpp
 src/engine/scene/scene_manager.cpp
+src/game/data/level_config.cpp
 src/game/data/session_data.cpp
 src/game/data/ui_config.cpp
 src/game/factory/blueprint_manager.cpp
 src/game/factory/entity_factory.cpp
 src/game/loader/entity_builder_mw.cpp
+src/game/spawner/enemy_spawner.cpp
 src/game/system/animation_event_system.cpp
 src/game/system/animation_state_system.cpp
 src/game/system/attack_starter_system.cpp
