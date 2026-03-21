@@ -111,6 +111,7 @@ namespace engine::core // 命名空间与文件路径一致
         [[nodiscard]] bool initInputManager();
         [[nodiscard]] bool initContext();
         [[nodiscard]] bool initSceneManager();
+        [[nodiscard]] bool initImGui();
 
         // 事件处理函数
         void onQuitEvent();

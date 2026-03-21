@@ -136,6 +136,9 @@
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\combat_resolve_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\debug_ui_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\effect_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -161,6 +164,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\render_range_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\selection_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\block_system.cpp">

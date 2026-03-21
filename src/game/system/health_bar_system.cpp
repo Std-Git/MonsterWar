@@ -38,7 +38,7 @@ void HealthBarSystem::update(entt::registry &registry, engine::render::Renderer 
         }
 
         // 执行绘制(先画边框，再画血量)
-        renderer.drawRect(camera, position, size, color);
+        renderer.drawRect(camera, position, size, color, 2);
         size.x = size.x * health_percent;
         renderer.drawFilledRect(camera, position, size, color);
     }

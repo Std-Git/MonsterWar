@@ -358,6 +358,7 @@ src/game/system/animation_event_system.cpp
 src/game/system/animation_state_system.cpp
 src/game/system/attack_starter_system.cpp
 src/game/system/combat_resolve_system.cpp
+src/game/system/debug_ui_system.cpp
 src/game/system/effect_system.cpp
 src/game/system/followpath_system.cpp
 src/game/system/game_rule_system.cpp
@@ -367,6 +368,7 @@ src/game/system/place_unit_system.cpp
 src/game/system/projectile_system.cpp
 src/game/system/remove_dead_system.cpp
 src/game/system/render_range_system.cpp
+src/game/system/selection_system.cpp
 src/game/system/block_system.cpp
 src/game/system/set_target_system.cpp
 src/game/system/timer_system.cpp

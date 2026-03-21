@@ -14,10 +14,12 @@ class ProjectileSystem;
 class RemoveDeadSystem;
 class SetTargetSystem;
 class TimerSystem;
+class DebugUISystem;
 class EffectSystem;
 class HealthBarSystem;
 class GameRuleSystem;
 class PlaceUnitSystem;
 class RenderRangeSystem;
+class SelectionSystem;
 
 }   // namespace game::system
