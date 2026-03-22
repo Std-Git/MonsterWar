@@ -144,6 +144,82 @@ bool BlueprintManager::loadProjectileBlueprints(std::string_view projectile_json
     return true;
 }
 
+bool BlueprintManager::loadEffectBlueprints(std::string_view effect_json_path)
+{
+    auto path = std::filesystem::path(effect_json_path);
+    std::ifstream file(path);
+    nlohmann::json json;
+    file >> json;
+    file.close();
+    // -- 解析蓝图 --
+    try
+    {
+        for (auto& [name, data_json] : json.items())
+        {
+            // 解析基础数据
+            entt::id_type id = entt::hashed_string(name.c_str());
+            // 解析 Sprite
+            data::SpriteBlueprint sprite = parseSprite(data_json);
+            // 解析 Animation (单个动画)
+            data::AnimationBlueprint animation = parseOneAnimation(data_json);
+            // 解析完毕，组合蓝图并插入容器
+            effect_blueprints_.emplace(id, data::EffectBlueprint{
+                id,
+                name,
+                std::move(sprite),
+                std::move(animation)});
+        }
+    }
+    catch (const std::exception& e)
+    {
+        spdlog::error("加载特效数据时出错：{}", e.what());
+        return false;
+    }
+    return true;
+}
+
+bool BlueprintManager::loadSkillBlueprints(std::string_view skill_json_path)
+{
+    auto path = std::filesystem::path(skill_json_path);
+    std::ifstream file(path);
+    nlohmann::json json;
+    file >> json;
+    file.close();
+    // -- 解析蓝图 --
+    try
+    {
+        for (auto& [key, data_json] : json.items())
+        {
+            // 解析基础数据
+            entt::id_type id = entt::hashed_string(key.c_str());
+            std::string name_str = data_json.value("name", "");
+            std::string description_str = data_json.value("description", "");
+            bool passive = data_json.value("passive", false);
+            float cooldown = data_json.value("cooldown", 0.0f);
+            float duration = data_json.value("duration", 0.0f);
+
+            // 解析 Buff
+            game::data::BuffBlueprint buff = parseBuff(data_json);
+
+            // 解析完毕，组合蓝图并插入容器
+            skill_blueprints_.emplace(id, game::data::SkillBlueprint{
+                                              id,
+                                              name_str,
+                                              description_str,
+                                              passive,
+                                              cooldown,
+                                              duration,
+                                              std::move(buff)});
+        }
+    }
+    catch(const std::exception& e)
+    {
+        spdlog::error("加载技能数据时出错：{}", e.what());
+        return false;
+    }
+    return true;
+}
+
 const data::PlayerClassBlueprint &BlueprintManager::getPlayerClassBlueprint(entt::id_type id) const
 {
     if (auto it = player_class_blueprints_.find(id); it != player_class_blueprints_.end())
@@ -172,6 +248,26 @@ const data::ProjectileBlueprint &BlueprintManager::getProjectileBlueprint(entt::
     }
     spdlog::error("未找到对应 ID 的 ProjectileBlueprint: {}", id);
     return projectile_blueprints_.begin()->second;
+}
+
+const data::EffectBlueprint &BlueprintManager::getEffectBlueprint(entt::id_type id) const
+{
+    if (auto it = effect_blueprints_.find(id); it != effect_blueprints_.end())
+    {
+        return it->second;
+    }
+    spdlog::error("未找到对应 ID 的 EffectBlueprint: {}", id);
+    return effect_blueprints_.begin()->second;
+}
+
+const data::SkillBlueprint &BlueprintManager::getSkillBlueprint(entt::id_type id) const
+{
+    if (auto it = skill_blueprints_.find(id); it != skill_blueprints_.end())
+    {
+        return it->second;
+    }
+    spdlog::error("未找到对应 ID 的 SkillBlueprint: {}", id);
+    return skill_blueprints_.begin()->second;
 }
 
 // -- 拆分步骤的私有解析函数 -- 
@@ -245,6 +341,26 @@ std::unordered_map<entt::id_type, data::AnimationBlueprint> BlueprintManager::pa
     return animations;
 }
 
+data::AnimationBlueprint BlueprintManager::parseOneAnimation(const nlohmann::json &json)
+{
+    auto anim_data = json["animation"];
+    std::vector<int> frames = anim_data["frames"].get<std::vector<int>>();
+    std::unordered_map<int, entt::id_type> events;
+    if (anim_data.contains("events"))
+    {
+        for (auto& [event_name, event_frame] : anim_data["events"].items())
+        {
+            events.emplace(event_frame.get<int>(), entt::hashed_string(event_name.c_str()));
+        }
+    }
+    return data::AnimationBlueprint{
+        anim_data.value("duration", 100.0f),
+        anim_data.value("row", 0),
+        std::move(frames),
+        std::move(events)
+    };
+}
+
 data::SoundBlueprint BlueprintManager::parseSound(const nlohmann::json& json)
 {
     data::SoundBlueprint sounds;
@@ -298,6 +414,17 @@ data::DisplayInfoBlueprint BlueprintManager::parseDisplayInfo(const nlohmann::js
 {
     // 显示信息蓝图只包含"名称"和"描述"
     return data::DisplayInfoBlueprint{json.value("name",""), json.value("description", "")};
+}
+
+data::BuffBlueprint BlueprintManager::parseBuff(const nlohmann::json &json)
+{
+    // 下面的属性有则设置，无则按默认
+    return data::BuffBlueprint{json.value("hp", 1.0f),
+                               json.value("atk", 1.0f),
+                               json.value("def", 1.0f),
+                               json.value("range", 1.0f),
+                               json.value("atk_interval", 1.0f),
+                               json.value("cost_regen", 0.0f)};
 }
 
 }   // namespace game::factory

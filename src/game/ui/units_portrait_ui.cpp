@@ -113,7 +113,6 @@ void UnitsPortraitUI::createUnitsPortraitUI()
                                                                      [this, name_id, &unit_data, cost]() // 按钮点击回调：发送单位准备事件
                                                                      {
                                                                         context_.getDispatcher().enqueue(game::defs::PrepUnitEvent{name_id, unit_data.class_id_, cost});
-                                                                        spdlog::warn("name_id: {}", name_id);
                                                                      }
                                                                      // TODO:悬浮进入和悬浮离开函数
                                                                      ));

@@ -9,7 +9,8 @@ namespace game::system
 EffectSystem::EffectSystem(entt::registry &registry, entt::dispatcher &dispatcher, game::factory::EntityFactory &entity_factory)
     : registry_(registry), dispatcher_(dispatcher), entity_factory_(entity_factory)
 {
-    dispatcher.sink<game::defs::EnemyDeadEffectEvent>().connect<&EffectSystem::onEnemyDeadEffectEvent>(this);
+    dispatcher_.sink<game::defs::EnemyDeadEffectEvent>().connect<&EffectSystem::onEnemyDeadEffectEvent>(this);
+    dispatcher_.sink<game::defs::EffectEvent>().connect<&EffectSystem::onEffectEvent>(this);
 }
 
 EffectSystem::~EffectSystem()
@@ -20,6 +21,11 @@ EffectSystem::~EffectSystem()
 void EffectSystem::onEnemyDeadEffectEvent(const game::defs::EnemyDeadEffectEvent &event)
 {
     entity_factory_.createEnemyDeadEffect(event.class_id_, event.position_, event.is_flipped_);
+}
+
+void EffectSystem::onEffectEvent(const game::defs::EffectEvent &event)
+{
+    entity_factory_.createEffect(event.name_id_, event.position_, event.is_flipped_);
 }
 
 }   // namespace game::system

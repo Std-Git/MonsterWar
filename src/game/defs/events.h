@@ -41,6 +41,14 @@ struct EnemyDeadEffectEvent
     bool is_flipped_{false};             ///< @brief 是否翻转
 };
 
+/// @brief (通用)特效事件
+struct EffectEvent
+{
+    entt::id_type name_id_{entt::null};  ///< @brief 特效 ID
+    glm::vec2 position_{};               ///< @brief 位置
+    bool is_flipped_{false};             ///< @brief 是否翻转
+};
+
 /// @brief (创建)准备单位事件
 struct PrepUnitEvent
 {
@@ -57,6 +65,24 @@ struct RemoveUIPortraitEvent
 
 /// @brief 移除玩家单位事件
 struct RemovePlayerUnitEvent
+{
+    entt::entity entity_{entt::null};     ///< @brief 单位实体
+};
+
+/// @brief 技能准备就绪事件
+struct SkillReadyEvent
+{
+    entt::entity entity_{entt::null};     ///< @brief 单位实体
+};
+
+/// @brief 技能激活事件
+struct SkillActiveEvent
+{
+    entt::entity entity_{entt::null};     ///< @brief 单位实体
+};
+
+/// @brief 技能持续结束事件
+struct SkillDurationEndEvent
 {
     entt::entity entity_{entt::null};     ///< @brief 单位实体
 };

@@ -21,5 +21,6 @@ class GameRuleSystem;
 class PlaceUnitSystem;
 class RenderRangeSystem;
 class SelectionSystem;
+class SkillSystem;
 
 }   // namespace game::system

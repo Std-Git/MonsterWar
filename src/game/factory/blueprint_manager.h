@@ -26,6 +26,8 @@ private:
     std::unordered_map<entt::id_type, data::PlayerClassBlueprint> player_class_blueprints_; ///< @brief 玩家职业蓝图
     std::unordered_map<entt::id_type, data::EnemyClassBlueprint> enemy_class_blueprints_;   ///< @brief 敌人类型蓝图
     std::unordered_map<entt::id_type, data::ProjectileBlueprint> projectile_blueprints_;    ///< @brief 投射物蓝图
+    std::unordered_map<entt::id_type, data::EffectBlueprint> effect_blueprints_;            ///< @brief 特效蓝图
+    std::unordered_map<entt::id_type, data::SkillBlueprint> skill_blueprints_;              ///< @brief 技能蓝图
     // TODO:未来添加其他蓝图容器
 
 public:
@@ -34,11 +36,15 @@ public:
     [[nodiscard]] bool loadPlayerClassBlueprints(std::string_view player_json_path);        ///< @brief 加载玩家职业蓝图，返回是否成功
     [[nodiscard]] bool loadEnemyClassBlueprints(std::string_view enemy_json_path);          ///< @brief 加载敌人类型蓝图，返回是否成功
     [[nodiscard]] bool loadProjectileBlueprints(std::string_view projectile_json_path);     ///< @brief 加载投射物蓝图，返回是否成功
+    [[nodiscard]] bool loadEffectBlueprints(std::string_view effect_json_path);             ///< @brief 加载特效蓝图，返回是否成功
+    [[nodiscard]] bool loadSkillBlueprints(std::string_view skill_json_path);               ///< @brief 加载技能蓝图，返回是否成功
     //TODO: 未来添加其他蓝图加载函数
     
     const data::PlayerClassBlueprint& getPlayerClassBlueprint(entt::id_type id) const;      ///< @brief 获取指定 ID 的玩家职业蓝图
     const data::EnemyClassBlueprint& getEnemyClassBlueprint(entt::id_type id) const;        ///< @brief 获取指定 ID 的敌人类型蓝图
     const data::ProjectileBlueprint& getProjectileBlueprint(entt::id_type id) const;        ///< @brief 获取指定 ID 的投射物蓝图
+    const data::EffectBlueprint& getEffectBlueprint(entt::id_type id) const;                ///< @brief 获取指定 ID 的特效蓝图
+    const data::SkillBlueprint& getSkillBlueprint(entt::id_type id) const;                  ///< @brief 获取指定 ID 的技能蓝图
     //TODO: 未来添加其他蓝图获取函数
 
 private:
@@ -47,10 +53,12 @@ private:
     data::StatsBlueprint parseStats(const nlohmann::json& json);
     data::SpriteBlueprint parseSprite(const nlohmann::json& json);
     std::unordered_map<entt::id_type, data::AnimationBlueprint> parseAnimationsMap(const nlohmann::json& json);
+    data::AnimationBlueprint parseOneAnimation(const nlohmann::json& json);
     data::SoundBlueprint parseSound(const nlohmann::json& json);
     data::PlayerBlueprint parsePlayer(const nlohmann::json& json);
     data::EnemyBlueprint parseEnemy(const nlohmann::json& json);
     data::DisplayInfoBlueprint parseDisplayInfo(const nlohmann::json& json);
+    data::BuffBlueprint parseBuff(const nlohmann::json& json);
 };
 
 }   // namespace game::factory

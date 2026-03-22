@@ -175,6 +175,9 @@
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\set_target_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\skill_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\timer_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -15,6 +15,8 @@
 #include <glm/common.hpp>
 #include <spdlog/spdlog.h>
 
+using namespace entt::literals;
+
 namespace game::system
 {
 CombatResolveSystem::CombatResolveSystem(entt::registry& registry, entt::dispatcher& dispatcher)
@@ -118,7 +120,9 @@ void CombatResolveSystem::onHealEvent(const game::defs::HealEvent &event)
         target_stats.hp_ = target_stats.max_hp_;
         registry_.remove<game::defs::InjuredTag>(event.target_);
     }
-    // TODO:添加治疗特效
+    // 添加治疗特效
+    const auto& transform = registry_.get<engine::component::TransformComponent>(event.target_);
+    dispatcher_.enqueue(game::defs::EffectEvent{"heal"_hs, transform.position_, false});
 }
 
 // -- 辅助函数 -- 

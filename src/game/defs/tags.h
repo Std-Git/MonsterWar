@@ -29,4 +29,8 @@ struct RangedPlaceTag {};       ///< @brief 远程区域标签
 
 struct ShowRangeTag {};       ///< @brief 显示攻击范围标签
 
+struct SkillReadyTag {};       ///< @brief 技能准备标签，用于标记实体技能准备完毕 (冷却完毕)
+struct SkillActiveTag {};      ///< @brief 技能激活标签，用于标记实体技能激活 (技能释放中)
+struct PassiveSkillTag {};     ///< @brief 被动技能标签，用于标记实体被动技能
+
 }   // namespace game::defs

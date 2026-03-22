@@ -72,6 +72,23 @@ public:
      * @return 敌人死亡特效实体
      */
     entt::entity createEnemyDeadEffect(entt::id_type class_id, const glm::vec2& position, const bool is_flipped = false);
+
+    /**
+     * @brief 创建(通用)特效实体，数据来自特效蓝图
+     * @param effect_id 特效 ID
+     * @param position 特效位置
+     * @param is_flipped 是否翻转
+     * @return 特效实体
+     */
+    entt::entity createEffect(entt::id_type effect_id, const glm::vec2& position, const bool is_flipped = false);
+
+    /**
+     * @brief 创建技能显示实体
+     * @param effect_id 技能id
+     * @param position 技能显示位置
+     * @return 技能显示实体
+     */
+    entt::entity createSkillDisplay(entt::id_type effect_id, const glm::vec2& position);
     // TODO: 未来添加实体的创建函数
 
 private:
@@ -92,6 +109,7 @@ private:
     void addEnemyComponent(entt::entity entity, const data::EnemyBlueprint& enemy, int target_waypoint_id);
     void addAudioComponent(entt::entity entity, const data::SoundBlueprint& sounds);
     void addProjectileIDComponent(entt::entity entity, entt::id_type id);
+    void addSkillComponent(entt::entity entity, entt::id_type skill_id);
     // TODO:未来添加其他组件创建函数
 };
 
