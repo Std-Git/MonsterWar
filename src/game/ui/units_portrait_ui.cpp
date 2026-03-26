@@ -11,6 +11,7 @@
 #include "../../engine/ui/ui_button.h"
 #include "../../engine/ui/ui_label.h"
 #include "../../engine/ui/ui_manager.h"
+#include "../../engine/input/input_manager.h"
 #include <entt/core/hashed_string.hpp>
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
@@ -37,9 +38,18 @@ UnitsPortraitUI::~UnitsPortraitUI()
     context_.getDispatcher().sink<game::defs::RemoveUIPortraitEvent>().disconnect<&UnitsPortraitUI::onRemoveUIPortraitEvent>(this);
 }
 
-void UnitsPortraitUI::update(float)
+void UnitsPortraitUI::update(float delta_time)
 {
     updatePortraitCover();
+    // 检测是否按下移动肖像面板的按键
+    auto& input_manager = context_.getInputManager();
+    if (input_manager.isActionDown("move_left"_hs))
+    {
+        movePortraitPanelLeft(delta_time);
+    } else if (input_manager.isActionDown("move_right"_hs))
+    {
+        movePortraitPanelRight(delta_time);
+    }
 }
 
 void UnitsPortraitUI::updatePortraitCover()
@@ -95,7 +105,7 @@ void UnitsPortraitUI::createUnitsPortraitUI()
         auto frame = ui_config->getPortraitFrame(unit_data.rarity_);
         auto icon = ui_config->getIcon(unit_data.class_id_);
         auto cost = blueprint_manager->getPlayerClassBlueprint(unit_data.class_id_).player_.cost_;
-        cost = static_cast<int>(std::round(engine::utils::statModify(cost, 1, unit_data.rarity_))); // 只有稀有度对 cost 有影响
+        cost = static_cast<int>(std::round(engine::utils::statModify(static_cast<float>(cost), 1, unit_data.rarity_))); // 只有稀有度对 cost 有影响
 
         // 创建每个肖像的frame_panel
         auto frame_pos = glm::vec2(padding + index * (frame_size.x + padding), padding);
@@ -110,11 +120,15 @@ void UnitsPortraitUI::createUnitsPortraitUI()
                                                                      frame,
                                                                      glm::vec2(0.0f, 0.0f),
                                                                      frame_size,
-                                                                     [this, name_id, &unit_data, cost]() // 按钮点击回调：发送单位准备事件
-                                                                     {
+                                                                     [this, name_id, &unit_data, cost]() {  // 按钮点击回调：发送单位准备事件
                                                                         context_.getDispatcher().enqueue(game::defs::PrepUnitEvent{name_id, unit_data.class_id_, cost});
+                                                                     },
+                                                                     [this, name_id]() {    // 按钮悬停回调：发送单位肖像悬停进入事件
+                                                                        context_.getDispatcher().enqueue(game::defs::UIPortraitHoverEnterEvent{name_id});
+                                                                     },
+                                                                     [this]() {     // 按钮悬停离开回调：发送单位肖像悬停离开事件
+                                                                        context_.getDispatcher().enqueue(game::defs::UIPortraitHoverLeaveEvent{});
                                                                      }
-                                                                     // TODO:悬浮进入和悬浮离开函数
                                                                      ));
         frame_panel->addChild(std::make_unique<engine::ui::UIImage>(icon, glm::vec2(0.0f, 0.0f), frame_size / 2.0f));
         frame_panel->addChild(std::make_unique<engine::ui::UILabel>(context_.getTextRenderer(),
@@ -160,6 +174,30 @@ void UnitsPortraitUI::arrangeUnitsPortraitUI()
     // 更新panel 的size
     anchor_panel_->setSize(glm::vec2(padding + anchor_panel_->getChildren().size() * (frame_size.x + padding),
                                     frame_size.y + 2 * padding));
+}
+
+void UnitsPortraitUI::movePortraitPanelRight(float delta_time)
+{
+    // 获取panel的位置
+    auto panel_position = anchor_panel_->getPosition();
+    // 如果位置为负就向右移，最多到达0
+    panel_position.x = glm::min(0.0f, panel_position.x + delta_time * 400.0f);
+    anchor_panel_->setPosition(panel_position);
+}
+
+void UnitsPortraitUI::movePortraitPanelLeft(float delta_time)
+{
+    // 获取窗口大小
+    const auto &window_size = context_.getGameState().getLogicalSize();
+    // 获取panel的位置
+    auto panel_position = anchor_panel_->getPosition();
+    const auto& panel_size = anchor_panel_->getSize();
+    // 如果面板宽度小于窗口宽度，则不移动
+    if (panel_size.x < window_size.x) return;
+
+    // 如果右端超出屏幕就向左移动，右端最多到达窗口宽度
+    panel_position.x = glm::max(window_size.x - panel_size.x, panel_position.x - delta_time * 400.0f);
+    anchor_panel_->setPosition(panel_position);
 }
 
 void UnitsPortraitUI::onRemoveUIPortraitEvent(const game::defs::RemoveUIPortraitEvent &event)

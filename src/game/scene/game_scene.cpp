@@ -45,8 +45,16 @@ using namespace entt::literals;
 
 namespace game::scene
 {
-    GameScene::GameScene(engine::core::Context &context)
-        : engine::scene::Scene("GameScene", context)
+    GameScene::GameScene(engine::core::Context &context,
+                         std::shared_ptr<game::factory::BlueprintManager> blueprint_manager,
+                         std::shared_ptr<game::data::SessionData> session_data,
+                         std::shared_ptr<game::data::UIConfig> ui_config,
+                         std::shared_ptr<game::data::LevelConfig> level_config)
+        : engine::scene::Scene("GameScene", context),
+          blueprint_manager_(blueprint_manager),
+          session_data_(session_data),
+          ui_config_(ui_config),
+          level_config_(level_config)
     {
         spdlog::info("GameScene 构造完成");
     }
@@ -69,6 +77,7 @@ namespace game::scene
         if (!initSystems())             { spdlog::error("初始化系统失败"); return; }
         if (!initEnemySpawner())        { spdlog::error("初始化敌人生成器失败"); return; }
 
+        context_.getGameState().setState(engine::core::State::Playing);
         Scene::init();
     }
 
@@ -78,6 +87,17 @@ namespace game::scene
 
         // 每一帧最先清理死亡实体(要在 dispatcher 处理完事件后再清理，因此放在下一帧开头)
         remove_dead_system_->update(registry_);
+
+        // 暂停状态下，有些功能依然正常运行
+        if (context_.getGameState().isPaused())
+        {
+            place_unit_system_->update(delta_time);
+            ysort_system_->update(registry_);
+            selection_system_->update();
+            units_portrait_ui_->update(delta_time);
+            Scene::update(delta_time);
+            return;
+        }
 
         // 注意系统更新的顺序
         timer_system_->update(delta_time);
@@ -197,7 +217,10 @@ namespace game::scene
 
     bool GameScene::initEventConnections()
     {
-        // auto& dispatcher = context_.getDispatcher();
+        auto &dispatcher = context_.getDispatcher();
+        dispatcher.sink<game::defs::RestartEvent>().connect<&GameScene::onRestart>(this);
+        dispatcher.sink<game::defs::BackToTitleEvent>().connect<&GameScene::onBackToTitle>(this);
+        dispatcher.sink<game::defs::SaveEvent>().connect<&GameScene::onSave>(this);
         return true;
     }
 
@@ -311,6 +334,35 @@ namespace game::scene
             context_.getDispatcher().enqueue(game::defs::RemovePlayerUnitEvent{entity});
         }
         return true;
+    }
+
+    void GameScene::onRestart()
+    {
+        spdlog::info("重新开始关卡");
+        requestReplaceScene(std::make_unique<game::scene::GameScene>(
+            context_,
+            blueprint_manager_,
+            session_data_,
+            ui_config_,
+            level_config_));
+    }
+
+    void GameScene::onBackToTitle()
+    {
+        spdlog::info("返回标题");
+        // TODO:返回标题
+    }
+
+    void GameScene::onSave()
+    {
+        spdlog::info("保存游戏");
+        // TODO:保存游戏
+    }
+
+    void GameScene::onLevelClear()
+    {
+        spdlog::info("关卡通关");
+        // TODO:关卡通过
     }
 
 } // namespace game::scene

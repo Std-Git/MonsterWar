@@ -49,7 +49,7 @@ PlaceUnitSystem::~PlaceUnitSystem()
     context_.getDispatcher().disconnect(this);
 }
 
-void PlaceUnitSystem::update(float delta_time)
+void PlaceUnitSystem::update(float)
 {
     // 目标放置位置先设置为null,只有找到了有效位只才会被赋值
     target_place_entity_ = entt::null;

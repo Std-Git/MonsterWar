@@ -19,7 +19,7 @@ public:
     [[nodiscard]] game::data::LevelData& getLevelData(int level_number) { return level_data_[level_number - 1]; }
 
     [[nodiscard]] game::data::Waves &getWavesData(int level_number) { return level_data_[level_number - 1].waves_data_; }
-    [[nodiscard]] int getLevelCount() const { return level_data_.size(); }
+    [[nodiscard]] int getLevelCount() const { return static_cast<int>(level_data_.size()); }
     [[nodiscard]] std::string_view getMapPath(int level_number) const { return level_data_[level_number - 1].map_path_; }
     [[nodiscard]] int getTotalEnemyCount(int level_number) const { return level_data_[level_number - 1].total_enemy_count_; }
     [[nodiscard]] bool isFinalLevel(int level_number) const { return level_number == getLevelCount(); }

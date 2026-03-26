@@ -12,13 +12,15 @@ void RenderSystem::update(entt::registry &registry, render::Renderer &renderer, 
 {
     //spdlog::trace("RenderSystem::update");
 
-    // 对 RenderComponent 进行排序(需要自定义 RenderComponent 的比较运算符)
+    // 对 RenderComponent storage 排序，比较规则由 RenderComponent::operator< 定义。
     registry.sort<component::RenderComponent>([](const auto& lhs, const auto& rhs) {
         return lhs < rhs;
     });
 
-    // 执行渲染，注意排序组件 RenderComponent 必须放在最前面
+    // EnTT 的 view 默认会选择元素最少的 storage 驱动迭代。
+    // 显式指定使用 RenderComponent，才能保证遍历顺序与上面的排序一致。
     auto view = registry.view<component::RenderComponent, component::TransformComponent, component::SpriteComponent>();
+    view.use<component::RenderComponent>();
     for (auto entity : view)
     {
         const auto& render = view.get<component::RenderComponent>(entity);

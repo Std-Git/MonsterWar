@@ -230,7 +230,7 @@ void LevelLoader::loadTileLayer(const nlohmann::json &layer_json)
             continue;
         }
         // 使用生成器创建瓦片实体
-        auto tile_entity = entity_builder_->configure(index, &tile_info.value())->build()->getEntityID();
+        auto tile_entity = entity_builder_->configure(static_cast<int>(index), &tile_info.value())->build()->getEntityID();
         // 添加到 vector 中
         tiles.push_back(tile_entity);
         index++;

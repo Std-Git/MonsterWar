@@ -26,6 +26,7 @@ namespace engine::audio
 namespace engine::core
 {
     class GameState;
+    class Time;
 }
 
 namespace engine::core
@@ -48,6 +49,7 @@ namespace engine::core
         engine::resource::ResourceManager &resource_manager_; ///< @brief 资源管理器
         engine::audio::AudioPlayer &audio_player_;            ///< @brief 音频播放器
         engine::core::GameState &game_state_;                 ///< @brief 游戏状态
+        engine::core::Time &time_;                            ///< @brief 时间
 
     public:
         /**
@@ -59,6 +61,7 @@ namespace engine::core
          * @param resource_manager 对 ResourceManager 实例的引用
          * @param audio_player 对 AudioPlayer 实例的引用
          * @param game_state 对 GameState 实例的引用
+         * @param time 对 Time 实例的引用。
          */
         Context(entt::dispatcher &dispatcher,
                 engine::input::InputManager &input_manager,
@@ -67,7 +70,8 @@ namespace engine::core
                 engine::render::TextRenderer &text_renderer,
                 engine::resource::ResourceManager &resource_manager,
                 engine::audio::AudioPlayer &audio_player,
-                engine::core::GameState &game_state);
+                engine::core::GameState &game_state,
+                engine::core::Time &time);
 
         // 禁止拷贝和移动，Context 对象通常是唯一的或按需创建/传递
         Context(const Context &) = delete;
@@ -84,6 +88,7 @@ namespace engine::core
         engine::resource::ResourceManager &getResourceManager() const { return resource_manager_; }; ///< @brief 获取资源管理器
         engine::audio::AudioPlayer &getAudioPlayer() const { return audio_player_; };                ///< @brief 获取音频播放器
         engine::core::GameState &getGameState() const { return game_state_; };                       ///< @brief 获取游戏状态
+        engine::core::Time& getTime() const { return time_; }                                        ///< @brief 获取时间
     };
 
 } // namespace engine::core

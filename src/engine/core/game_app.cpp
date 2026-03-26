@@ -366,7 +366,8 @@ namespace engine::core
                                                                *text_renderer_,
                                                                *resource_manager_,
                                                                *audio_player_,
-                                                               *game_state_);
+                                                               *game_state_,
+                                                               *time_);
         }
         catch (const std::exception &e)
         {

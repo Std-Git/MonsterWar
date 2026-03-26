@@ -1,4 +1,5 @@
 #include "context.h"
+#include "time.h"
 #include "game_state.h"
 #include "../input/input_manager.h"
 #include "../render/renderer.h"
@@ -19,7 +20,8 @@ namespace engine::core
                    engine::render::TextRenderer &text_renderer,
                    engine::resource::ResourceManager &resource_manager,
                    engine::audio::AudioPlayer &audio_player,
-                   engine::core::GameState &game_state)
+                   engine::core::GameState &game_state,
+                   engine::core::Time &time)
       : dispatcher_(dispatcher),
         input_manager_(input_manager),
         renderer_(renderer),
@@ -27,9 +29,10 @@ namespace engine::core
         text_renderer_(text_renderer),
         resource_manager_(resource_manager),
         audio_player_(audio_player),
-        game_state_(game_state)
+        game_state_(game_state),
+        time_(time)
   {
-    spdlog::trace("Context 已创建并初始化, 包含, 事件分发器,输入管理器, 渲染器, 相机, 文本渲染器, 资源管理器, 音频播放器和游戏状态");
+    spdlog::trace("Context 已创建并初始化"); // 包含, 事件分发器,输入管理器, 渲染器, 相机, 文本渲染器, 资源管理器, 音频播放器, 游戏状态和时间
   }
 
 } // namespace engine::core

@@ -55,8 +55,9 @@ public:
     int addOneLevel() { return ++level_number_; }                                           ///< @brief 增加关卡号(进入下一关)
     void setLevelClear(bool clear) { level_clear_ = clear; }                                ///< @brief 设置关卡是否通关
 
-    // --- getters --- 
-    [[nodiscard]] std::unordered_map<entt::id_type, UnitData>& getUnitMap() { return unit_map_; }
+    // --- getters ---
+    [[nodiscard]] std::unordered_map<entt::id_type, UnitData> &getUnitMap() { return unit_map_; }
+    [[nodiscard]] UnitData &getUnitData(entt::id_type name_id) { return unit_map_[name_id]; }
     [[nodiscard]] int getLevelNumber() const { return level_number_; }
     [[nodiscard]] int getPoint() const { return point_; }
     [[nodiscard]] bool isLevelClear() const { return level_clear_; }
