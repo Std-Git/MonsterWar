@@ -86,6 +86,7 @@ private:
     int level_number_{1};
     entt::entity selected_unit_{entt::null};    // 游戏中鼠标选中的单位
     entt::entity hovered_unit_{entt::null};     // 游戏中鼠标悬停的单位
+    bool show_save_panel_{false};               // 是否显示保存面板
 
 public:
     /**
@@ -121,9 +122,6 @@ private:
     [[nodiscard]] bool initSystems();
     [[nodiscard]] bool initEnemySpawner();
     [[nodiscard]] bool initUnitsPortraitUI();
-
-    // 测试函数
-    bool onClearAllPlayers();
 
     // 场景相关函数
     void onRestart();

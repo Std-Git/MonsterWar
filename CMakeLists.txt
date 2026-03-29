@@ -374,6 +374,7 @@ src/game/system/set_target_system.cpp
 src/game/system/skill_system.cpp
 src/game/system/timer_system.cpp
 src/game/scene/game_scene.cpp
+src/game/scene/title_scene.cpp
 src/game/ui/units_portrait_ui.cpp
 )
 

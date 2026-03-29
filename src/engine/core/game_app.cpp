@@ -406,13 +406,13 @@ namespace engine::core
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // 启用游戏手柄控制
 
         // 设置 ImGui 主题
-        ImGui::StyleColorsDark();
+        //ImGui::StyleColorsDark();
         // ImGui::StyleColorsLight();
-        // ImGui::StyleColorsClassic();
+        ImGui::StyleColorsClassic();
 
         // 设置缩放
-        float main_scale = SDL_GetDisplayContentScale(SDL_GetPrimaryDisplay()); // 与系统绑定
-        // float main_scale = 1.0f; // 或者直接设置更加稳定
+        //float main_scale = SDL_GetDisplayContentScale(SDL_GetPrimaryDisplay()); // 与系统绑定
+        float main_scale = 1.0f; // 或者直接设置更加稳定
         ImGuiStyle& style = ImGui::GetStyle();
         style.ScaleAllSizes(main_scale);    // 固定样式缩放比例
         style.FontScaleDpi = main_scale;    // 设置初始字体缩放比例

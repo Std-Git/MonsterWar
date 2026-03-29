@@ -497,6 +497,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\skill_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\system\timer_system.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\scene\game_scene.cpp" />
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\scene\title_scene.cpp" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\ui\units_portrait_ui.cpp" />
     <ResourceCompile Include="D:\CMakeProgram\MonsterWar\resources.rc" />
     <ClCompile Include="D:\CMakeProgram\MonsterWar\external\imgui\imgui.cpp" />
