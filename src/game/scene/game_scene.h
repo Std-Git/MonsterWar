@@ -1,4 +1,5 @@
 #pragma once
+#include "../defs/events.h"
 #include "../data/waypoint_node.h"
 #include "../data/session_data.h"
 #include "../data/ui_config.h"
@@ -128,6 +129,7 @@ private:
     void onBackToTitle();
     void onSave();
     void onLevelClear();
+    void onGameEndEvent(const game::defs::GameEndEvent &event);
 };
 
 } // namespace game::scene

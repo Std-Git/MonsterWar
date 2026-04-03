@@ -18,6 +18,7 @@ enum class State
     Playing,    ///< @brief 正常游戏进行中
     Paused,     ///< @brief 游戏暂停 (通常覆盖菜单界面)
     GameOver,   ///< @brief 游戏结束界面
+    LevelClear  ///< @brief 关卡过关界面
     // 可以根据需要添加更多状态，如 CutState, SettingMenu 等
 };
 
@@ -60,7 +61,7 @@ public:
     bool isPlaying() const { return current_state_ == State::Playing; }
     bool isPaused() const { return current_state_ == State::Paused; }
     bool isGameOver() const { return current_state_ == State::GameOver; }
-
+    bool isLevelClear() const { return current_state_ == State::LevelClear; }
 };
 
 }   // namespace engine::core

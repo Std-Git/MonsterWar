@@ -46,17 +46,17 @@
                 "enemy_types": {
                     "slime": 8,
                     "wolf": 2,
-                    "dark_witch": 1
+                    "goblin": 1
                 },
                 "next_wave_interval": 20.0,
                 "spawn_interval": 0.8
             },
             {
                 "enemy_types": {
-                    "slime": 5,
-                    "wolf": 3,
+                    "slime": 6,
+                    "wolf": 2,
                     "goblin": 2,
-                    "dark_witch": 2
+                    "dark_witch": 1
                 },
                 "next_wave_interval": 20.0,
                 "spawn_interval": 0.5
@@ -65,7 +65,7 @@
                 "enemy_types": {
                     "slime": 2,
                     "wolf": 3,
-                    "goblin": 5,
+                    "goblin": 3,
                     "dark_witch": 2
                 },
                 "next_wave_interval": 20.0,

@@ -406,9 +406,9 @@ namespace engine::core
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // 启用游戏手柄控制
 
         // 设置 ImGui 主题
-        //ImGui::StyleColorsDark();
+        ImGui::StyleColorsDark();
         // ImGui::StyleColorsLight();
-        ImGui::StyleColorsClassic();
+        // ImGui::StyleColorsClassic();
 
         // 设置缩放
         //float main_scale = SDL_GetDisplayContentScale(SDL_GetPrimaryDisplay()); // 与系统绑定

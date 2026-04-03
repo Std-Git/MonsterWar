@@ -187,6 +187,12 @@
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\scene\title_scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\scene\end_scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\scene\level_clear_scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="D:\CMakeProgram\MonsterWar\src\game\ui\units_portrait_ui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
