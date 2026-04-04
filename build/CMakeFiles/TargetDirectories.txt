@@ -2,3 +2,14 @@ D:/CMakeProgram/MonsterWar/build/CMakeFiles/MonsterWar-Windows.dir
 D:/CMakeProgram/MonsterWar/build/CMakeFiles/PACKAGE.dir
 D:/CMakeProgram/MonsterWar/build/CMakeFiles/ALL_BUILD.dir
 D:/CMakeProgram/MonsterWar/build/CMakeFiles/ZERO_CHECK.dir
+D:/CMakeProgram/MonsterWar/build/_deps/glm-build/CMakeFiles/PACKAGE.dir
+D:/CMakeProgram/MonsterWar/build/_deps/glm-build/CMakeFiles/ALL_BUILD.dir
+D:/CMakeProgram/MonsterWar/build/_deps/glm-build/glm/CMakeFiles/glm.dir
+D:/CMakeProgram/MonsterWar/build/_deps/glm-build/glm/CMakeFiles/PACKAGE.dir
+D:/CMakeProgram/MonsterWar/build/_deps/json-build/CMakeFiles/PACKAGE.dir
+D:/CMakeProgram/MonsterWar/build/_deps/json-build/CMakeFiles/ALL_BUILD.dir
+D:/CMakeProgram/MonsterWar/build/_deps/spdlog-build/CMakeFiles/spdlog.dir
+D:/CMakeProgram/MonsterWar/build/_deps/spdlog-build/CMakeFiles/PACKAGE.dir
+D:/CMakeProgram/MonsterWar/build/_deps/spdlog-build/CMakeFiles/ALL_BUILD.dir
+D:/CMakeProgram/MonsterWar/build/_deps/EnTT-build/CMakeFiles/PACKAGE.dir
+D:/CMakeProgram/MonsterWar/build/_deps/EnTT-build/CMakeFiles/ALL_BUILD.dir

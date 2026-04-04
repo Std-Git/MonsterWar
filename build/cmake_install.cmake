@@ -32,6 +32,15 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for each subdirectory.
+  include("D:/CMakeProgram/MonsterWar/build/_deps/glm-build/cmake_install.cmake")
+  include("D:/CMakeProgram/MonsterWar/build/_deps/json-build/cmake_install.cmake")
+  include("D:/CMakeProgram/MonsterWar/build/_deps/spdlog-build/cmake_install.cmake")
+  include("D:/CMakeProgram/MonsterWar/build/_deps/EnTT-build/cmake_install.cmake")
+
+endif()
+
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)

@@ -30,6 +30,7 @@ void ResourceManager::clear()
 {
     font_manager_->clearFonts();
     audio_manager_->clearSounds();
+    audio_manager_->clearMusic();
     texture_manager_->clearTextures();
     spdlog::trace("ResourcesManager 中的资源通过 clear() 清理成功。");
 }
@@ -125,22 +126,22 @@ void ResourceManager::clearTextures()
 }
 
 // --- 音频接口实现 ---
-Mix_Chunk *ResourceManager::loadSound(entt::id_type id, std::string_view file_path)
+MIX_Audio *ResourceManager::loadSound(entt::id_type id, std::string_view file_path)
 {
     return audio_manager_->loadSound(id, file_path);
 }
 
-Mix_Chunk* ResourceManager::loadSound(entt::hashed_string str_hs)
+MIX_Audio* ResourceManager::loadSound(entt::hashed_string str_hs)
 {
     return audio_manager_->loadSound(str_hs);
 }
 
-Mix_Chunk *ResourceManager::getSound(entt::id_type id, std::string_view file_path)
+MIX_Audio *ResourceManager::getSound(entt::id_type id, std::string_view file_path)
 {
     return audio_manager_->getSound(id, file_path);
 }
 
-Mix_Chunk* ResourceManager::getSound(entt::hashed_string str_hs)
+MIX_Audio* ResourceManager::getSound(entt::hashed_string str_hs)
 {
     return audio_manager_->getSound(str_hs);
 }
@@ -155,22 +156,22 @@ void ResourceManager::clearSounds()
     audio_manager_->clearSounds();
 }
 
-Mix_Music *ResourceManager::loadMusic(entt::id_type id, std::string_view file_path)
+MIX_Audio *ResourceManager::loadMusic(entt::id_type id, std::string_view file_path)
 {
     return audio_manager_->loadMusic(id, file_path);
 }
 
-Mix_Music* ResourceManager::loadMusic(entt::hashed_string str_hs)
+MIX_Audio* ResourceManager::loadMusic(entt::hashed_string str_hs)
 {
     return audio_manager_->loadMusic(str_hs);
 }
 
-Mix_Music *ResourceManager::getMusic(entt::id_type id, std::string_view file_path)
+MIX_Audio *ResourceManager::getMusic(entt::id_type id, std::string_view file_path)
 {
     return audio_manager_->getMusic(id, file_path);
 }
 
-Mix_Music* ResourceManager::getMusic(entt::hashed_string str_hs)
+MIX_Audio* ResourceManager::getMusic(entt::hashed_string str_hs)
 {
     return audio_manager_->getMusic(str_hs);
 }
@@ -183,6 +184,11 @@ void ResourceManager::unloadMusic(entt::id_type id)
 void ResourceManager::clearMusic()
 {
     audio_manager_->clearMusic();
+}
+
+MIX_Mixer *ResourceManager::getMixer()
+{
+    return audio_manager_->getMixer();
 }
 
 // --- 字体接口实现 ---

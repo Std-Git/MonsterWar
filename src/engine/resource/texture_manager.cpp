@@ -30,17 +30,18 @@ SDL_Texture *TextureManager::loadTexture(entt::id_type id, std::string_view file
     // 如果没有则尝试加载纹理
     SDL_Texture *raw_texture = IMG_LoadTexture(renderer_, file_path.data()); // 通过.data()获取const char*的指针
 
-    // 载入纹理时，设置纹理缩放模式为最邻近插值(必不可少，否则 TileLayer 渲染中会出现边缘空隙/模糊)
-    if (!SDL_SetTextureScaleMode(raw_texture, SDL_SCALEMODE_NEAREST))
-    {
-        spdlog::warn("无法设置纹理缩放模式为最临近插值");
-    }
-
     if (!raw_texture)
     {
         spdlog::error("加载纹理失败: {} {}", file_path.data(), SDL_GetError());
         return nullptr;
     }
+
+    // 载入纹理时，设置纹理缩放模式为最邻近插值(必不可少，否则 TileLayer 渲染中会出现边缘空隙/模糊)
+    if (!SDL_SetTextureScaleMode(raw_texture, SDL_SCALEMODE_NEAREST))
+    {
+        spdlog::warn("无法为纹理 '{}' 设置最邻近缩放：{}", file_path.data(), SDL_GetError());
+    }
+
     // 使用带有自定义删除器的 unique_ptr 存储加载的纹理
     textures_.emplace(id, std::unique_ptr<SDL_Texture, SDLTextureDeleter>(raw_texture));
     spdlog::debug("成功加载并缓存纹理：{}", file_path.data());

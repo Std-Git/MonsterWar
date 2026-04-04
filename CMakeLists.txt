@@ -230,8 +230,8 @@ find_or_fetch_dependency(
     SDL3
     SDL3
     "https://github.com/libsdl-org/SDL.git"
-    "release-3.2.24"
-    "external/SDL-release-3.2.24"
+    "release-3.4.2"
+    "external/SDL-release-3.4.2"
     AUTO  # 使用全局BUILD_SHARED_LIBS设置
 )
 
@@ -245,8 +245,8 @@ find_or_fetch_dependency(
     SDL3_image
     SDL3_image
     "https://github.com/libsdl-org/SDL_image.git"
-    "release-3.2.4"
-    "external/SDL_image-release-3.2.4"
+    "release-3.4.0"
+    "external/SDL_image-release-3.4.0"
     AUTO  # 使用全局BUILD_SHARED_LIBS设置
 )
 
@@ -255,8 +255,8 @@ find_or_fetch_dependency(
     SDL3_mixer
     SDL3_mixer
     "https://github.com/libsdl-org/SDL_mixer.git"
-    "30c1301055a35ee87b8679279b6fc88e10d28fa3"
-    "external/SDL_mixer-30c1301"
+    "release-3.2.0"
+    "external/SDL_mixer-release-3.2.0"
     AUTO  # 使用全局BUILD_SHARED_LIBS设置
 )
 
