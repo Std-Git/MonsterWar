@@ -16,6 +16,15 @@ namespace engine::core
     void Time::update()
     {
         frame_start_time_ = SDL_GetTicksNS(); // 计入进入 update 的时间
+
+        // 如果游戏暂停，不更新delta_time
+        if (is_paused_)
+        {
+            last_time_ = frame_start_time_;
+            delta_time_ = 0.0f;
+            return;
+        }
+
         auto current_delta_time = static_cast<double>(frame_start_time_ - last_time_) / 1000000000.0;
         if (target_frame_time_ > 0.0) // 如果设置了目标帧率，则限制帧率，否则 delta_time_ = current_delta_time
         {
@@ -38,8 +47,9 @@ namespace engine::core
             Uint64 ns_to_wait = static_cast<Uint64>(time_to_wait_ * 1000000000.0);
             SDL_DelayNS(ns_to_wait);
             delta_time_ = static_cast<double>(SDL_GetTicksNS() - last_time_) / 1000000000.0;
-        }    
-        else {    // 否则，直接使用当前帧耗费的时间
+        }
+        else
+        { // 否则，直接使用当前帧耗费的时间
             delta_time_ = static_cast<double>(current_delta_time);
         }
     }
@@ -96,6 +106,24 @@ namespace engine::core
     int Time::getTargetFps() const
     {
         return target_fps_;
+    }
+
+    void Time::pause()
+    {
+        is_paused_ = true;
+        spdlog::info("Time: 正在拖动窗口, 不更新current_delta_time_");
+    }
+
+    void Time::resume()
+    {
+        is_paused_ = false;
+        last_time_ = SDL_GetTicksNS();
+        spdlog::info("Time: 窗口没有被拖动, 恢复更新current_delta_time_");
+    }
+
+    bool Time::getIsPaused() const
+    {
+        return is_paused_;
     }
 
 } // namespace engine::core

@@ -28,7 +28,7 @@ class DebugUISystem
     engine::core::Context &context_;
 
     entt::id_type hovered_portrait_{entt::null};    ///< @brief 悬浮肖像的角色名称id
-    bool show_debug_ui_{false};                     ///< @brief 是否显示调试UI
+    bool show_debug_ui_{true};                      ///< @brief 是否显示调试UI
 
 public:
     DebugUISystem(entt::registry &registry, engine::core::Context &context);

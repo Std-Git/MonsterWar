@@ -21,6 +21,9 @@ struct ReplaceSceneEvent // 替换场景事件
     std::unique_ptr<engine::scene::Scene> scene;
 };
 
+struct WindowMovedEvent{};      // 窗口移动事件
+struct WindowExposedEvent{};    // 窗口暴露事件
+
 /// @brief 播放动画事件
 struct PlayAnimationEvent
 {

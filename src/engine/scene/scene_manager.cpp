@@ -1,6 +1,7 @@
 #include "scene_manager.h"
 #include "scene.h"
 #include "../core/context.h"
+#include "../core/time.h"
 #include <spdlog/spdlog.h>
 #include <entt/signal/dispatcher.hpp>
 
@@ -14,6 +15,8 @@ SceneManager::SceneManager(engine::core::Context& context)
     context_.getDispatcher().sink<engine::utils::PopSceneEvent>().connect<&SceneManager::onPopScene>(this);
     context_.getDispatcher().sink<engine::utils::PushSceneEvent>().connect<&SceneManager::onPushScene>(this);
     context_.getDispatcher().sink<engine::utils::ReplaceSceneEvent>().connect<&SceneManager::onReplaceScene>(this);
+    context_.getDispatcher().sink<engine::utils::WindowMovedEvent>().connect<&SceneManager::onWindowMovedEvent>(this);
+    context_.getDispatcher().sink<engine::utils::WindowExposedEvent>().connect<&SceneManager::onWindowExposedEvent>(this);
     spdlog::trace("场景管理器已创建");
 }
 
@@ -35,6 +38,10 @@ Scene* SceneManager::getCurrentScene() const
 void SceneManager::update(float delta_time)
 {
     // 只更新栈顶(当前)场景
+    //if (!is_update_){
+    //    spdlog::warn("窗口未暴露，不更新场景");
+    //    return;
+    //}
     Scene* current_scene = getCurrentScene();
     if (current_scene)
     {
@@ -85,6 +92,20 @@ void SceneManager::onReplaceScene(engine::utils::ReplaceSceneEvent &event)
 {
     pending_action_ = PendingAction::Replace;
     pending_scene_ = std::move(event.scene);
+}
+
+void SceneManager::onWindowMovedEvent(engine::utils::WindowMovedEvent &event)
+{
+    is_update_ = false;
+    context_.getTime().pause();
+    spdlog::warn("正在拖动窗口");
+}
+
+void SceneManager::onWindowExposedEvent(engine::utils::WindowExposedEvent &event)
+{
+    is_update_ = true;
+    context_.getTime().resume();
+    spdlog::warn("窗口已暴露");
 }
 
 // 私有函数

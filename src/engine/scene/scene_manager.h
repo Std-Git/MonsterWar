@@ -29,6 +29,7 @@ private:
     enum class PendingAction { None, Push, Pop, Replace };  ///< @brief 待处理的动作
     PendingAction pending_action_ = PendingAction::None;    ///< @brief 待处理的动作
     std::unique_ptr<Scene> pending_scene_;                  ///< @brief 待处理的场景
+    bool is_update_ = true;                                 ///< @brief 是否需要更新
 
 public:
     explicit SceneManager(engine::core::Context& context);
@@ -54,6 +55,8 @@ private:
     void onPopScene();
     void onPushScene(engine::utils::PushSceneEvent& event);
     void onReplaceScene(engine::utils::ReplaceSceneEvent& event);
+    void onWindowMovedEvent(engine::utils::WindowMovedEvent& event);
+    void onWindowExposedEvent(engine::utils::WindowExposedEvent& event);
 
     void processPendingActions();                                   ///< @brief 处理挂起的场景操作 (每轮更新最后调用)
     // 直接切换场景

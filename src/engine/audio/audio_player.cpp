@@ -164,13 +164,13 @@ void AudioPlayer::setSoundVolume(float volume)
 {
     // 通过混音器整体增益控制音效音量（0.0-1.0）
     MIX_SetMixerGain(mixer_, volume);
-    spdlog::trace("AudioPlayer: 设置音效音量为 {:.2f}。", volume);
+    //spdlog::trace("AudioPlayer: 设置音效音量为 {:.2f}。", volume);
 }
 
 void AudioPlayer::setMusicVolume(float volume)
 {
     MIX_SetTrackGain(music_track_, volume);
-    spdlog::trace("AudioPlayer: 设置音乐音量为 {:.2f}", volume);
+    //spdlog::trace("AudioPlayer: 设置音乐音量为 {:.2f}", volume);
 }
 
 float AudioPlayer::getSoundVolume()

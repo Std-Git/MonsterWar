@@ -21,6 +21,7 @@ private:
     // 帧率限制相关
     int target_fps_ = 0;                ///< @brief 目标帧率 (0 表示无限制)
     double target_frame_time_ = 0.0;    ///< @brief 目标帧时间 (秒)
+    bool is_paused_ = false;            ///< @brief 是否暂停
 
 public:
     Time();
@@ -72,6 +73,10 @@ public:
      * @return int 目标帧率 (0 表示无限制)
      */
     int getTargetFps() const;
+
+    void pause();   // 在拖动游戏窗口时不更新current_delta_time_
+    void resume();  // 恢复更新current_delta_time_
+    bool getIsPaused() const;   // 获取是否暂停
 
 private:
     /**

@@ -18,7 +18,7 @@ namespace game::system
 
 void BlockSystem::update(entt::registry &registry, entt::dispatcher &dispatcher)
 {
-    spdlog::trace("BlockSystem::update");
+    //spdlog::trace("BlockSystem::update");
     //  -- 检查阻挡者是否有效 -- 
     auto view_blocked_by = registry.view<component::BlockedByComponent>();
     for (auto blocked_by_entity : view_blocked_by)

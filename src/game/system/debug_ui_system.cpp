@@ -417,6 +417,8 @@ void DebugUISystem::renderDebugUI()
         spdlog::error("调试工具窗口打开失败");
         return;
     }
+    auto delta_time = context_.getTime().getDeltaTime();
+    ImGui::Text("FPS: %.1f", 1.0f / delta_time);
     auto& game_stats = registry_.ctx().get<game::data::GameStats &>();
     if (ImGui::Button("COST + 10"))
     {
@@ -771,8 +773,8 @@ void DebugUISystem::renderUnitTable()
                                  case 5:
                                  { // COST
                                      // 要考虑相等的情况，因此使用int排序而非float
-                                     const int cost_l = static_cast<int>(std::round(engine::utils::statModify(pcb_l.player_.cost_, 1, lhs->rarity_)));
-                                     const int cost_r = static_cast<int>(std::round(engine::utils::statModify(pcb_r.player_.cost_, 1, rhs->rarity_)));
+                                     const int cost_l = static_cast<int>(std::round(engine::utils::statModify(static_cast<float>(pcb_l.player_.cost_), 1, lhs->rarity_)));
+                                     const int cost_r = static_cast<int>(std::round(engine::utils::statModify(static_cast<float>(pcb_r.player_.cost_), 1, rhs->rarity_)));
                                      delta = (cost_l < cost_r) ? -1 : (cost_l > cost_r ? 1 : 0);
                                      break;
                                  }
@@ -825,8 +827,8 @@ void DebugUISystem::renderUnitTable()
                                  }
                                  case 13:
                                  { // 升级按钮 (和COST排序一致)
-                                     const int cost_l = static_cast<int>(std::round(engine::utils::statModify(pcb_l.player_.cost_, 1, lhs->rarity_)));
-                                     const int cost_r = static_cast<int>(std::round(engine::utils::statModify(pcb_r.player_.cost_, 1, rhs->rarity_)));
+                                     const int cost_l = static_cast<int>(std::round(engine::utils::statModify(static_cast<float>(pcb_l.player_.cost_), 1, lhs->rarity_)));
+                                     const int cost_r = static_cast<int>(std::round(engine::utils::statModify(static_cast<float>(pcb_r.player_.cost_), 1, rhs->rarity_)));
                                      delta = (cost_l < cost_r) ? -1 : (cost_l > cost_r ? 1 : 0);
                                      break;
                                  }
@@ -852,7 +854,7 @@ void DebugUISystem::renderUnitTable()
         const auto hp = engine::utils::statModify(stats.hp_, unit->level_, unit->rarity_);
         const auto atk = engine::utils::statModify(stats.atk_, unit->level_, unit->rarity_);
         const auto def = engine::utils::statModify(stats.def_, unit->level_, unit->rarity_);
-        const auto cost = engine::utils::statModify(player_class_blueprint.player_.cost_, 1, unit->rarity_);
+        const auto cost = engine::utils::statModify(static_cast<float>(player_class_blueprint.player_.cost_), 1, unit->rarity_);
         std::string type = player_class_blueprint.player_.type_ == game::defs::PlayerType::MELEE ? "近战" : 
                            player_class_blueprint.player_.type_ == game::defs::PlayerType::RANGED ?"远程" :
                            player_class_blueprint.player_.type_ == game::defs::PlayerType::MIXED ? "混合" : "未知";

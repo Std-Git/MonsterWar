@@ -111,6 +111,7 @@ namespace engine::core
     {
         // 游戏逻辑更新
         scene_manager_->update(delta_time);
+        // spdlog::debug("delta_time: {}", delta_time);
         // spdlog::info("FPS: {}", 1.0f / delta_time);
     }
 

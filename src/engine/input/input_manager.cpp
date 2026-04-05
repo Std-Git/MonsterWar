@@ -148,6 +148,15 @@ namespace engine::input
             mouse_position_ = {event.button.x, event.button.y};
             SDL_RenderCoordinatesFromWindow(sdl_renderer_, mouse_position_.x, mouse_position_.y, &logical_mouse_position_.x, &logical_mouse_position_.y);
             break;
+        case SDL_EVENT_WINDOW_MOVED:
+        case SDL_EVENT_WINDOW_RESIZED:
+            // 拖拽窗口
+            dispatcher_->enqueue<engine::utils::WindowMovedEvent>();
+            break;
+        case SDL_EVENT_WINDOW_EXPOSED:
+            // 窗口显示
+            dispatcher_->enqueue<engine::utils::WindowExposedEvent>();
+            break;
         case SDL_EVENT_QUIT:
             quit();
             break;
