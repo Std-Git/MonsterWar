@@ -64,7 +64,7 @@ namespace engine::input
          * @param dispatcher 事件分发器
          * @throws std::runtime_error 如果任意指针为 nullptr
          */
-        InputManager(SDL_Renderer *sdl_renderer, const engine::core::Config *config, entt::dispatcher* dispatcher);
+        InputManager(SDL_Renderer *sdl_renderer, const engine::core::Config *config, entt::dispatcher *dispatcher); //, engine::core::Context &context
 
         /**
          * @brief 注册每一个动作的回调函数

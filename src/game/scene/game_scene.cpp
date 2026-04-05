@@ -50,10 +50,10 @@ namespace game::scene
                          std::shared_ptr<game::data::UIConfig> ui_config,
                          std::shared_ptr<game::data::LevelConfig> level_config)
         : engine::scene::Scene("GameScene", context),
-          blueprint_manager_(blueprint_manager),
-          session_data_(session_data),
-          ui_config_(ui_config),
-          level_config_(level_config)
+          blueprint_manager_(std::move(blueprint_manager)),
+          session_data_(std::move(session_data)),
+          ui_config_(std::move(ui_config)),
+          level_config_(std::move(level_config))
     {
         spdlog::info("GameScene 构造完成");
     }
@@ -62,23 +62,23 @@ namespace game::scene
     {
     }
 
-    void GameScene::init()
+    bool GameScene::init()
     {
-        if (!initSessionData())         { spdlog::error("初始化session_data_失败"); return; }
-        if (!initLevelConfig())         { spdlog::error("初始化关卡配置失败"); return; }
-        if (!initUIConfig())            { spdlog::error("初始化UI配置失败"); return; }
-        if (!loadLevel())               { spdlog::error("加载关卡失败"); return; }
-        if (!initEventConnections())    { spdlog::error("初始化事件连接失败"); return; }
-        if (!initInputConnections())    { spdlog::error("初始化输入连接失败"); return; }
-        if (!initEntityFactory())       { spdlog::error("初始化实体工厂失败"); return; }
-        if (!initRegistryContext())     { spdlog::error("初始化注册表上下文失败"); return; }
-        if (!initUnitsPortraitUI())     { spdlog::error("初始化单位肖像UI失败"); return; }
-        if (!initSystems())             { spdlog::error("初始化系统失败"); return; }
-        if (!initEnemySpawner())        { spdlog::error("初始化敌人生成器失败"); return; }
+        if (!initSessionData())         { spdlog::error("初始化session_data_失败"); return false; }
+        if (!initLevelConfig())         { spdlog::error("初始化关卡配置失败"); return false; }
+        if (!initUIConfig())            { spdlog::error("初始化UI配置失败"); return false; }
+        if (!loadLevel())               { spdlog::error("加载关卡失败"); return false; }
+        if (!initEventConnections())    { spdlog::error("初始化事件连接失败"); return false; }
+        if (!initInputConnections())    { spdlog::error("初始化输入连接失败"); return false; }
+        if (!initEntityFactory())       { spdlog::error("初始化实体工厂失败"); return false; }
+        if (!initRegistryContext())     { spdlog::error("初始化注册表上下文失败"); return false; }
+        if (!initUnitsPortraitUI())     { spdlog::error("初始化单位肖像UI失败"); return false; }
+        if (!initSystems())             { spdlog::error("初始化系统失败"); return false; }
+        if (!initEnemySpawner())        { spdlog::error("初始化敌人生成器失败"); return false; }
 
         context_.getGameState().setState(engine::core::State::Playing);
         context_.getAudioPlayer().playMusic("battle_bgm"_hs);
-        Scene::init();
+        return Scene::init();
     }
 
     void GameScene::update(float delta_time)

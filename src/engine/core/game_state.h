@@ -18,14 +18,14 @@ enum class State
     Playing,    ///< @brief 正常游戏进行中
     Paused,     ///< @brief 游戏暂停 (通常覆盖菜单界面)
     GameOver,   ///< @brief 游戏结束界面
-    LevelClear  ///< @brief 关卡过关界面
+    LevelClear, ///< @brief 关卡过关界面
     // 可以根据需要添加更多状态，如 CutState, SettingMenu 等
 };
 
 /**
  * @brief 管理和查询游戏的全局宏观状态
  * 
- * 提供一个中心点来确定游戏档期啊俺处于哪个主要模式
+ * 提供一个中心点来确定游戏当前处于哪个主要模式
  * 以便其他系统 (输入，渲染，更新等) 可以相应的调整其行为
  */
 class GameState final

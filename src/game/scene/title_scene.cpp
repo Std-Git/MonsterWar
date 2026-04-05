@@ -28,30 +28,30 @@ TitleScene::TitleScene(engine::core::Context &context,
     std::shared_ptr<game::data::UIConfig> ui_config, 
     std::shared_ptr<game::data::LevelConfig> level_config)
     : engine::scene::Scene("TitleScene", context),
-    blueprint_manager_(blueprint_manager),
-    session_data_(session_data),
-    ui_config_(ui_config),
-    level_config_(level_config) {}
+    blueprint_manager_(std::move(blueprint_manager)),
+    session_data_(std::move(session_data)),
+    ui_config_(std::move(ui_config)),
+    level_config_(std::move(level_config)) {}
 
 TitleScene::~TitleScene() = default;
 
-void TitleScene::init()
+bool TitleScene::init()
 {
-    if (!initSessionData())             { spdlog::error("初始化session_data_失败"); return; }
-    if (!initLevelConfig())             { spdlog::error("初始化关卡配置失败"); return; }
-    if (!initBlueprintManager())        { spdlog::error("初始化蓝图管理器失败"); return; }
-    if (!initUIConfig())                { spdlog::error("初始化UI配置失败"); return; }
-    if (!loadTitleLevel())              { spdlog::error("加载标题关卡失败"); return; }
-    if (!initSystems())                 { spdlog::error("初始化系统失败"); return; }
-    if (!initRegistryContext())         { spdlog::error("初始化注册表上下文失败"); return; }
-    if (!initUI())                      { spdlog::error("初始化UI失败"); return; }
+    if (!initSessionData())             { spdlog::error("初始化session_data_失败"); return false; }
+    if (!initLevelConfig())             { spdlog::error("初始化关卡配置失败"); return false; }
+    if (!initBlueprintManager())        { spdlog::error("初始化蓝图管理器失败"); return false; }
+    if (!initUIConfig())                { spdlog::error("初始化UI配置失败"); return false; }
+    if (!loadTitleLevel())              { spdlog::error("加载标题关卡失败"); return false; }
+    if (!initSystems())                 { spdlog::error("初始化系统失败"); return false; }
+    if (!initRegistryContext())         { spdlog::error("初始化注册表上下文失败"); return false; }
+    if (!initUI())                      { spdlog::error("初始化UI失败"); return false; }
 
     context_.getGameState().setState(engine::core::State::Title);
     context_.getTime().setTimeScale(1.0f);  // 重置游戏速度
 
     context_.getAudioPlayer().playMusic("title_bgm"_hs);    // 设置标题场景背景音乐
 
-    engine::scene::Scene::init();
+    return engine::scene::Scene::init();
 }
 
 void TitleScene::update(float delta_time)
@@ -170,9 +170,6 @@ bool TitleScene::initUI()
     auto window_size = context_.getGameState().getLogicalSize();
     if (!ui_manager_->init(window_size))
         return false;
-
-    // 设置背景音乐
-    // context_.getAudioPlayer().playMusic("title_bgm"_hs);
 
     /* 先用ImGui实现UI，未来再使用游戏内UI */
     return true;

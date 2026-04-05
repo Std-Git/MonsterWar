@@ -59,6 +59,16 @@ namespace engine::input
         {
             ImGui_ImplSDL3_ProcessEvent(&event); // ImGui 步骤2 处理 ImGui 事件
             processEvent(event);
+            // 窗口移动事件 (拖动中)
+            //if (event.type == SDL_EVENT_WINDOW_MOVED)
+            //{
+            //    // 开始拖动，暂停游戏
+            //    context_.getGameState().setState(engine::core::State::Paused);
+            //} else if (event.type == SDL_EVENT_WINDOW_EXPOSED) {
+            //    // 窗口显示，恢复游戏
+            //    context_.getGameState().setState(context_.getGameState().getLastState());
+            //    spdlog::warn("窗口显示，恢复游戏, 游戏状态：{}", static_cast<int>(context_.getGameState().getLastState()));
+            //}
         }
 
         // 3.触发回调

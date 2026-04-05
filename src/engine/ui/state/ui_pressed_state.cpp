@@ -30,6 +30,17 @@ void UIPressedState::enter()
     spdlog::debug("切换到按下状态");
 }
 
+void UIPressedState::update(float, engine::core::Context &context)
+{
+    auto &input_manager = context.getInputManager();
+    auto mouse_pos = input_manager.getLogicalMousePosition();
+    if (!owner_->isPointInside(mouse_pos)) // 如果鼠标不在 UI 元素内，则设置正常状态
+    {
+        owner_->hover_leave();
+        owner_->setNextState(std::make_unique<UINormalState>(owner_));
+    }
+}
+
 bool UIPressedState::onMouseReleased()
 {
     auto& input_manager = owner_->getContext().getInputManager();

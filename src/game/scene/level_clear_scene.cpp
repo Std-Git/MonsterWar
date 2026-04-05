@@ -25,10 +25,10 @@ LevelClearScene::LevelClearScene(engine::core::Context & context,
     std::shared_ptr<game::data::SessionData> session_data, 
     game::data::GameStats & game_stats)
     : engine::scene::Scene("LevelClearScene", context),
-    blueprint_manager_(blueprint_manager),
-    ui_config_(ui_config),
-    level_config_(level_config),
-    session_data_(session_data),
+    blueprint_manager_(std::move(blueprint_manager)),
+    ui_config_(std::move(ui_config)),
+    level_config_(std::move(level_config)),
+    session_data_(std::move(session_data)),
     game_stats_(game_stats)
 {
     // 直接在构造函数中初始化DebugUISystem
@@ -37,12 +37,12 @@ LevelClearScene::LevelClearScene(engine::core::Context & context,
 
 LevelClearScene::~LevelClearScene() = default;
 
-void LevelClearScene::init()
+bool LevelClearScene::init()
 {
     if (!ui_config_ || !level_config_ || !session_data_ || !blueprint_manager_)
     {
         spdlog::error("LevelClearScene: init failed, some data is null");
-        return;
+        return false;
     }
     context_.getGameState().setState(engine::core::State::LevelClear);
 
@@ -50,6 +50,7 @@ void LevelClearScene::init()
     registry_.ctx().emplace<std::shared_ptr<game::factory::BlueprintManager>>(blueprint_manager_);
     registry_.ctx().emplace<std::shared_ptr<game::data::UIConfig>>(ui_config_);
     context_.getAudioPlayer().playMusic("win"_hs, 0);
+    return engine::scene::Scene::init();
 }
 
 void LevelClearScene::render()

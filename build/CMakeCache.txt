@@ -21,6 +21,7 @@ BUILD_EXAMPLES:BOOL=OFF
 //Build libXMP-lite library
 BUILD_LITE:BOOL=OFF
 
+//依赖库默认编译为动态库
 BUILD_SHARED_LIBS:BOOL=OFF
 
 BUILD_TESTING:BOOL=OFF
@@ -357,7 +358,7 @@ ENTT_USE_SANITIZER:BOOL=OFF
 EnTT_BINARY_DIR:STATIC=D:/CMakeProgram/MonsterWar/build/_deps/EnTT-build
 
 //The directory containing a CMake configuration file for EnTT.
-EnTT_DIR:PATH=EnTT_DIR-NOTFOUND
+EnTT_DIR:PATH=D:/Library/EnTT/lib/EnTT/cmake
 
 //Value Computed by CMake
 EnTT_IS_TOP_LEVEL:STATIC=OFF
@@ -978,7 +979,7 @@ XMP_DEMO_WITH_SDL2:BOOL=OFF
 glm_BINARY_DIR:STATIC=D:/CMakeProgram/MonsterWar/build/_deps/glm-build
 
 //The directory containing a CMake configuration file for glm.
-glm_DIR:PATH=glm_DIR-NOTFOUND
+glm_DIR:PATH=D:/Library/glm/share/glm
 
 //Value Computed by CMake
 glm_IS_TOP_LEVEL:STATIC=OFF
@@ -1017,7 +1018,7 @@ libxmp_SOURCE_DIR:STATIC=D:/CMakeProgram/MonsterWar/external/SDL_mixer-30c1301/e
 nlohmann_json_BINARY_DIR:STATIC=D:/CMakeProgram/MonsterWar/build/_deps/json-build
 
 //The directory containing a CMake configuration file for nlohmann_json.
-nlohmann_json_DIR:PATH=nlohmann_json_DIR-NOTFOUND
+nlohmann_json_DIR:PATH=D:/Library/nlohmann_json/share/cmake/nlohmann_json
 
 //Value Computed by CMake
 nlohmann_json_IS_TOP_LEVEL:STATIC=OFF
@@ -1029,7 +1030,7 @@ nlohmann_json_SOURCE_DIR:STATIC=D:/CMakeProgram/MonsterWar/external/json-3.12.0
 spdlog_BINARY_DIR:STATIC=D:/CMakeProgram/MonsterWar/build/_deps/spdlog-build
 
 //The directory containing a CMake configuration file for spdlog.
-spdlog_DIR:PATH=spdlog_DIR-NOTFOUND
+spdlog_DIR:PATH=D:/Library/spdlog/lib/cmake/spdlog
 
 //Value Computed by CMake
 spdlog_IS_TOP_LEVEL:STATIC=OFF
@@ -1188,7 +1189,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MT
 CMAKE_MT-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
 //Platform information initialized
 CMAKE_PLATFORM_INFO_INITIALIZED:INTERNAL=1
 //noop for ranlib

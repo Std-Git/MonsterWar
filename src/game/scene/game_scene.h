@@ -106,7 +106,7 @@ public:
             );
     ~GameScene();
     
-    void init() override;
+    bool init() override;
     void update(float delta_time) override;
     void render() override;
     void clean() override;
