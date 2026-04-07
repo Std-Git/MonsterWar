@@ -200,7 +200,7 @@ namespace engine::core
         // 设置窗口大小 (窗口大小 * 窗口缩放比例)
         int window_width = static_cast<int>(static_cast<float>(config_->window_width_) * config_->window_scale_);
         int window_height = static_cast<int>(static_cast<float>(config_->window_height_) * config_->window_scale_);
-        window_ = SDL_CreateWindow(config_->window_title_.c_str(), window_width, window_height, config_->window_resizable_ ? SDL_WINDOW_RESIZABLE : 0);
+        window_ = SDL_CreateWindow(config_->window_title_.c_str(), window_width, window_height, SDL_WINDOW_RESIZABLE);
         if (window_ == nullptr)
         {
             spdlog::error("无法创建窗口! SDL错误: {}", SDL_GetError());
