@@ -105,6 +105,27 @@ void Config::fromJson(const nlohmann::json& j)
     {
         spdlog::trace("配置跟踪：未找到 'input_mappings' 部分或不是对象，使用头文件中定义的默认映射");
     }
+    // 从 JSON 加载 imgui_input_mappings
+    if (j.contains("imgui_input_mappings") && j["imgui_input_mappings"].is_object())
+    {
+        const auto &imgui_mappings_json = j["imgui_input_mappings"];
+        try
+        {
+            // 直接尝试从 JSON 对象转换为 map<string, vector<string>>
+            auto imgui_input_mappings = imgui_mappings_json.get<std::unordered_map<std::string, std::vector<std::string>>>();
+            // 如果成功, 则将 input_mappings 移动到 input_mappings_ 中
+            imgui_input_mappings_ = std::move(imgui_input_mappings);
+            spdlog::trace("成功从配置中加载输入映射");
+        }
+        catch (const std::exception &e)
+        {
+            spdlog::warn("配置加载警告：解析 'imgui_input_mappings' 时发生异常，使用默认映射。错误：{}", e.what());
+        }
+    }
+    else
+    {
+        spdlog::trace("配置跟踪：未找到 'imgui_input_mappings' 部分或不是对象，使用头文件中定义的默认映射");
+    }
 }
 
 bool Config::saveToFile(std::string_view file_path)
@@ -153,7 +174,8 @@ nlohmann::ordered_json Config::toJson() const
             {"music_volume", music_volume_},
             {"sound_volume", sound_volume_}
         }},
-        {"input_mappings", input_mappings_}
+        {"input_mappings", input_mappings_},
+        {"imgui_input_mappings", imgui_input_mappings_}
     };
 }
 

@@ -147,12 +147,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalDependencies>D:\CMakeProgram\MonsterWar\prebuilt\lib\x64\SDL3.lib;D:\CMakeProgram\MonsterWar\prebuilt\cmake\..\lib\x64\SDL3_image.lib;D:\CMakeProgram\MonsterWar\prebuilt\cmake\..\lib\x64\SDL3_mixer.lib;D:\CMakeProgram\MonsterWar\prebuilt\cmake\..\lib\x64\SDL3_ttf.lib;D:\Library\glm\lib\glm.lib;D:\Library\spdlog\lib\spdlog.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>D:/CMakeProgram/MonsterWar/build/Debug/MonsterWar-Windows.lib</ImportLibrary>
       <ProgramDataBaseFile>D:/CMakeProgram/MonsterWar/build/Debug/MonsterWar-Windows.pdb</ProgramDataBaseFile>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -222,12 +221,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalDependencies>D:\CMakeProgram\MonsterWar\prebuilt\lib\x64\SDL3.lib;D:\CMakeProgram\MonsterWar\prebuilt\cmake\..\lib\x64\SDL3_image.lib;D:\CMakeProgram\MonsterWar\prebuilt\cmake\..\lib\x64\SDL3_mixer.lib;D:\CMakeProgram\MonsterWar\prebuilt\cmake\..\lib\x64\SDL3_ttf.lib;D:\Library\glm\lib\glm.lib;D:\Library\spdlog\lib\spdlog.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>D:/CMakeProgram/MonsterWar/build/Release/MonsterWar-Windows.lib</ImportLibrary>
       <ProgramDataBaseFile>D:/CMakeProgram/MonsterWar/build/Release/MonsterWar-Windows.pdb</ProgramDataBaseFile>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -297,12 +295,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalDependencies>D:\CMakeProgram\MonsterWar\prebuilt\lib\x64\SDL3.lib;D:\CMakeProgram\MonsterWar\prebuilt\cmake\..\lib\x64\SDL3_image.lib;D:\CMakeProgram\MonsterWar\prebuilt\cmake\..\lib\x64\SDL3_mixer.lib;D:\CMakeProgram\MonsterWar\prebuilt\cmake\..\lib\x64\SDL3_ttf.lib;D:\Library\glm\lib\glm.lib;D:\Library\spdlog\lib\spdlog.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>D:/CMakeProgram/MonsterWar/build/MinSizeRel/MonsterWar-Windows.lib</ImportLibrary>
       <ProgramDataBaseFile>D:/CMakeProgram/MonsterWar/build/MinSizeRel/MonsterWar-Windows.pdb</ProgramDataBaseFile>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -371,12 +368,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalDependencies>D:\CMakeProgram\MonsterWar\prebuilt\lib\x64\SDL3.lib;D:\CMakeProgram\MonsterWar\prebuilt\cmake\..\lib\x64\SDL3_image.lib;D:\CMakeProgram\MonsterWar\prebuilt\cmake\..\lib\x64\SDL3_mixer.lib;D:\CMakeProgram\MonsterWar\prebuilt\cmake\..\lib\x64\SDL3_ttf.lib;D:\Library\glm\lib\glm.lib;D:\Library\spdlog\lib\spdlog.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ImportLibrary>D:/CMakeProgram/MonsterWar/build/RelWithDebInfo/MonsterWar-Windows.lib</ImportLibrary>
       <ProgramDataBaseFile>D:/CMakeProgram/MonsterWar/build/RelWithDebInfo/MonsterWar-Windows.pdb</ProgramDataBaseFile>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>

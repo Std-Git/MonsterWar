@@ -18,6 +18,7 @@
 #include "../../engine/core/context.h"
 #include "../../engine/core/game_state.h"
 #include "../../engine/core/time.h"
+#include "../../engine/input/input_manager.h"
 #include "../../engine/render/renderer.h"
 #include "../../engine/resource/resource_manager.h"
 #include "../../engine/utils/math.h"
@@ -29,6 +30,8 @@
 #include <entt/entity/registry.hpp>
 #include <entt/signal/dispatcher.hpp>
 #include <entt/core/hashed_string.hpp>
+#include <string>
+#include <string_view>
 
 using namespace entt::literals;
 
@@ -240,26 +243,26 @@ void DebugUISystem::renderSelectedUnit()
     bool button_avaliable = avaliable_cost >= player.cost_;
     // cost资源充足时升级按钮才可用
     ImGui::BeginDisabled(!button_avaliable);
-    // 设置快捷键U升级
-    ImGui::SetNextItemShortcut(ImGuiKey_U, ImGuiInputFlags_RouteAlways | ImGuiInputFlags_Tooltip);
+    // 设置快捷键升级
+    ImGui::SetNextItemShortcut(context_.getInputManager().getShortcutForAction("upgrade"_hs), ImGuiInputFlags_RouteAlways | ImGuiInputFlags_Tooltip);
     if (ImGui::Button("升级"))
     {
         context_.getDispatcher().enqueue<game::defs::UpgradeUnitEvent>(entity, player.cost_);
     }
     ImGui::SameLine();
-    ImGui::Text("快捷键 U: COST消费: %d", player.cost_);
+    ImGui::Text("快捷键 %s: COST消费: %d", context_.getInputManager().getActionKeyName("upgrade"_hs).c_str(),player.cost_);
     ImGui::EndDisabled();
 
     // 撤退，返还 50% 的cost
     auto return_cost = static_cast<int>(player.cost_ * 0.5);
-    // 设置快捷键 R 撤退
-    ImGui::SetNextItemShortcut(ImGuiKey_R, ImGuiInputFlags_RouteAlways | ImGuiInputFlags_Tooltip);
+    // 设置快捷键撤退
+    ImGui::SetNextItemShortcut(context_.getInputManager().getShortcutForAction("retreat"_hs), ImGuiInputFlags_RouteAlways | ImGuiInputFlags_Tooltip);
     if (ImGui::Button("撤退"))
     {
         context_.getDispatcher().enqueue<game::defs::RetreatEvent>(entity, return_cost);
     }
     ImGui::SameLine();
-    ImGui::Text("快捷键 R: COST返还: %d", return_cost);
+    ImGui::Text("快捷键 %s: COST返还: %d", context_.getInputManager().getActionKeyName("retreat"_hs).c_str(), return_cost);
 
     // 技能显示与交互
     if (auto skill = registry_.try_get<game::component::SkillComponent>(entity); skill)
@@ -268,7 +271,7 @@ void DebugUISystem::renderSelectedUnit()
         auto ready = registry_.all_of<game::defs::SkillReadyTag>(entity);
         ImGui::BeginDisabled(!ready);
         // 设置快捷键S激活技能
-        ImGui::SetNextItemShortcut(ImGuiKey_S, ImGuiInputFlags_RouteAlways | ImGuiInputFlags_Tooltip);
+        ImGui::SetNextItemShortcut(context_.getInputManager().getShortcutForAction("skill"_hs), ImGuiInputFlags_RouteAlways | ImGuiInputFlags_Tooltip);
         if (ImGui::Button(skill->name_.c_str()))
         {
             // 激活技能
@@ -287,7 +290,7 @@ void DebugUISystem::renderSelectedUnit()
             }
         // 否则显示冷却时间
         } else {
-            ImGui::Text("快捷键 S: ");
+            ImGui::Text("快捷键 %s: ", context_.getInputManager().getActionKeyName("skill"_hs).c_str());
             ImGui::SameLine();
             if (registry_.all_of<game::defs::SkillReadyTag>(entity))
             {
@@ -343,7 +346,7 @@ void DebugUISystem::renderSettingUI()
     }
     // 场景控制
     auto &game_state = context_.getGameState();
-    ImGui::SetNextItemShortcut(ImGuiKey_P, ImGuiInputFlags_RouteAlways | ImGuiInputFlags_Tooltip);
+    ImGui::SetNextItemShortcut(context_.getInputManager().getShortcutForAction("pause"_hs), ImGuiInputFlags_RouteAlways | ImGuiInputFlags_Tooltip);
     if (game_state.isPaused())  // 如果游戏暂停，则显示“继续游戏”按钮，快捷键P
     {
         if (ImGui::Button("继续游戏"))
@@ -418,6 +421,7 @@ void DebugUISystem::renderDebugUI()
         return;
     }
     auto delta_time = context_.getTime().getDeltaTime();
+    ImGui::Text("delta_time: %.3f", delta_time);
     ImGui::Text("FPS: %.1f", 1.0f / delta_time);
     auto& game_stats = registry_.ctx().get<game::data::GameStats &>();
     if (ImGui::Button("COST + 10"))

@@ -72,6 +72,7 @@ void EnemySpawner::spawnEnemy()
     auto &level_number = registry_.ctx().get<int &>();
 
     // 随机选择起点
+    spdlog::debug("当前起点数量: {}", start_points.size());
     auto random_index = engine::utils::randomInt(0, start_points.size() - 1);
     auto start_index = start_points[random_index];
     auto position = waypoint_nodes[start_index].position_;

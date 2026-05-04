@@ -48,6 +48,20 @@ const char *arch_POWERPC32 = "INFO<POWERPC32=" ARCH_POWERPC32 ">";
 #endif
 const char *arch_POWERPC64 = "INFO<POWERPC64=" ARCH_POWERPC64 ">";
 
+#if defined(__riscv) && defined(__riscv_xlen) && __riscv_xlen == 32
+#define ARCH_RISCV32 "1"
+#else
+#define ARCH_RISCV32 "0"
+#endif
+const char *arch_RISCV32 = "INFO<RISCV32=" ARCH_RISCV32 ">";
+
+#if defined(__riscv) && defined(__riscv_xlen) && __riscv_xlen == 64
+#define ARCH_RISCV64 "1"
+#else
+#define ARCH_RISCV64 "0"
+#endif
+const char *arch_RISCV64 = "INFO<RISCV64=" ARCH_RISCV64 ">";
+
 #if defined(__i386__) || defined(__i486__) || defined(__i586__) || defined(__i686__) ||defined( __i386) || defined(_M_IX86)
 #define ARCH_X86 "1"
 #else
@@ -73,6 +87,8 @@ int main(int argc, char *argv[]) {
   result += arch_LOONGARCH64[argc];
   result += arch_POWERPC32[argc];
   result += arch_POWERPC64[argc];
+  result += arch_RISCV32[argc];
+  result += arch_RISCV64[argc];
   result += arch_X86[argc];
   result += arch_X64[argc];
   return result;

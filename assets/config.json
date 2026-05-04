@@ -46,5 +46,19 @@
             "K",
             "MouseLeft"
         ]
+    },
+    "imgui_input_mappings": {
+        "upgrade": [
+            "Q"
+        ],
+        "retreat": [
+            "E"
+        ],
+        "skill": [
+            "S"
+        ],
+        "pause": [
+            "Escape"
+        ]
     }
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <string_view>
 #include <unordered_map>
 #include <vector>
@@ -8,6 +9,7 @@
 #include <glm/vec2.hpp>
 #include <entt/signal/sigh.hpp>
 #include <entt/signal/fwd.hpp>
+#include <imgui.h>
 
 namespace engine::core
 {
@@ -49,6 +51,10 @@ namespace engine::input
 
         ///< @brief 存储每个动作的当前状态
         std::unordered_map<entt::id_type, ActionState> action_states_;
+        ///< @brief 每个动作对应的ImGui快捷键 (取第一个有效键盘按键)
+        std::unordered_map<entt::id_type, ImGuiKeyChord> action_shortcuts_;
+        ///< @brief 每个动作对应的按键名称字符串 (用于 ImGui 显示)
+        std::unordered_map<entt::id_type, std::string> action_key_names_;
 
         ///< @brief 从输入到关联的动作名称列表
         std::unordered_map<std::variant<SDL_Scancode, Uint32>, std::vector<entt::id_type>> input_to_actions_;
@@ -85,13 +91,17 @@ namespace engine::input
         glm::vec2 getMousePosition() const;        ///< @brief 获取鼠标位置 (屏幕坐标)
         glm::vec2 getLogicalMousePosition() const; ///< @brief 获取鼠标位置 (逻辑坐标)
 
+        ImGuiKeyChord getShortcutForAction(entt::id_type action_name_id) const; ///< @brief 获取动作对应的ImGui快捷键
+        std::string getActionKeyName(entt::id_type action_name_id) const; ///< @brief 获取动作对应的按键名称字符串 (如 "W" 等)
+
     private:
         void processEvent(const SDL_Event &event);                   ///< @brief 处理 SDL 事件 (将按键转换为动作状态)
         void initializeMappings(const engine::core::Config *config); ///< @brief 根据 Config 配置初始化映射表
 
-        void updateActionState(entt::id_type action_name_id, bool is_input_active, bool is_repeat_event); ///< @brief 辅助更新动作状态
-        SDL_Scancode scancodeFromString(std::string_view key_name);                                       ///< @brief 将字符串键名转换为 SDL_Scancode
-        Uint32 mouseButtonFromString(std::string_view button_name);                                       ///< @brief 将字符串按钮名转换为 SDL_Button
+        void updateActionState(entt::id_type action_name_id, bool is_input_active, bool is_repeat_event);   ///< @brief 辅助更新动作状态
+        SDL_Scancode scancodeFromString(std::string_view key_name);                                         ///< @brief 将字符串键名转换为 SDL_Scancode
+        ImGuiKeyChord parseKeyChordFromString(std::string_view key_name);                                   ///< @brief 将字符串键组合解析为 ImGuiKeyChord
+        Uint32 mouseButtonFromString(std::string_view button_name);                                         ///< @brief 将字符串按钮名转换为 SDL_Button
     };
 
 } // namespace engine::input
