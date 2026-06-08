@@ -3,6 +3,7 @@
 #include "game/scene/title_scene.h"
 #include "engine/utils/events.h"
 #include <spdlog/spdlog.h>
+#include <spdlog/sinks/wincolor_sink.h>
 #include <entt/signal/dispatcher.hpp>
 
 // 只在 Windows 平台上包含 Windows.h

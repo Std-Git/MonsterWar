@@ -500,17 +500,20 @@ std::string LevelLoader::resolvePath(std::string_view relative_path, std::string
 {
     try
     {
-        // 获取地图文件的父目录(相对于可执行文件)       "assets/maps/level1.json" -> "assets/maps"
         auto map_dir = std::filesystem::path(file_path).parent_path();
-        // 合并路径 (相对于可执行文件) 并返回      /* std::filesystem::canonical: 解析路径中的当前目录 (.) 和上级目录 (..) 导航符 */
-        /* 得到一个干净的路径 */
-        auto final_path = std::filesystem::canonical(map_dir / relative_path);
-        return final_path.string();
+        auto combined = map_dir / relative_path;
+        // 词法规范化: 处理 . 和 .. 以及分隔符，但不检查文件是否存在
+        auto normalized = combined.lexically_normal();
+        // 如果希望得到绝对路径可以这样 (仍然不要求路径存在)
+        // auto absolute = std::filesystem::absolute(normalized);
+        return normalized.string();
     }
     catch (const std::exception &e)
     {
         spdlog::error("解析路径失败：{}", e.what());
-        return std::string(relative_path);
+        // 至少拼接起来在返回，而不是丢掉前缀
+        auto map_dir = std::filesystem::path(file_path).parent_path();
+        return (map_dir / relative_path).string();
     }
 }
 

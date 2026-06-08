@@ -59,16 +59,6 @@ namespace engine::input
         {
             ImGui_ImplSDL3_ProcessEvent(&event); // ImGui 步骤2 处理 ImGui 事件
             processEvent(event);
-            // 窗口移动事件 (拖动中)
-            //if (event.type == SDL_EVENT_WINDOW_MOVED)
-            //{
-            //    // 开始拖动，暂停游戏
-            //    context_.getGameState().setState(engine::core::State::Paused);
-            //} else if (event.type == SDL_EVENT_WINDOW_EXPOSED) {
-            //    // 窗口显示，恢复游戏
-            //    context_.getGameState().setState(context_.getGameState().getLastState());
-            //    spdlog::warn("窗口显示，恢复游戏, 游戏状态：{}", static_cast<int>(context_.getGameState().getLastState()));
-            //}
         }
 
         // 3.触发回调
@@ -154,6 +144,7 @@ namespace engine::input
             dispatcher_->enqueue<engine::utils::WindowMovedEvent>();
             break;
         case SDL_EVENT_WINDOW_EXPOSED:
+        case SDL_EVENT_WINDOW_RESTORED:
             // 窗口显示
             dispatcher_->enqueue<engine::utils::WindowExposedEvent>();
             break;
@@ -204,6 +195,26 @@ namespace engine::input
     {
         // 每帧最多计算一次，避免每次调用时在计算
         return logical_mouse_position_;
+    }
+
+    ImGuiKeyChord InputManager::getShortcutForAction(entt::id_type action_name_id) const
+    {
+        auto it = action_shortcuts_.find(action_name_id);
+        if (it != action_shortcuts_.end())
+        {
+            return it->second;
+        }
+        return ImGuiKey_None;
+    }
+
+    std::string InputManager::getActionKeyName(entt::id_type action_name_id) const
+    {
+        auto it = action_key_names_.find(action_name_id);
+        if (it != action_key_names_.end())
+        {
+            return it->second;
+        }
+        return "None";
     }
 
     // --- 初始化输入映射 ---
@@ -260,6 +271,29 @@ namespace engine::input
                     spdlog::warn("输入映射警告：未知键或按钮名称 '{}' 用于动作 '{}'", key_name, action_name);
                 }
             }
+        } 
+        
+        auto actions_to_keychord = config->imgui_input_mappings_; // 获取配置中的输入映射 (动作 -> 按键组合)
+        for (const auto &[action_name, key_chords] : actions_to_keychord)
+        {
+            auto imgui_action_name_id = entt::hashed_string(action_name.c_str());
+            ImGuiKeyChord key = ImGuiKey_None;
+            std::string key_name_str = "";
+            // 设置"按键 -> 动作" 的映射
+            for (const auto &key_chord : key_chords)
+            {
+                key = parseKeyChordFromString(key_chord);
+                if (key != ImGuiKey_None)
+                {
+                    key_name_str = key_chord;
+                    break;
+                }
+            }
+            if (key != ImGuiKey_None)
+            {
+                action_shortcuts_[imgui_action_name_id] = ImGuiKeyChord(key);
+                action_key_names_[imgui_action_name_id] = key_name_str;
+            }
         }
         spdlog::trace("输入映射初始化完成");
     }
@@ -269,6 +303,46 @@ namespace engine::input
     SDL_Scancode InputManager::scancodeFromString(std::string_view key_name)
     {
         return SDL_GetScancodeFromName(key_name.data());
+    }
+
+    ImGuiKeyChord InputManager::parseKeyChordFromString(std::string_view key_name)
+    {
+        // 常用键名映射
+        static const std::unordered_map<std::string_view, ImGuiKey> key_map = {
+            {"Space", ImGuiKey_Space},
+            {"Enter", ImGuiKey_Enter},
+            {"Tab", ImGuiKey_Tab},
+            {"Backspace", ImGuiKey_Backspace},
+            {"Escape", ImGuiKey_Escape},
+            {"LeftArrow", ImGuiKey_LeftArrow},
+            {"RightArrow", ImGuiKey_RightArrow},
+            {"UpArrow", ImGuiKey_UpArrow},
+            {"DownArrow", ImGuiKey_DownArrow},
+            {"Delete", ImGuiKey_Delete},
+            {"Home", ImGuiKey_Home},
+            {"End", ImGuiKey_End},
+            {"PageUp", ImGuiKey_PageUp},
+            {"PageDown", ImGuiKey_PageDown},
+            {"Insert", ImGuiKey_Insert},
+            {"A", ImGuiKey_A}, {"B", ImGuiKey_B}, {"C", ImGuiKey_C}, 
+            {"D", ImGuiKey_D}, {"E", ImGuiKey_E}, {"F", ImGuiKey_F}, 
+            {"G", ImGuiKey_G}, {"H", ImGuiKey_H}, {"I", ImGuiKey_I},
+            {"J", ImGuiKey_J}, {"K", ImGuiKey_K}, {"L", ImGuiKey_L},
+            {"M", ImGuiKey_M}, {"N", ImGuiKey_N}, {"O", ImGuiKey_O},
+            {"P", ImGuiKey_P}, {"Q", ImGuiKey_Q}, {"R", ImGuiKey_R},
+            {"S", ImGuiKey_S}, {"T", ImGuiKey_T}, {"U", ImGuiKey_U},
+            {"V", ImGuiKey_V}, {"W", ImGuiKey_W}, {"X", ImGuiKey_X},
+            {"Y", ImGuiKey_Y}, {"Z", ImGuiKey_Z},
+            {"0", ImGuiKey_0}, {"1", ImGuiKey_1}, {"2", ImGuiKey_2}, {"3", ImGuiKey_3}, {"4", ImGuiKey_4}, 
+            {"5", ImGuiKey_5}, {"6", ImGuiKey_6}, {"7", ImGuiKey_7}, {"8", ImGuiKey_8}, {"9", ImGuiKey_9},
+        };
+
+        auto it = key_map.find(key_name);
+        if (it != key_map.end())
+        {
+            return it->second;
+        }
+        return ImGuiKey_None;
     }
 
     // 将鼠标按钮名称字符串转换为 SDL 按钮 Uint8 值

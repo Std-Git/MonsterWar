@@ -1,0 +1,26 @@
+{
+    "peashooter": {
+        "name": "豌豆射手",
+        "description": "你的第一株植物，发射豌豆攻击敌人。",
+        "hp": 300,
+        "atk": 20,
+        "def": 10,
+        "range": 300,
+        "atk_interval": 1.5,
+        "type": "ranged",
+        "projectile": "arrow",
+        "healer": false,
+        "block": 0,
+        "cost": 8,
+        "skill": "speed_up",
+        "sprite_sheet": "assets/textures/Plants/Peashooter.png",
+        "face_right": true,
+        "width": 101,
+        "height": 128,
+        "offset_x": -50,
+        "offset_y": -96,
+        "animation": {
+            "idle": {"row":0, "frames":[0,1,2,3,4,5,6,7,8,9], "duration": 50}
+        }
+    }
+}

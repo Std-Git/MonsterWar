@@ -1,126 +1,111 @@
-#标题
-cmake_minimum_required(VERSION 3.10.0)
-project(MonsterWar VERSION 0.1.0 LANGUAGES C CXX)
-
-#设置C++标准
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-#设置编译选项
-if(MSVC)
-    add_compile_options(/W4 /utf-8)
-else()
-    add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
-
-#设置编译输出目录
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
-
-set(TARGET ${PROJECT_NAME}-${CMAKE_SYSTEM_NAME})
-
-#查找并载入Cmake预设
-find_package(SDL3 REQUIRED)
-find_package(SDL3_image REQUIRED)
-find_package(SDL3_mixer REQUIRED)
-find_package(SDL3_ttf REQUIRED)
-find_package(glm REQUIRED)
-find_package(nlohmann_json REQUIRED)
-find_package(spdlog REQUIRED)
-find_package(EnTT REQUIRED)
-
-#设置通用源文件
-set(SOURCES
-    src/main.cpp
-    src/engine/audio/audio_player.cpp
-    src/engine/core/config.cpp
-    src/engine/core/context.cpp
-    src/engine/core/game_app.cpp
-    src/engine/core/game_state.cpp
-    src/engine/core/time.cpp
-    src/engine/input/input_manager.cpp
-    src/engine/loader/level_loader.cpp
-    src/engine/loader/basic_entity_builder.cpp
-    src/engine/render/camera.cpp
-    src/engine/render/renderer.cpp
-    src/engine/render/text_renderer.cpp
-    src/engine/resource/resource_manager.cpp
-    src/engine/resource/texture_manager.cpp
-    src/engine/resource/audio_manager.cpp
-    src/engine/resource/font_manager.cpp
-    src/engine/system/animation_system.cpp
-    src/engine/system/movement_system.cpp
-    src/engine/system/ysort_system.cpp
-    src/engine/system/render_system.cpp
-    src/engine/ui/state/ui_hover_state.cpp
-    src/engine/ui/state/ui_normal_state.cpp
-    src/engine/ui/state/ui_pressed_state.cpp
-    src/engine/ui/ui_button.cpp
-    src/engine/ui/ui_element.cpp
-    src/engine/ui/ui_image.cpp
-    src/engine/ui/ui_interactive.cpp
-    src/engine/ui/ui_label.cpp
-    src/engine/ui/ui_manager.cpp
-    src/engine/ui/ui_panel.cpp
-    src/engine/scene/scene.cpp
-    src/engine/scene/scene_manager.cpp
-    src/game/factory/blueprint_manager.cpp
-    src/game/factory/entity_factory.cpp
-    src/game/loader/entity_builder_mw.cpp
-    src/game/system/animation_state_system.cpp
-    src/game/system/attack_starter_system.cpp
-    src/game/system/followpath_system.cpp
-    src/game/system/orientation_system.cpp
-    src/game/system/remove_dead_system.cpp
-    src/game/system/block_system.cpp
-    src/game/system/set_target_system.cpp
-    src/game/system/timer_system.cpp
-    src/game/scene/game_scene.cpp)
-
-# --- 添加 ImGui 开始 --- 
-
-# 定义 ImGui 源文件变量，方便管理
-set(IMGUI_DIR ${CMAKE_SOURCE_DIR}/external/imgui)
-set(IMGUI_SOURCES
-    ${IMGUI_DIR}/imgui.cpp
-    ${IMGUI_DIR}/imgui_draw.cpp
-    ${IMGUI_DIR}/imgui_tables.cpp
-    ${IMGUI_DIR}/imgui_widgets.cpp
-    ${IMGUI_DIR}/imgui_demo.cpp
-    #Backend files
-    ${IMGUI_DIR}/backends/imgui_impl_sdl3.cpp
-    ${IMGUI_DIR}/backends/imgui_impl_sdlrenderer3.cpp
-)
-
-# 将 ImGui 的目录和其后端目录添加到头文件搜索路径
-include_directories(
-    ${IMGUI_DIR}
-    ${IMGUI_DIR}/backends
-)
-
-# --- 添加 ImGui 结束 ---
-
-#根据平台向“通用源文件”追加平台专属文件
-if(WIN32)
-    list(APPEND SOURCES resources.rc)
-endif()
-
-#添加可执行文件，使用配置好的“SOURCES”变量
-add_executable(${TARGET} ${SOURCES} ${IMGUI_SOURCES})
-
-#链接库
-target_link_libraries(${TARGET}
-                        ${SDL3_LIBRARIES}
-                        SDL3_image::SDL3_image
-                        SDL3_mixer::SDL3_mixer
-                        SDL3_ttf::SDL3_ttf
-                        glm::glm
-                        nlohmann_json::nlohmann_json
-                        spdlog::spdlog
-                        EnTT::EnTT
-                        )
-#不弹出控制台窗口
-#if (MSVC)
-#    target_link_options(${TARGET} PRIVATE "/SUBSYSTEM:WINDOWS")
-#endif()
+,
+    "warrior": {
+        "name": "战士",
+        "description": "近战单位，拥有较高的生命值和防御力，阻挡3名敌人。",
+        "hp": 500,
+        "atk": 90,
+        "def": 40,
+        "range": 30,
+        "atk_interval": 2.0,
+        "type": "melee",
+        "healer": false,
+        "block": 3,
+        "cost": 10,
+        "skill": "shield",
+        "sprite_sheet": "assets/textures/Units/Warrior.png",
+        "face_right": true,
+        "width": 192,
+        "height": 192,
+        "offset_x": -96,
+        "offset_y": -128,
+        "animation": {
+            "idle": {"row":0, "frames":[0,1,2,3,4,5,6,7]},
+            "guard":{"row":1, "frames":[0,1,2,3,4,5]},
+            "attack": {"row":2, "frames":[0,1,2,3], "events": {"hit": 2}}
+        },
+        "sounds": {
+            "hit": "sword_hit"
+        }
+    },
+    "archer": {
+        "name": "弓箭手",
+        "description": "远程单位，拥有较高的攻击力和攻击速度。",
+        "hp": 400,
+        "atk": 110,
+        "def": 20,
+        "range": 300,
+        "atk_interval": 1.5,
+        "type": "ranged",
+        "projectile": "arrow",
+        "healer": false,
+        "block": 0,
+        "cost": 8,
+        "skill": "speed_up",
+        "sprite_sheet": "assets/textures/Units/Archer.png",
+        "face_right": true,
+        "width": 192,
+        "height": 192,
+        "offset_x": -96,
+        "offset_y": -128,
+        "animation": {
+            "idle": {"row":0, "frames":[0,1,2,3,4,5]},
+            "attack":{"row":1, "frames":[0,1,2,3,4,5,6,7], "events": {"emit": 5}}
+        },
+        "sounds": {
+            "emit": "arrow_shoot"
+        }
+    },
+    "lancer": {
+        "name": "枪兵",
+        "description": "近战单位，属性一般，但可以回复COST，阻挡2名敌人。",
+        "hp": 400,
+        "atk": 100,
+        "def": 30,
+        "range": 40,
+        "atk_interval": 2.0,
+        "type": "melee",
+        "healer": false,
+        "block": 2,
+        "cost": 12,
+        "skill": "rest",
+        "sprite_sheet": "assets/textures/Units/Lancer.png",
+        "face_right": true,
+        "width": 320,
+        "height": 320,
+        "offset_x": -160,
+        "offset_y": -192,
+        "animation": {
+            "idle": {"row":0, "frames":[0,1,2,3,4,5,6,7,8,9,10,11]},
+            "attack": {"row":1, "frames":[0,1,2], "events": {"hit": 1}}
+        },
+        "sounds": {
+            "hit": "sword_hit"
+        }
+    },
+    "witch": {
+        "name": "女巫",
+        "description": "远程单位，治疗友军。",
+        "hp": 400,
+        "atk": 100,
+        "def": 30,
+        "range": 300,
+        "atk_interval": 1.5,
+        "type": "ranged",
+        "healer": true,
+        "block": 0,
+        "cost": 13,
+        "skill": "power_up",
+        "sprite_sheet": "assets/textures/Units/Witch.png",
+        "face_right": false,
+        "width": 192,
+        "height": 192,
+        "offset_x": -96,
+        "offset_y": -148,
+        "animation": {
+            "idle": {"row":0, "frames":[0,1,2,3,4,5,6,7,8,9,10,11,12,13]},
+            "heal":{"duration": 25, "row":1, "frames":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24], "events": {"hit": 19}}
+        },
+        "sounds": {
+            "hit": "heal"
+        }
+    }

@@ -19,9 +19,9 @@ bool UIConfig::loadFromFile(std::string_view path)
     file >> json;
 
     try {
-        loadIcon(json["icon"]);
-        loadPortrait(json["portrait"]);
-        loadPortraitFrame(json["portrait_frame"]);
+        //loadIcon(json["icon"]);
+        loadPortrait(json["card"]);
+        //loadPortraitFrame(json["portrait_frame"]);
         loadLayout(json["layout"]);
     } catch (const std::exception& e) {
         spdlog::error("载入 UI config 失败：{}", e.what());
@@ -75,6 +75,7 @@ void UIConfig::loadLayout(nlohmann::json& json)
     unit_panel_padding_ = json["unit_panel"]["padding"].get<float>();
     unit_panel_frame_size_ = {json["unit_panel"]["frame_size"]["width"].get<float>(),
                               json["unit_panel"]["frame_size"]["height"].get<float>()};
+    spdlog::warn("{}, {}", unit_panel_frame_size_.x, unit_panel_frame_size_.y);
     unit_panel_font_size_ = json["unit_panel"]["font_size"].get<int>();
     unit_panel_font_path_ = json["unit_panel"]["font_path"].get<std::string>();
     unit_panel_font_offset_ = {json["unit_panel"]["font_offset"]["x"].get<float>(),

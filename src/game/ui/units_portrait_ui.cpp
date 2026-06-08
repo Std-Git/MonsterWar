@@ -102,8 +102,8 @@ void UnitsPortraitUI::createUnitsPortraitUI()
     for (auto &[name_id, unit_data] : unit_map)
     {
         auto portrait = ui_config->getPortrait(name_id);
-        auto frame = ui_config->getPortraitFrame(unit_data.rarity_);
-        auto icon = ui_config->getIcon(unit_data.class_id_);
+        //auto frame = ui_config->getPortraitFrame(unit_data.rarity_);
+        //auto icon = ui_config->getIcon(unit_data.class_id_);
         auto cost = blueprint_manager->getPlayerClassBlueprint(unit_data.class_id_).player_.cost_;
         cost = static_cast<int>(std::round(engine::utils::statModify(static_cast<float>(cost), 1, unit_data.rarity_))); // 只有稀有度对 cost 有影响
 
@@ -113,11 +113,11 @@ void UnitsPortraitUI::createUnitsPortraitUI()
         frame_panel->setId(name_id);
 
         // 依次添加四个元素，为了能够交互，将frame 设置为按钮，并绑定点击事件
-        frame_panel->addChild(std::make_unique<engine::ui::UIImage>(portrait, glm::vec2(0.0f, 0.0f), frame_size));
+        //frame_panel->addChild(std::make_unique<engine::ui::UIImage>(portrait, glm::vec2(0.0f, 0.0f), frame_size));
         frame_panel->addChild(std::make_unique<engine::ui::UIButton>(context_,
-                                                                     frame,
-                                                                     frame,
-                                                                     frame,
+                                                                     portrait,
+                                                                     portrait,
+                                                                     portrait,
                                                                      glm::vec2(0.0f, 0.0f),
                                                                      frame_size,
                                                                      [this, name_id, &unit_data, cost]() {  // 按钮点击回调：发送单位准备事件
@@ -130,7 +130,7 @@ void UnitsPortraitUI::createUnitsPortraitUI()
                                                                         context_.getDispatcher().enqueue(game::defs::UIPortraitHoverLeaveEvent{});
                                                                      }
                                                                      ));
-        frame_panel->addChild(std::make_unique<engine::ui::UIImage>(icon, glm::vec2(0.0f, 0.0f), frame_size / 2.0f));
+        //frame_panel->addChild(std::make_unique<engine::ui::UIImage>(icon, glm::vec2(0.0f, 0.0f), frame_size / 2.0f));
         frame_panel->addChild(std::make_unique<engine::ui::UILabel>(context_.getTextRenderer(),
                                                                     std::to_string(cost),
                                                                     ui_config->getUnitPanelFontPath(),

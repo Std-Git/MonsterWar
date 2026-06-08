@@ -19,7 +19,7 @@ namespace engine::core
     public:
         //  --- 默认配置值 --- (为了方便拓展，全部设置为公有)
         // 窗口设置
-        std::string window_title_ = "MonsterWar";
+        std::string window_title_ = "PlantsVsZombies_EnChanted";
         int window_width_ = 1600;
         int window_height_ = 1216;
         bool window_resizable_ = true;
@@ -46,8 +46,18 @@ namespace engine::core
                 {"move_down", {"S", "Down"}},
                 {"jump", {"J", "Space"}},
                 {"attack", {"K", "MouseLeft"}},
-                {"pause", {"P", "Escape"}},
+                {"pause", {"P", "Escape"}}
                 // 可以继续添加更多默认动作
+        };
+
+        // 存储动作名称到 ImGuiKeyChord 名称列表的映射
+        std::unordered_map<std::string, std::vector<std::string>> imgui_input_mappings_ = 
+        {
+            // 提供一些合理的默认值，以防配置文件加载失败或缺少此部分
+            {"upgrade", {"U"}},
+            {"retreat", {"R"}},
+            {"skill", {"S"}},
+            {"pause", {"Escape"}}
         };
 
         explicit Config(std::string_view file_path); ///< @brief 构造函数，指定配置文件路径

@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="D:\CMakeProgram\MonsterWar\build\CMakeFiles\c25bc9ee790e4a45255921688a826216\generate.stamp.rule">
+    <CustomBuild Include="D:\CMakeProgram\PvZ_EnChanted\build\CMakeFiles\5a8c5ad0bfa6ed8662e8d34e39299346\generate.stamp.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{9928A787-DBB8-3F23-A699-1A0427A48120}</UniqueIdentifier>
+      <UniqueIdentifier>{7A9CC3D4-D8C2-362B-9CFE-E94E9A312096}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
