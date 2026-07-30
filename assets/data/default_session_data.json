@@ -1,6 +1,6 @@
 {
     "unit": {
-        "豌豆射手": {"class": "peashooter", "level": 1, "rarity": 1}
+        "豌豆射手": {"class": "Peashooter", "level": 1, "rarity": 1}
     },
     "level": 1,
     "point": 0,

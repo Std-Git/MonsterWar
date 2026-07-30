@@ -45,6 +45,7 @@ void ProjectileSystem::update(float delta_time)
             registry_.emplace<game::defs::DeadTag>(entity);
             continue;
         }
+        //spdlog::warn("飞行时间：{}，总飞行时间：{}", projectile.current_flight_time_, projectile.total_flight_time_);
         // 计算飞行进度 (t 从 0 到 1)
         float t = projectile.current_flight_time_ / projectile.total_flight_time_;
         t = glm::clamp(t, 0.0f, 1.0f);  // 确保 t 在 0 到 1 之间
@@ -63,6 +64,8 @@ void ProjectileSystem::update(float delta_time)
         // 4 根据上一帧的位置计算朝向，并更新TransformComponent 的旋转参数
         auto direction = transform.position_ - projectile.previous_position_;
         transform.rotation_ = glm::atan(direction.y, direction.x) * 180.0f / glm::pi<float>();
+        //spdlog::info("rotation: {}", transform.rotation_);
+        //spdlog::info("position: {}, {}", transform.position_.x, transform.position_.y);
 
         // 5 更新上一帧的位置
         projectile.previous_position_ = transform.position_;
@@ -74,9 +77,17 @@ void ProjectileSystem::onEmitProjectileEvent(const game::defs::EmitProjectileEve
     spdlog::info("发射投射物：{}", event.id_);
     entity_factory_.createProjectile(event.id_, 
         event.start_position_, 
-        event.target_position_, 
+        event.target_position_,
         event.target_, 
         event.damage_);
+    /*spdlog::debug("发射投射物：{}，起始位置：{}, {}，目标位置：{}, {}，目标：{}，伤害：{}",
+                  event.id_,
+                  event.start_position_.x,
+                  event.start_position_.y,
+                  event.target_position_.x,
+                  event.target_position_.y,
+                  entt::to_integral(event.target_),
+                  event.damage_);*/
 }
 
 } // namespace game::system

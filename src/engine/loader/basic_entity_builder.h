@@ -71,5 +71,4 @@ protected:
     template <typename T>
     std::optional<T> getTileProperty(const nlohmann::json& tile_json, std::string_view property_name);
 };
-
 } // namespace engine::loader

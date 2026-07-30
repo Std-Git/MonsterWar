@@ -79,6 +79,8 @@ void EnemySpawner::spawnEnemy()
     auto level = level_config->getEnemyLevel(level_number);
     auto rarity = level_config->getEnemyRarity(level_number);
 
+    // spdlog::warn("random_index: {}", random_index);
+
     // 弹出敌人类型
     auto enemy_type = enemy_types_.front();
     enemy_types_.pop_front();

@@ -170,7 +170,7 @@ bool PlaceUnitSystem::onPlaceUnit()
         // 创建单位
         auto unit_entity = entity_factory_.createPlayerUnit(unit_data.class_id_, position, unit_data.level_, unit_data.rarity_);
         registry_.emplace<engine::component::NameComponent>(unit_entity, unit_data.name_id_, unit_data.name_);
-        // 地点尸体添加占用组件
+        // 地点实体添加占用组件
         registry_.emplace<game::component::PlaceOccupiedComponent>(target_place_entity_, unit_entity);
         // 扣除费用
         game_stats.cost_ -= unit_prep_component.cost_;
@@ -178,7 +178,7 @@ bool PlaceUnitSystem::onPlaceUnit()
         registry_.emplace_or_replace<game::defs::DeadTag>(entity);
 
         // 通知UI移除对应肖像 <next>
-        context_.getDispatcher().enqueue(game::defs::RemoveUIPortraitEvent{unit_data.name_id_});
+        context_.getDispatcher().enqueue(game::defs::RemoveUICardEvent{unit_data.name_id_});
 
         // --- 渲染图层修正：确保玩家所在图层大于放置点图标的图层 ---
         const auto& render_place = registry_.get<engine::component::RenderComponent>(target_place_entity_);

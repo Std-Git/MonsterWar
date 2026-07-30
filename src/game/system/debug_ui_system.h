@@ -27,7 +27,7 @@ class DebugUISystem
     entt::registry &registry_;
     engine::core::Context &context_;
 
-    entt::id_type hovered_portrait_{entt::null};    ///< @brief 悬浮肖像的角色名称id
+    entt::id_type hovered_card_{entt::null};    ///< @brief 悬浮肖像的角色名称id
     bool show_debug_ui_{true};                      ///< @brief 是否显示调试UI
 
 public:
@@ -48,7 +48,7 @@ private:
     // 封装每一个UI显示模块
     //void renderDemoUI();
     // --- GameScene ---
-    void renderHoveredPortrait();
+    void renderHoveredCard();
     void renderHoveredUnit();
     void renderSelectedUnit();
     void renderInfoUI();
@@ -75,8 +75,8 @@ private:
     void renderUnitTable();
 
     // 事件回调函数
-    void onUIPortraitHoverEnterEvent(const game::defs::UIPortraitHoverEnterEvent &event);
-    void onUIPortraitHoverLeaveEvent();
+    void onUICardHoverEnterEvent(const game::defs::UICardHoverEnterEvent &event);
+    void onUICardHoverLeaveEvent();
 };
 
 }   // namespace game::system

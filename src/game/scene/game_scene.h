@@ -31,7 +31,7 @@ namespace game::spawner
 
 namespace game::ui
 {
-    class UnitsPortraitUI;
+    class PlantsCardUI;
 }
 
 namespace game::scene
@@ -57,18 +57,18 @@ private:
     std::unique_ptr<game::system::AnimationEventSystem> animation_event_system_;
     std::unique_ptr<game::system::CombatResolveSystem> combat_resolve_system_;
     std::unique_ptr<game::system::ProjectileSystem> projectile_system_;
-    std::unique_ptr<game::system::EffectSystem> effect_system_;
+    // std::unique_ptr<game::system::EffectSystem> effect_system_;
     std::unique_ptr<game::system::HealthBarSystem> health_bar_system_;
     std::unique_ptr<game::system::GameRuleSystem> game_rule_system_;
     std::unique_ptr<game::system::PlaceUnitSystem> place_unit_system_;
     std::unique_ptr<game::system::RenderRangeSystem> render_range_system_;
     std::unique_ptr<game::system::DebugUISystem> debug_ui_system_;
     std::unique_ptr<game::system::SelectionSystem> selection_system_;
-    std::unique_ptr<game::system::SkillSystem> skill_system_;
+    // std::unique_ptr<game::system::SkillSystem> skill_system_;
 
     std::unique_ptr<game::spawner::EnemySpawner> enemy_spawner_;        // 敌人生成器，负责生成敌人
 
-    std::unique_ptr<game::ui::UnitsPortraitUI> units_portrait_ui_; // 封装的单位肖像UI，负责管理单位肖像UI的创建、更新和排列
+    std::unique_ptr<game::ui::PlantsCardUI> plants_card_ui_; // 封装的单位肖像UI，负责管理单位肖像UI的创建、更新和排列
 
     std::unordered_map<int, game::data::WaypointNode> waypoint_nodes_;  // 路径节点ID到节点数据的映射
     std::vector<int> start_points_;                                     // 起点ID列表
@@ -122,7 +122,7 @@ private:
     [[nodiscard]] bool initRegistryContext();
     [[nodiscard]] bool initSystems();
     [[nodiscard]] bool initEnemySpawner();
-    [[nodiscard]] bool initUnitsPortraitUI();
+    [[nodiscard]] bool initPlantsCardUI();
 
     // 场景相关函数
     void onRestart();
@@ -130,6 +130,14 @@ private:
     void onSave();
     void onLevelClear();
     void onGameEndEvent(const game::defs::GameEndEvent &event);
+
+    // 测试函数
+    bool onCameraMoveLeft();
+    bool onCameraMoveRight();
+    bool onCameraMoveUp();
+    bool onCameraMoveDown();
+
+    bool onRenderText();
 };
 
 } // namespace game::scene

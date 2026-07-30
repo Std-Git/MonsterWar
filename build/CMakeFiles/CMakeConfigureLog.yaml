@@ -24,7 +24,7 @@ events:
       The output was:
       0
       适用于 .NET Framework MSBuild 版本 17.14.10+8b8e13593
-      生成启动时间为 2026/5/2 14:18:52。
+      生成启动时间为 2026/5/11 22:39:55。
       
       节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdC\\CompilerIdC.vcxproj”(默认目标)。
       PrepareForBuild:
@@ -53,7 +53,7 @@ events:
           0 个警告
           0 个错误
       
-      已用时间 00:00:02.36
+      已用时间 00:00:01.98
       
       
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
@@ -79,7 +79,7 @@ events:
       The output was:
       0
       适用于 .NET Framework MSBuild 版本 17.14.10+8b8e13593
-      生成启动时间为 2026/5/2 14:18:54。
+      生成启动时间为 2026/5/11 22:39:58。
       
       节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\3.31.6-msvc6\\CompilerIdCXX\\CompilerIdCXX.vcxproj”(默认目标)。
       PrepareForBuild:
@@ -108,7 +108,7 @@ events:
           0 个警告
           0 个错误
       
-      已用时间 00:00:01.80
+      已用时间 00:00:01.34
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -127,8 +127,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-3a310r"
-      binary: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-3a310r"
+      source: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-uli35e"
+      binary: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-uli35e"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
       CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
@@ -137,40 +137,40 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-3a310r'
+        Change Dir: 'D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-uli35e'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_e8fee.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_ce906.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         适用于 .NET Framework MSBuild 版本 17.14.10+8b8e13593
-        生成启动时间为 2026/5/2 14:18:57。
+        生成启动时间为 2026/5/11 22:40:00。
         
-        节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3a310r\\cmTC_e8fee.vcxproj”(默认目标)。
+        节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uli35e\\cmTC_ce906.vcxproj”(默认目标)。
         PrepareForBuild:
-          正在创建目录“cmTC_e8fee.dir\\Debug\\”。
+          正在创建目录“cmTC_ce906.dir\\Debug\\”。
           已启用结构化输出。编译器诊断的格式设置将反映错误层次结构。有关详细信息，请参阅 https://aka.ms/cpp/structured-output。
-          正在创建目录“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3a310r\\Debug\\”。
-          正在创建目录“cmTC_e8fee.dir\\Debug\\cmTC_e8fee.tlog\\”。
+          正在创建目录“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uli35e\\Debug\\”。
+          正在创建目录“cmTC_ce906.dir\\Debug\\cmTC_ce906.tlog\\”。
         InitializeBuildStatus:
-          正在创建“cmTC_e8fee.dir\\Debug\\cmTC_e8fee.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
-          正在对“cmTC_e8fee.dir\\Debug\\cmTC_e8fee.tlog\\unsuccessfulbuild”执行 Touch 任务。
+          正在创建“cmTC_ce906.dir\\Debug\\cmTC_ce906.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_ce906.dir\\Debug\\cmTC_ce906.tlog\\unsuccessfulbuild”执行 Touch 任务。
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e8fee.dir\\Debug\\\\" /Fd"cmTC_e8fee.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_ce906.dir\\Debug\\\\" /Fd"cmTC_ce906.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
           用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.44.35211 版
           版权所有(C) Microsoft Corporation。保留所有权利。
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e8fee.dir\\Debug\\\\" /Fd"cmTC_e8fee.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_ce906.dir\\Debug\\\\" /Fd"cmTC_ce906.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
           CMakeCCompilerABI.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3a310r\\Debug\\cmTC_e8fee.exe" /INCREMENTAL /ILK:"cmTC_e8fee.dir\\Debug\\cmTC_e8fee.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-3a310r/Debug/cmTC_e8fee.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-3a310r/Debug/cmTC_e8fee.lib" /MACHINE:X64  /machine:x64 cmTC_e8fee.dir\\Debug\\CMakeCCompilerABI.obj
-          cmTC_e8fee.vcxproj -> D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3a310r\\Debug\\cmTC_e8fee.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uli35e\\Debug\\cmTC_ce906.exe" /INCREMENTAL /ILK:"cmTC_ce906.dir\\Debug\\cmTC_ce906.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-uli35e/Debug/cmTC_ce906.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-uli35e/Debug/cmTC_ce906.lib" /MACHINE:X64  /machine:x64 cmTC_ce906.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_ce906.vcxproj -> D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uli35e\\Debug\\cmTC_ce906.exe
         FinalizeBuildStatus:
-          正在删除文件“cmTC_e8fee.dir\\Debug\\cmTC_e8fee.tlog\\unsuccessfulbuild”。
-          正在对“cmTC_e8fee.dir\\Debug\\cmTC_e8fee.tlog\\cmTC_e8fee.lastbuildstate”执行 Touch 任务。
-        已完成生成项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3a310r\\cmTC_e8fee.vcxproj”(默认目标)的操作。
+          正在删除文件“cmTC_ce906.dir\\Debug\\cmTC_ce906.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_ce906.dir\\Debug\\cmTC_ce906.tlog\\cmTC_ce906.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-uli35e\\cmTC_ce906.vcxproj”(默认目标)的操作。
         
         已成功生成。
             0 个警告
             0 个错误
         
-        已用时间 00:00:01.30
+        已用时间 00:00:01.58
         
       exitCode: 0
   -
@@ -210,8 +210,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-mejbmp"
-      binary: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-mejbmp"
+      source: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-pzqfue"
+      binary: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-pzqfue"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
@@ -221,40 +221,40 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-mejbmp'
+        Change Dir: 'D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-pzqfue'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_1bad5.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_d1c1e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         适用于 .NET Framework MSBuild 版本 17.14.10+8b8e13593
-        生成启动时间为 2026/5/2 14:18:58。
+        生成启动时间为 2026/5/11 22:40:02。
         
-        节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mejbmp\\cmTC_1bad5.vcxproj”(默认目标)。
+        节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pzqfue\\cmTC_d1c1e.vcxproj”(默认目标)。
         PrepareForBuild:
-          正在创建目录“cmTC_1bad5.dir\\Debug\\”。
+          正在创建目录“cmTC_d1c1e.dir\\Debug\\”。
           已启用结构化输出。编译器诊断的格式设置将反映错误层次结构。有关详细信息，请参阅 https://aka.ms/cpp/structured-output。
-          正在创建目录“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mejbmp\\Debug\\”。
-          正在创建目录“cmTC_1bad5.dir\\Debug\\cmTC_1bad5.tlog\\”。
+          正在创建目录“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pzqfue\\Debug\\”。
+          正在创建目录“cmTC_d1c1e.dir\\Debug\\cmTC_d1c1e.tlog\\”。
         InitializeBuildStatus:
-          正在创建“cmTC_1bad5.dir\\Debug\\cmTC_1bad5.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
-          正在对“cmTC_1bad5.dir\\Debug\\cmTC_1bad5.tlog\\unsuccessfulbuild”执行 Touch 任务。
+          正在创建“cmTC_d1c1e.dir\\Debug\\cmTC_d1c1e.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_d1c1e.dir\\Debug\\cmTC_d1c1e.tlog\\unsuccessfulbuild”执行 Touch 任务。
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_1bad5.dir\\Debug\\\\" /Fd"cmTC_1bad5.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_d1c1e.dir\\Debug\\\\" /Fd"cmTC_d1c1e.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
           用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.44.35211 版
           版权所有(C) Microsoft Corporation。保留所有权利。
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_1bad5.dir\\Debug\\\\" /Fd"cmTC_1bad5.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_d1c1e.dir\\Debug\\\\" /Fd"cmTC_d1c1e.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
           CMakeCXXCompilerABI.cpp
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mejbmp\\Debug\\cmTC_1bad5.exe" /INCREMENTAL /ILK:"cmTC_1bad5.dir\\Debug\\cmTC_1bad5.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-mejbmp/Debug/cmTC_1bad5.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-mejbmp/Debug/cmTC_1bad5.lib" /MACHINE:X64  /machine:x64 cmTC_1bad5.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_1bad5.vcxproj -> D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mejbmp\\Debug\\cmTC_1bad5.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pzqfue\\Debug\\cmTC_d1c1e.exe" /INCREMENTAL /ILK:"cmTC_d1c1e.dir\\Debug\\cmTC_d1c1e.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-pzqfue/Debug/cmTC_d1c1e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-pzqfue/Debug/cmTC_d1c1e.lib" /MACHINE:X64  /machine:x64 cmTC_d1c1e.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_d1c1e.vcxproj -> D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pzqfue\\Debug\\cmTC_d1c1e.exe
         FinalizeBuildStatus:
-          正在删除文件“cmTC_1bad5.dir\\Debug\\cmTC_1bad5.tlog\\unsuccessfulbuild”。
-          正在对“cmTC_1bad5.dir\\Debug\\cmTC_1bad5.tlog\\cmTC_1bad5.lastbuildstate”执行 Touch 任务。
-        已完成生成项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-mejbmp\\cmTC_1bad5.vcxproj”(默认目标)的操作。
+          正在删除文件“cmTC_d1c1e.dir\\Debug\\cmTC_d1c1e.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_d1c1e.dir\\Debug\\cmTC_d1c1e.tlog\\cmTC_d1c1e.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pzqfue\\cmTC_d1c1e.vcxproj”(默认目标)的操作。
         
         已成功生成。
             0 个警告
             0 个错误
         
-        已用时间 00:00:00.91
+        已用时间 00:00:01.38
         
       exitCode: 0
   -
@@ -306,38 +306,38 @@ events:
       stdout: |
         Change Dir: 'D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeTmp/SDL_detect_arch/CMakeFiles/CMakeTmp'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_10155.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_8a010.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         适用于 .NET Framework MSBuild 版本 17.14.10+8b8e13593
-        生成启动时间为 2026/5/2 14:19:00。
+        生成启动时间为 2026/5/11 22:40:04。
         
-        节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\cmTC_10155.vcxproj”(默认目标)。
+        节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\cmTC_8a010.vcxproj”(默认目标)。
         PrepareForBuild:
-          正在创建目录“cmTC_10155.dir\\Debug\\”。
+          正在创建目录“cmTC_8a010.dir\\Debug\\”。
           已启用结构化输出。编译器诊断的格式设置将反映错误层次结构。有关详细信息，请参阅 https://aka.ms/cpp/structured-output。
           正在创建目录“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\Debug\\”。
-          正在创建目录“cmTC_10155.dir\\Debug\\cmTC_10155.tlog\\”。
+          正在创建目录“cmTC_8a010.dir\\Debug\\cmTC_8a010.tlog\\”。
         InitializeBuildStatus:
-          正在创建“cmTC_10155.dir\\Debug\\cmTC_10155.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
-          正在对“cmTC_10155.dir\\Debug\\cmTC_10155.tlog\\unsuccessfulbuild”执行 Touch 任务。
+          正在创建“cmTC_8a010.dir\\Debug\\cmTC_8a010.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_8a010.dir\\Debug\\cmTC_8a010.tlog\\unsuccessfulbuild”执行 Touch 任务。
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_10155.dir\\Debug\\\\" /Fd"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\Debug\\cmTC_10155.pdb" /external:W3 /Gd /TC /errorReport:queue D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch.c
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8a010.dir\\Debug\\\\" /Fd"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\Debug\\cmTC_8a010.pdb" /external:W3 /Gd /TC /errorReport:queue D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch.c
           用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.44.35211 版
           版权所有(C) Microsoft Corporation。保留所有权利。
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_10155.dir\\Debug\\\\" /Fd"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\Debug\\cmTC_10155.pdb" /external:W3 /Gd /TC /errorReport:queue D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch.c
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8a010.dir\\Debug\\\\" /Fd"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\Debug\\cmTC_8a010.pdb" /external:W3 /Gd /TC /errorReport:queue D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch.c
           SDL_detect_arch.c
         Lib:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\Lib.exe /OUT:"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\Debug\\cmTC_10155.lib" /NOLOGO /MACHINE:X64  /machine:x64 cmTC_10155.dir\\Debug\\SDL_detect_arch.obj
-          cmTC_10155.vcxproj -> D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\Debug\\cmTC_10155.lib
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\Lib.exe /OUT:"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\Debug\\cmTC_8a010.lib" /NOLOGO /MACHINE:X64  /machine:x64 cmTC_8a010.dir\\Debug\\SDL_detect_arch.obj
+          cmTC_8a010.vcxproj -> D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\Debug\\cmTC_8a010.lib
         FinalizeBuildStatus:
-          正在删除文件“cmTC_10155.dir\\Debug\\cmTC_10155.tlog\\unsuccessfulbuild”。
-          正在对“cmTC_10155.dir\\Debug\\cmTC_10155.tlog\\cmTC_10155.lastbuildstate”执行 Touch 任务。
-        已完成生成项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\cmTC_10155.vcxproj”(默认目标)的操作。
+          正在删除文件“cmTC_8a010.dir\\Debug\\cmTC_8a010.tlog\\unsuccessfulbuild”。
+          正在对“cmTC_8a010.dir\\Debug\\cmTC_8a010.tlog\\cmTC_8a010.lastbuildstate”执行 Touch 任务。
+        已完成生成项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeTmp\\SDL_detect_arch\\CMakeFiles\\CMakeTmp\\cmTC_8a010.vcxproj”(默认目标)的操作。
         
         已成功生成。
             0 个警告
             0 个错误
         
-        已用时间 00:00:00.70
+        已用时间 00:00:00.85
         
       exitCode: 0
   -
@@ -354,8 +354,8 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-tagzyc"
-      binary: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-tagzyc"
+      source: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-ncfqaz"
+      binary: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-ncfqaz"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
       CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
@@ -364,40 +364,40 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: 'D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-tagzyc'
+        Change Dir: 'D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-ncfqaz'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_0d938.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_fb5a4.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         适用于 .NET Framework MSBuild 版本 17.14.10+8b8e13593
-        生成启动时间为 2026/5/2 14:19:01。
+        生成启动时间为 2026/5/11 22:40:06。
         
-        节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tagzyc\\cmTC_0d938.vcxproj”(默认目标)。
+        节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ncfqaz\\cmTC_fb5a4.vcxproj”(默认目标)。
         PrepareForBuild:
-          正在创建目录“cmTC_0d938.dir\\Debug\\”。
+          正在创建目录“cmTC_fb5a4.dir\\Debug\\”。
           已启用结构化输出。编译器诊断的格式设置将反映错误层次结构。有关详细信息，请参阅 https://aka.ms/cpp/structured-output。
-          正在创建目录“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tagzyc\\Debug\\”。
-          正在创建目录“cmTC_0d938.dir\\Debug\\cmTC_0d938.tlog\\”。
+          正在创建目录“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ncfqaz\\Debug\\”。
+          正在创建目录“cmTC_fb5a4.dir\\Debug\\cmTC_fb5a4.tlog\\”。
         InitializeBuildStatus:
-          正在创建“cmTC_0d938.dir\\Debug\\cmTC_0d938.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
-          正在对“cmTC_0d938.dir\\Debug\\cmTC_0d938.tlog\\unsuccessfulbuild”执行 Touch 任务。
+          正在创建“cmTC_fb5a4.dir\\Debug\\cmTC_fb5a4.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_fb5a4.dir\\Debug\\cmTC_fb5a4.tlog\\unsuccessfulbuild”执行 Touch 任务。
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_0d938.dir\\Debug\\\\" /Fd"cmTC_0d938.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tagzyc\\src.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_fb5a4.dir\\Debug\\\\" /Fd"cmTC_fb5a4.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ncfqaz\\src.c"
           用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.44.35211 版
           版权所有(C) Microsoft Corporation。保留所有权利。
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_0d938.dir\\Debug\\\\" /Fd"cmTC_0d938.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tagzyc\\src.c"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_fb5a4.dir\\Debug\\\\" /Fd"cmTC_fb5a4.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ncfqaz\\src.c"
           src.c
-        D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tagzyc\\src.c(1,10): error C1083: 无法打开包括文件: “pthread.h”: No such file or directory [D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tagzyc\\cmTC_0d938.vcxproj]
-        已完成生成项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tagzyc\\cmTC_0d938.vcxproj”(默认目标)的操作 - 失败。
+        D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ncfqaz\\src.c(1,10): error C1083: 无法打开包括文件: “pthread.h”: No such file or directory [D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ncfqaz\\cmTC_fb5a4.vcxproj]
+        已完成生成项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ncfqaz\\cmTC_fb5a4.vcxproj”(默认目标)的操作 - 失败。
         
         生成失败。
         
-        “D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tagzyc\\cmTC_0d938.vcxproj”(默认目标) (1) ->
+        “D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ncfqaz\\cmTC_fb5a4.vcxproj”(默认目标) (1) ->
         (ClCompile 目标) -> 
-          D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tagzyc\\src.c(1,10): error C1083: 无法打开包括文件: “pthread.h”: No such file or directory [D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-tagzyc\\cmTC_0d938.vcxproj]
+          D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ncfqaz\\src.c(1,10): error C1083: 无法打开包括文件: “pthread.h”: No such file or directory [D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ncfqaz\\cmTC_fb5a4.vcxproj]
         
             0 个警告
             1 个错误
         
-        已用时间 00:00:00.60
+        已用时间 00:00:00.61
         
       exitCode: 1
   -
@@ -413,8 +413,8 @@ events:
     checks:
       - "Looking for pthread_create in pthreads"
     directories:
-      source: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-98b5km"
-      binary: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-98b5km"
+      source: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-o1275x"
+      binary: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-o1275x"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
       CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
@@ -423,42 +423,42 @@ events:
       variable: "CMAKE_HAVE_PTHREADS_CREATE"
       cached: true
       stdout: |
-        Change Dir: 'D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-98b5km'
+        Change Dir: 'D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-o1275x'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_1246e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_7af98.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         适用于 .NET Framework MSBuild 版本 17.14.10+8b8e13593
-        生成启动时间为 2026/5/2 14:19:02。
+        生成启动时间为 2026/5/11 22:40:07。
         
-        节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-98b5km\\cmTC_1246e.vcxproj”(默认目标)。
+        节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-o1275x\\cmTC_7af98.vcxproj”(默认目标)。
         PrepareForBuild:
-          正在创建目录“cmTC_1246e.dir\\Debug\\”。
+          正在创建目录“cmTC_7af98.dir\\Debug\\”。
           已启用结构化输出。编译器诊断的格式设置将反映错误层次结构。有关详细信息，请参阅 https://aka.ms/cpp/structured-output。
-          正在创建目录“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-98b5km\\Debug\\”。
-          正在创建目录“cmTC_1246e.dir\\Debug\\cmTC_1246e.tlog\\”。
+          正在创建目录“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-o1275x\\Debug\\”。
+          正在创建目录“cmTC_7af98.dir\\Debug\\cmTC_7af98.tlog\\”。
         InitializeBuildStatus:
-          正在创建“cmTC_1246e.dir\\Debug\\cmTC_1246e.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
-          正在对“cmTC_1246e.dir\\Debug\\cmTC_1246e.tlog\\unsuccessfulbuild”执行 Touch 任务。
+          正在创建“cmTC_7af98.dir\\Debug\\cmTC_7af98.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_7af98.dir\\Debug\\cmTC_7af98.tlog\\unsuccessfulbuild”执行 Touch 任务。
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_1246e.dir\\Debug\\\\" /Fd"cmTC_1246e.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-98b5km\\CheckFunctionExists.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_7af98.dir\\Debug\\\\" /Fd"cmTC_7af98.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-o1275x\\CheckFunctionExists.c"
           用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.44.35211 版
           版权所有(C) Microsoft Corporation。保留所有权利。
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_1246e.dir\\Debug\\\\" /Fd"cmTC_1246e.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-98b5km\\CheckFunctionExists.c"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_7af98.dir\\Debug\\\\" /Fd"cmTC_7af98.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-o1275x\\CheckFunctionExists.c"
           CheckFunctionExists.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-98b5km\\Debug\\cmTC_1246e.exe" /INCREMENTAL /ILK:"cmTC_1246e.dir\\Debug\\cmTC_1246e.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-98b5km/Debug/cmTC_1246e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-98b5km/Debug/cmTC_1246e.lib" /MACHINE:X64  /machine:x64 cmTC_1246e.dir\\Debug\\CheckFunctionExists.obj
-        LINK : fatal error LNK1104: 无法打开文件“pthreads.lib” [D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-98b5km\\cmTC_1246e.vcxproj]
-        已完成生成项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-98b5km\\cmTC_1246e.vcxproj”(默认目标)的操作 - 失败。
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-o1275x\\Debug\\cmTC_7af98.exe" /INCREMENTAL /ILK:"cmTC_7af98.dir\\Debug\\cmTC_7af98.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-o1275x/Debug/cmTC_7af98.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-o1275x/Debug/cmTC_7af98.lib" /MACHINE:X64  /machine:x64 cmTC_7af98.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: 无法打开文件“pthreads.lib” [D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-o1275x\\cmTC_7af98.vcxproj]
+        已完成生成项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-o1275x\\cmTC_7af98.vcxproj”(默认目标)的操作 - 失败。
         
         生成失败。
         
-        “D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-98b5km\\cmTC_1246e.vcxproj”(默认目标) (1) ->
+        “D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-o1275x\\cmTC_7af98.vcxproj”(默认目标) (1) ->
         (Link 目标) -> 
-          LINK : fatal error LNK1104: 无法打开文件“pthreads.lib” [D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-98b5km\\cmTC_1246e.vcxproj]
+          LINK : fatal error LNK1104: 无法打开文件“pthreads.lib” [D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-o1275x\\cmTC_7af98.vcxproj]
         
             0 个警告
             1 个错误
         
-        已用时间 00:00:01.28
+        已用时间 00:00:00.88
         
       exitCode: 1
   -
@@ -474,8 +474,8 @@ events:
     checks:
       - "Looking for pthread_create in pthread"
     directories:
-      source: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-1i2fe3"
-      binary: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-1i2fe3"
+      source: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-g054md"
+      binary: "D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-g054md"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
       CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
@@ -484,42 +484,42 @@ events:
       variable: "CMAKE_HAVE_PTHREAD_CREATE"
       cached: true
       stdout: |
-        Change Dir: 'D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-1i2fe3'
+        Change Dir: 'D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-g054md'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_c7acf.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_9d56e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         适用于 .NET Framework MSBuild 版本 17.14.10+8b8e13593
-        生成启动时间为 2026/5/2 14:19:04。
+        生成启动时间为 2026/5/11 22:40:08。
         
-        节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1i2fe3\\cmTC_c7acf.vcxproj”(默认目标)。
+        节点 1 上的项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g054md\\cmTC_9d56e.vcxproj”(默认目标)。
         PrepareForBuild:
-          正在创建目录“cmTC_c7acf.dir\\Debug\\”。
+          正在创建目录“cmTC_9d56e.dir\\Debug\\”。
           已启用结构化输出。编译器诊断的格式设置将反映错误层次结构。有关详细信息，请参阅 https://aka.ms/cpp/structured-output。
-          正在创建目录“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1i2fe3\\Debug\\”。
-          正在创建目录“cmTC_c7acf.dir\\Debug\\cmTC_c7acf.tlog\\”。
+          正在创建目录“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g054md\\Debug\\”。
+          正在创建目录“cmTC_9d56e.dir\\Debug\\cmTC_9d56e.tlog\\”。
         InitializeBuildStatus:
-          正在创建“cmTC_c7acf.dir\\Debug\\cmTC_c7acf.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
-          正在对“cmTC_c7acf.dir\\Debug\\cmTC_c7acf.tlog\\unsuccessfulbuild”执行 Touch 任务。
+          正在创建“cmTC_9d56e.dir\\Debug\\cmTC_9d56e.tlog\\unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+          正在对“cmTC_9d56e.dir\\Debug\\cmTC_9d56e.tlog\\unsuccessfulbuild”执行 Touch 任务。
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c7acf.dir\\Debug\\\\" /Fd"cmTC_c7acf.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1i2fe3\\CheckFunctionExists.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_9d56e.dir\\Debug\\\\" /Fd"cmTC_9d56e.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g054md\\CheckFunctionExists.c"
           用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.44.35211 版
           版权所有(C) Microsoft Corporation。保留所有权利。
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c7acf.dir\\Debug\\\\" /Fd"cmTC_c7acf.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1i2fe3\\CheckFunctionExists.c"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_9d56e.dir\\Debug\\\\" /Fd"cmTC_9d56e.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g054md\\CheckFunctionExists.c"
           CheckFunctionExists.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1i2fe3\\Debug\\cmTC_c7acf.exe" /INCREMENTAL /ILK:"cmTC_c7acf.dir\\Debug\\cmTC_c7acf.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-1i2fe3/Debug/cmTC_c7acf.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-1i2fe3/Debug/cmTC_c7acf.lib" /MACHINE:X64  /machine:x64 cmTC_c7acf.dir\\Debug\\CheckFunctionExists.obj
-        LINK : fatal error LNK1104: 无法打开文件“pthread.lib” [D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1i2fe3\\cmTC_c7acf.vcxproj]
-        已完成生成项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1i2fe3\\cmTC_c7acf.vcxproj”(默认目标)的操作 - 失败。
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g054md\\Debug\\cmTC_9d56e.exe" /INCREMENTAL /ILK:"cmTC_9d56e.dir\\Debug\\cmTC_9d56e.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-g054md/Debug/cmTC_9d56e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/CMakeScratch/TryCompile-g054md/Debug/cmTC_9d56e.lib" /MACHINE:X64  /machine:x64 cmTC_9d56e.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: 无法打开文件“pthread.lib” [D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g054md\\cmTC_9d56e.vcxproj]
+        已完成生成项目“D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g054md\\cmTC_9d56e.vcxproj”(默认目标)的操作 - 失败。
         
         生成失败。
         
-        “D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1i2fe3\\cmTC_c7acf.vcxproj”(默认目标) (1) ->
+        “D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g054md\\cmTC_9d56e.vcxproj”(默认目标) (1) ->
         (Link 目标) -> 
-          LINK : fatal error LNK1104: 无法打开文件“pthread.lib” [D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-1i2fe3\\cmTC_c7acf.vcxproj]
+          LINK : fatal error LNK1104: 无法打开文件“pthread.lib” [D:\\CMakeProgram\\PvZ_EnChanted\\build\\CMakeFiles\\CMakeScratch\\TryCompile-g054md\\cmTC_9d56e.vcxproj]
         
             0 个警告
             1 个错误
         
-        已用时间 00:00:00.63
+        已用时间 00:00:01.03
         
       exitCode: 1
 ...

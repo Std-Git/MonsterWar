@@ -33,7 +33,7 @@ public:
     glm::vec2 worldToScreenWithParallax(const glm::vec2& world_pos, const glm::vec2& scroll_factor) const;  ///< @brief 将世界坐标转换为屏幕坐标，考虑视差效果
     glm::vec2 screenToWorld(const glm::vec2& screen_pos) const;      ///< @brief 将屏幕坐标转换为世界坐标
 
-    void setPosition(glm::vec2 position);                    ///< @brief 设置相机位置
+    void setPosition(glm::vec2 position);                           ///< @brief 设置相机位置
     void setLimitBounds(std::optional<engine::utils::Rect> limit_bounds); ///< @brief 设置相机移动范围限制
 
     const glm::vec2& getPosition() const;                              ///< @brief 获取相机位置

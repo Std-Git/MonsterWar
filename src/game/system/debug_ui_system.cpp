@@ -40,8 +40,8 @@ namespace game::system
 DebugUISystem::DebugUISystem(entt::registry& registry, engine::core::Context& context) 
     : registry_(registry), context_(context) 
 {
-    context_.getDispatcher().sink<game::defs::UIPortraitHoverEnterEvent>().connect<&DebugUISystem::onUIPortraitHoverEnterEvent>(this);
-    context_.getDispatcher().sink<game::defs::UIPortraitHoverLeaveEvent>().connect<&DebugUISystem::onUIPortraitHoverLeaveEvent>(this);
+    context_.getDispatcher().sink<game::defs::UICardHoverEnterEvent>().connect<&DebugUISystem::onUICardHoverEnterEvent>(this);
+    context_.getDispatcher().sink<game::defs::UICardHoverLeaveEvent>().connect<&DebugUISystem::onUICardHoverLeaveEvent>(this);
 }
 
 DebugUISystem::~DebugUISystem()
@@ -52,7 +52,7 @@ DebugUISystem::~DebugUISystem()
 void DebugUISystem::update()
 {
     beginFrame();
-    renderHoveredPortrait();
+    renderHoveredCard();
     renderHoveredUnit();
     renderSelectedUnit();
     renderInfoUI();
@@ -122,15 +122,15 @@ void DebugUISystem::endFrame()
 
 // ----------------------------- GameScene -----------------------------
 
-void DebugUISystem::renderHoveredPortrait()
+void DebugUISystem::renderHoveredCard()
 {
     // 确定鼠标悬浮的单位肖像存在
-    if (hovered_portrait_ == entt::null) return;
+    if (hovered_card_ == entt::null) return;
 
     // 角色名称不是一个实体，需要从蓝图中获取数据
     const auto& session_data = registry_.ctx().get<std::shared_ptr<game::data::SessionData>>();
     const auto& blueprint_manager = registry_.ctx().get<std::shared_ptr<game::factory::BlueprintManager>>();
-    const auto &unit_data = session_data->getUnitData(hovered_portrait_);
+    const auto &unit_data = session_data->getUnitData(hovered_card_);
     const auto& class_blueprint = blueprint_manager->getPlayerClassBlueprint(unit_data.class_id_);
     const auto &stats = class_blueprint.stats_;
     // 计算等级和稀有度对属性的影响
@@ -265,7 +265,7 @@ void DebugUISystem::renderSelectedUnit()
     ImGui::Text("快捷键 %s: COST返还: %d", context_.getInputManager().getActionKeyName("retreat"_hs).c_str(), return_cost);
 
     // 技能显示与交互
-    if (auto skill = registry_.try_get<game::component::SkillComponent>(entity); skill)
+    /*if (auto skill = registry_.try_get<game::component::SkillComponent>(entity); skill)
     {
         // 如果技能准备就绪，则按钮可用(激活技能)，否则按钮不可用
         auto ready = registry_.all_of<game::defs::SkillReadyTag>(entity);
@@ -302,7 +302,7 @@ void DebugUISystem::renderSelectedUnit()
         }
         // 显示技能描述
         ImGui::TextWrapped("%s", skill->description_.c_str());
-    }
+    }*/
     ImGui::End();
 }
 
@@ -467,27 +467,28 @@ void DebugUISystem::renderTitleButtons(game::scene::TitleScene &title_scene)
         return;
     }
     // 设置字体让按钮字体更大
-    ImGui::SetWindowFontScale(2.0f);
-    if (ImGui::Button("开始游戏", ImVec2(200, 60)))
+    ImGui::SetWindowFontScale(ImGui::GetIO().FontGlobalScale * 2.0f);
+    auto padding = ImGui::GetIO().FontGlobalScale * 10.0f;
+    if (ImGui::Button("开始游戏"))
     {
         title_scene.onStartGameClick(); // 直接调用TitleScene的私有函数，不需要通过dispatcher发送信号
     }
-    ImGui::SameLine();  ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 20.0f);
-    if (ImGui::Button("确认角色", ImVec2(200, 60)))
+    ImGui::SameLine();  ImGui::SetCursorPosX(ImGui::GetCursorPosX() + padding);
+    if (ImGui::Button("确认角色"))
     {
         title_scene.onConfirmRoleClick();
     }
-    ImGui::SameLine();  ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 20.0f);
-    if (ImGui::Button("载入游戏", ImVec2(200, 60)))
+    ImGui::SameLine();  ImGui::SetCursorPosX(ImGui::GetCursorPosX() + padding);
+    if (ImGui::Button("载入游戏"))
     {
         title_scene.onLoadGameClick();
     }
-    ImGui::SameLine();  ImGui::SetCursorPosX(ImGui::GetCursorPosX() + 20.0f);
-    if (ImGui::Button("退出游戏", ImVec2(200, 60)))
+    ImGui::SameLine();  ImGui::SetCursorPosX(ImGui::GetCursorPosX() + padding);
+    if (ImGui::Button("退出游戏"))
     {
         title_scene.onQuitClick();
     }
-    ImGui::SetWindowFontScale(1.0f);    // 恢复默认字体大小
+    ImGui::SetWindowFontScale(ImGui::GetIO().FontGlobalScale); // 恢复默认字体大小
     ImGui::End();
 }
 
@@ -824,9 +825,9 @@ void DebugUISystem::renderUnitTable()
                                  }
                                  case 12:
                                  { // 技能
-                                     const auto &sk_l = blueprint_manager->getSkillBlueprint(pcb_l.player_.skill_id_);
-                                     const auto &sk_r = blueprint_manager->getSkillBlueprint(pcb_r.player_.skill_id_);
-                                     delta = compareStrings(sk_l.name_, sk_r.name_);
+                                     //const auto &sk_l = blueprint_manager->getSkillBlueprint(pcb_l.player_.skill_id_);
+                                     //const auto &sk_r = blueprint_manager->getSkillBlueprint(pcb_r.player_.skill_id_);
+                                     //delta = compareStrings(sk_l.name_, sk_r.name_);
                                      break;
                                  }
                                  case 13:
@@ -853,7 +854,7 @@ void DebugUISystem::renderUnitTable()
     {
         // 获取并计算属性数据信息
         const auto& player_class_blueprint = blueprint_manager->getPlayerClassBlueprint(unit->class_id_);
-        const auto& skill_blueprint = blueprint_manager->getSkillBlueprint(player_class_blueprint.player_.skill_id_);
+        //const auto& skill_blueprint = blueprint_manager->getSkillBlueprint(player_class_blueprint.player_.skill_id_);
         const auto &stats = player_class_blueprint.stats_;
         const auto hp = engine::utils::statModify(stats.hp_, unit->level_, unit->rarity_);
         const auto atk = engine::utils::statModify(stats.atk_, unit->level_, unit->rarity_);
@@ -864,19 +865,19 @@ void DebugUISystem::renderUnitTable()
                            player_class_blueprint.player_.type_ == game::defs::PlayerType::MIXED ? "混合" : "未知";
         
         // 获取头像信息
-        const auto& portrait_image = ui_config->getPortrait(unit->name_id_);
-        auto portrait_texture = context_.getResourceManager().getTexture(portrait_image.getTextureId(), portrait_image.getTexturePath());
-        auto portrait_rect = portrait_image.getSourceRect();    // 源矩形的区域
-        auto sprite_sheet_size = context_.getResourceManager().getTextureSize(portrait_image.getTextureId());//  获取精灵图片的大小
+        const auto& card_image = ui_config->getCard(unit->name_id_);
+        auto card_texture = context_.getResourceManager().getTexture(card_image.getTextureId(), card_image.getTexturePath());
+        auto card_rect = card_image.getSourceRect();    // 源矩形的区域
+        auto sprite_sheet_size = context_.getResourceManager().getTextureSize(card_image.getTextureId());//  获取精灵图片的大小
 
         // 计算头像的UV坐标 (即源矩形的左上、右下的坐标，相对于整张精灵图大小的比例，取值在0~1之间)
-        float u = portrait_rect->position.x / sprite_sheet_size.x;
-        float v = portrait_rect->position.y / sprite_sheet_size.y;
-        float u2 = (portrait_rect->position.x + portrait_rect->size.x) / sprite_sheet_size.x;
-        float v2 = (portrait_rect->position.y + portrait_rect->size.y) / sprite_sheet_size.y;
+        float u = card_rect->position.x / sprite_sheet_size.x;
+        float v = card_rect->position.y / sprite_sheet_size.y;
+        float u2 = (card_rect->position.x + card_rect->size.x) / sprite_sheet_size.x;
+        float v2 = (card_rect->position.y + card_rect->size.y) / sprite_sheet_size.y;
 
         // 设置显示尺寸
-        constexpr glm::vec2 DISPLAY_SIZE = glm::vec2(128.0f, 128.0f);
+        glm::vec2 DISPLAY_SIZE = glm::vec2(128.0f, sprite_sheet_size.y / sprite_sheet_size.x * 128.0f);
 
         // 新建一行
         ImGui::TableNextRow();
@@ -888,7 +889,7 @@ void DebugUISystem::renderUnitTable()
         {
             ImGui::BeginTooltip();
             // 图片显示参数：SDL_Texture* 显示尺寸(像素)，源矩形的左上角UV坐标，源矩形的右下角UV坐标
-            ImGui::Image(portrait_texture, ImVec2(DISPLAY_SIZE.x, DISPLAY_SIZE.y), ImVec2(u, v), ImVec2(u2, v2));
+            ImGui::Image(card_texture, ImVec2(DISPLAY_SIZE.x, DISPLAY_SIZE.y), ImVec2(u, v), ImVec2(u2, v2));
             ImGui::EndTooltip();
         }
         ImGui::TableNextColumn();   // 第二列：职业
@@ -916,8 +917,8 @@ void DebugUISystem::renderUnitTable()
         ImGui::TableNextColumn();   // 第十二列：阻挡数量
         ImGui::Text("%d", player_class_blueprint.player_.block_);
         ImGui::TableNextColumn();   // 第十三列：技能
-        ImGui::Text("%s", skill_blueprint.name_.c_str());
-        ImGui::SetItemTooltip("%s", skill_blueprint.description_.c_str());
+        ImGui::Text("%s", "技能");      // skill_blueprint.name_.c_str()
+        // ImGui::SetItemTooltip("%s", skill_blueprint.description_.c_str());
         ImGui::TableNextColumn();   // 第十四列：升级按钮
 
         // 使用 name_ 作为下一个UI组件(即button)的id, 确保唯一性，否则同名Button会冲突
@@ -939,14 +940,14 @@ void DebugUISystem::renderUnitTable()
 
 // 事件回调函数
 
-void DebugUISystem::onUIPortraitHoverEnterEvent(const game::defs::UIPortraitHoverEnterEvent &event)
+void DebugUISystem::onUICardHoverEnterEvent(const game::defs::UICardHoverEnterEvent &event)
 {
-    hovered_portrait_ = event.name_id_;
+    hovered_card_ = event.name_id_;
 }
 
-void DebugUISystem::onUIPortraitHoverLeaveEvent()
+void DebugUISystem::onUICardHoverLeaveEvent()
 {
-    hovered_portrait_ = entt::null;
+    hovered_card_ = entt::null;
 }
 
 /*

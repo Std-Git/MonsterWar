@@ -3,6 +3,7 @@
 #include <entt/core/hashed_string.hpp>
 #include <entt/entity/entity.hpp>
 #include <unordered_map>
+#include <optional>
 #include <vector>
 
 namespace engine::component
@@ -33,6 +34,10 @@ struct Animation
     float total_duration_ms_{};                ///< @brief 动画总时长 (ms)
     bool loop_{true};                          ///< @brief 是否循环
 
+    // 新增：可选的尺寸和偏移（覆盖 SpriteComponent 的默认值）
+    std::optional<glm::vec2> size_;
+    std::optional<glm::vec2> offset_;
+
     /**
      * @brief 构造函数
      * @param name 动画名称
@@ -42,10 +47,12 @@ struct Animation
      */
     Animation(std::vector<AnimationFrame> frames,
               std::unordered_map<int, entt::id_type> events = {},
-              bool loop = true) : 
+              bool loop = true,
+              std::optional<glm::vec2> size = std::nullopt,
+              std::optional<glm::vec2> offset = std::nullopt) : 
               frames_(std::move(frames)), 
               events_(std::move(events)),
-              loop_(loop)
+              loop_(loop), size_(size), offset_(offset)
     {
         // 计算动画总时长 (总时长 == 所有帧时长之和)
         total_duration_ms_ = 0.0f;

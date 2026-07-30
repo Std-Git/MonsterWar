@@ -23,4 +23,5 @@ class RenderRangeSystem;
 class SelectionSystem;
 class SkillSystem;
 
+class GridSystem;
 }   // namespace game::system

@@ -1,26 +1,36 @@
 {
-    "peashooter": {
+    "Peashooter": {
         "name": "豌豆射手",
         "description": "你的第一株植物，发射豌豆攻击敌人。",
         "hp": 300,
         "atk": 20,
-        "def": 10,
-        "range": 300,
+        "def": 0,
+        "range": 120,
         "atk_interval": 1.5,
         "type": "ranged",
-        "projectile": "arrow",
+        "projectile": "pea",
         "healer": false,
         "block": 0,
-        "cost": 8,
+        "cost": 100,
         "skill": "speed_up",
         "sprite_sheet": "assets/textures/Plants/Peashooter.png",
         "face_right": true,
-        "width": 101,
-        "height": 128,
-        "offset_x": -50,
-        "offset_y": -96,
+        "width": 100,
+        "height": 120,
+        "offset_x": -25,
+        "offset_y": -50,
+        "scale_x": 0.5,
+        "scale_y": 0.5,
         "animation": {
-            "idle": {"row":0, "frames":[0,1,2,3,4,5,6,7,8,9], "duration": 50}
+            "idle": {"row":0, "frames":[0,1,2,3,4,5,6,7,8,9],
+                    "offset_x": -25,
+                    "offset_y": -47},
+            "attack":{"row":1, "frames":[0,1,2,3,4,5,6,7], "events": {"emit": 5},
+                    "offset_x": -22,
+                    "offset_y": -47}
+        },
+        "sounds": {
+            "emit": "arrow_shoot"
         }
     }
 }

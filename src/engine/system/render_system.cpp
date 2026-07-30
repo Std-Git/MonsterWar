@@ -4,6 +4,7 @@
 #include "../component/transform_component.h"
 #include "../component/sprite_component.h"
 #include "../component/render_component.h"
+#include "../component/animation_component.h"
 #include <spdlog/spdlog.h>
 
 namespace engine::system
@@ -26,10 +27,33 @@ void RenderSystem::update(entt::registry &registry, render::Renderer &renderer, 
         const auto& render = view.get<component::RenderComponent>(entity);
         const auto &transform = view.get<component::TransformComponent>(entity);
         const auto &sprite = view.get<component::SpriteComponent>(entity);
-        auto position = transform.position_ + sprite.offset_;   // 位置 = 变换组件的位置 + 精灵的偏移
-        auto size = sprite.size_ * transform.scale_;            // 大小 = 精灵的大小 * 变换组件的缩放
+
+        glm::vec2 size = sprite.size_;
+        glm::vec2 offset = sprite.offset_;
+
+        // 如果存在 AnimationComponent，尝试获取当前动画的自定义值
+        if (auto animation = registry.try_get<component::AnimationComponent>(entity); animation)
+        {
+            auto it = animation->animations_.find(animation->current_animation_id_);
+            if (it != animation->animations_.end())
+            {
+                const auto &anim = it->second;
+                if (anim.size_.has_value())
+                    size = *anim.size_;
+                if (anim.offset_.has_value())
+                    offset = *anim.offset_;
+            }
+        }
+        // 对方向的额外偏移
+        if (sprite.sprite_.is_flipped_)
+        {
+            offset.x = -size.x * transform.scale_.x - offset.x; // size.x / 2.0f - offset.x + size.x / 2.0f;
+        }
+
+        auto position = transform.position_ + offset;   // 位置 = 变换组件的位置 + 精灵的偏移
+        auto final_size = size * transform.scale_;              // 大小 = 精灵的大小 * 变换组件的缩放
         // 绘制时应用Render组件中的颜色调整参数
-        renderer.drawSprite(camera, sprite.sprite_, position, size, transform.rotation_, render.color_);
+        renderer.drawSprite(camera, sprite.sprite_, position, final_size, transform.rotation_, render.color_);
     }
 }
 

@@ -1,14 +1,16 @@
 {
     "window": {
         "title": "PlantsVsZombies_EnChanted",
-        "width": 1600,
-        "height": 1216,
-        "window_scale": 0.75,
+        "width": 480,
+        "height": 360,
+        "window_scale": 2.0,
         "logical_scale": 1.0,
         "resizable": true
     },
     "graphics": {
-        "vsync": true
+        "vsync": true,
+        "imgui_main_scale": 1.0,
+        "imgui_style": "Dark"
     },
     "performance": {
         "target_fps": 60
@@ -45,6 +47,20 @@
         "attack": [
             "K",
             "MouseLeft"
-        ]
+        ],
+        "imgui_input_mappings": {
+            "upgrade": [
+                "Q"
+            ],
+            "retreat": [
+                "E"
+            ],
+            "skill": [
+                "S"
+            ],
+            "pause": [
+                "Escape"
+            ]
+        }
     }
 }

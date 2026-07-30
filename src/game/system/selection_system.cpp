@@ -2,6 +2,7 @@
 #include "../component/player_component.h"
 #include "../component/enemy_component.h"
 #include "../../engine/core/context.h"
+#include "../../engine/render/camera.h"
 #include "../../engine/input/input_manager.h"
 #include "../../engine/component/transform_component.h"
 #include "../defs/constants.h"
@@ -30,7 +31,7 @@ SelectionSystem::~SelectionSystem()
 
 void SelectionSystem::update()
 {
-    auto mouse_pos = context_.getInputManager().getLogicalMousePosition();
+    auto mouse_pos = context_.getCamera().screenToWorld(context_.getInputManager().getLogicalMousePosition());
     // 优先判断玩家单位
     auto view_player = registry_.view<engine::component::TransformComponent, game::component::PlayerComponent>();
     for (auto entity : view_player)

@@ -32,6 +32,7 @@ class SessionData
     int level_number_{1};       ///< @brief 当前关卡
     int point_{0};              ///< @brief 积分
     bool level_clear_{false};   ///< @brief 是否通关
+    bool is_conveyor_belt_{false}; ///< @brief 是否是传送带关卡
 
     /// @brief 储存玩家拥有的角色 (角色名id : 角色数据)
     std::unordered_map<entt::id_type, UnitData> unit_map_;

@@ -63,6 +63,15 @@ void Config::fromJson(const nlohmann::json& j)
         const auto& graphics_config = j["graphics"];
         vsync_enabled_ = graphics_config.value("vsync", vsync_enabled_);
         spdlog::info("垂直同步已被设置为: {}", vsync_enabled_);
+        imgui_main_scale_ = graphics_config.value("imgui_main_scale", imgui_main_scale_);
+        if (imgui_main_scale_ <= 0)
+        {
+            spdlog::warn("ImGui 主窗口缩放比例必须大于零, 设置为默认值 1.0");
+            imgui_main_scale_ = 1.0f;
+        }
+        spdlog::info("ImGui 主窗口缩放比例已被设置为: {}", imgui_main_scale_);
+        imgui_style_ = graphics_config.value("imgui_style", imgui_style_);
+        spdlog::info("ImGui 风格已被设置为: {}", imgui_style_);
     }
     if (j.contains("performance"))
     {
@@ -165,7 +174,9 @@ nlohmann::ordered_json Config::toJson() const
             {"resizable", window_resizable_}
         }},
         {"graphics", {
-            {"vsync", vsync_enabled_}   
+            {"vsync", vsync_enabled_},
+            {"imgui_main_scale", imgui_main_scale_},
+            {"imgui_style", imgui_style_}
         }},
         {"performance", {
             {"target_fps", target_fps_}

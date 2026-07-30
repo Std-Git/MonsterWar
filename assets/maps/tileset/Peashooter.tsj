@@ -1,13 +1,13 @@
 { "columns":10,
  "image":"..\/..\/textures\/Plants\/Peashooter.png",
- "imageheight":128,
- "imagewidth":1010,
+ "imageheight":424,
+ "imagewidth":2200,
  "margin":0,
  "name":"Peashooter",
  "spacing":0,
- "tilecount":10,
+ "tilecount":20,
  "tiledversion":"1.11.2",
- "tileheight":128,
+ "tileheight":212,
  "tiles":[
         {
          "animation":[
@@ -52,8 +52,44 @@
                  "tileid":9
                 }],
          "id":0
+        }, 
+        {
+         "animation":[
+                {
+                 "duration":100,
+                 "tileid":10
+                }, 
+                {
+                 "duration":100,
+                 "tileid":11
+                }, 
+                {
+                 "duration":100,
+                 "tileid":12
+                }, 
+                {
+                 "duration":100,
+                 "tileid":13
+                }, 
+                {
+                 "duration":100,
+                 "tileid":14
+                }, 
+                {
+                 "duration":100,
+                 "tileid":15
+                }, 
+                {
+                 "duration":100,
+                 "tileid":16
+                }, 
+                {
+                 "duration":100,
+                 "tileid":17
+                }],
+         "id":10
         }],
- "tilewidth":101,
+ "tilewidth":220,
  "type":"tileset",
  "version":"1.10"
 }

@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <optional>
 #include <entt/entity/entity.hpp>
 #include <glm/vec2.hpp>
 
@@ -28,6 +29,7 @@ struct SpriteBlueprint
     engine::utils::Rect src_rect_{};
     glm::vec2 size_{0.0f};
     glm::vec2 offset_{0.0f};
+    glm::vec2 scale_{1.0f};
     bool face_right_{true}; // @brief 角色默认朝右，如果朝左就设置为false
 };
 
@@ -38,6 +40,10 @@ struct AnimationBlueprint
     int row_{0};
     std::vector<int> frames_;       ///< @brief 动画帧索引数组
     std::unordered_map<int, entt::id_type> events_; ///< @brief 动画事件, 键为帧索引，值为事件ID
+    std::optional<float> width_;
+    std::optional<float> height_;
+    std::optional<float> offset_x_;
+    std::optional<float> offset_y_;
 };
 
 /// @brief 声音蓝图，用于创建声音组件

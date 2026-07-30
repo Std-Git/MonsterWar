@@ -49,15 +49,15 @@ void AnimationStateSystem::onAnimationFinishedEvent(const engine::utils::Animati
     if (registry_.all_of<game::component::PlayerComponent>(event.entity_))
     {
         // 如果技能是盾御，且技能正在激活中，则返回guard动画 <next> 动画覆盖组件
-        const auto &skill = registry_.get<game::component::SkillComponent>(event.entity_);
+        /*const auto &skill = registry_.get<game::component::SkillComponent>(event.entity_);
         if (skill.skill_id_ == "shield"_hs && registry_.any_of<game::defs::SkillActiveTag>(event.entity_))
         {
             dispatcher_.enqueue(engine::utils::PlayAnimationEvent{event.entity_, "guard"_hs, true});
             spdlog::info("玩家技能盾御动画结束，返回 guard 动画, ID: {}", entt::to_integral(event.entity_));
-        } else {    // 其他情况则返回 idle 动画
-            dispatcher_.enqueue(engine::utils::PlayAnimationEvent{event.entity_, "idle"_hs, true});
-            spdlog::info("玩家动画结束，返回 idle 动画, ID: {}", entt::to_integral(event.entity_));
-        }
+        } else {    // 其他情况则返回 idle 动画*/
+        dispatcher_.enqueue(engine::utils::PlayAnimationEvent{event.entity_, "idle"_hs, true});
+        spdlog::info("玩家动画结束，返回 idle 动画, ID: {}", entt::to_integral(event.entity_));
+
         // 移除动作锁定标签
         registry_.remove<game::defs::ActionLockTag>(event.entity_);
         return;

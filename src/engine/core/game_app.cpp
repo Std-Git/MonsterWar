@@ -13,6 +13,7 @@
 #include "../component/sprite_component.h"
 #include "../scene/scene_manager.h"
 #include "../utils/events.h"
+#include <string>
 #include <SDL3/SDL.h>
 #include <spdlog/spdlog.h>
 #include <entt/signal/dispatcher.hpp>
@@ -414,13 +415,24 @@ namespace engine::core
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // 启用游戏手柄控制
 
         // 设置 ImGui 主题
-        ImGui::StyleColorsDark();
-        // ImGui::StyleColorsLight();
-        // ImGui::StyleColorsClassic();
+        std::string imgui_style = config_->imgui_style_;
+        if (imgui_style == "Dark" || imgui_style == "dark") {
+            ImGui::StyleColorsDark();
+        }
+        else if (imgui_style == "Light" || imgui_style == "light") {
+            ImGui::StyleColorsLight();
+        }
+        else if (imgui_style == "Classic" || imgui_style == "classic") {
+            ImGui::StyleColorsClassic();
+        }
+        else {
+            spdlog::warn("警告：未知的 ImGui 主题设置，使用默认主题");
+            ImGui::StyleColorsDark();
+        }
 
         // 设置缩放
         //float main_scale = SDL_GetDisplayContentScale(SDL_GetPrimaryDisplay()); // 与系统绑定
-        float main_scale = 1.0f; // 或者直接设置更加稳定
+        float main_scale = config_->imgui_main_scale_; // 或者直接设置更加稳定
         ImGuiStyle& style = ImGui::GetStyle();
         style.ScaleAllSizes(main_scale);    // 固定样式缩放比例
         style.FontScaleDpi = main_scale;    // 设置初始字体缩放比例

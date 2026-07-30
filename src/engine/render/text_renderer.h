@@ -1,7 +1,11 @@
 #pragma once
 #include <SDL3/SDL_render.h>
+#include <SDL3_ttf/SDL_ttf.h>
+#include <string>
 #include <string_view>
 #include <entt/core/hashed_string.hpp>
+#include <unordered_map>
+#include <memory>
 #include <glm/vec2.hpp>
 #include "../utils/math.h"
 
@@ -24,8 +28,24 @@ namespace engine::render
 class TextRenderer final
 {
 private:
-    SDL_Renderer* sdl_renderer_ = nullptr;                          ///< @brief 持有渲染器的非拥有指针
-    engine::resource::ResourceManager* resource_manager_ = nullptr; ///< @brief 持有资源管理器的非拥有指针
+    /// < @brief TTF_Text 的删除器函数对象，用于智能指针管理
+    struct TTFTextDeleter
+    {
+        void operator()(TTF_Text *text) const
+        {
+            if (text)
+            {
+                TTF_DestroyText(text);
+            }
+        }
+    };
+
+    SDL_Renderer *sdl_renderer_ = nullptr;                          ///< @brief 持有渲染器的非拥有指针
+    engine::resource::ResourceManager *resource_manager_ = nullptr; ///< @brief 持有资源管理器的非拥有指针
+
+    ///< @brief 缓存 TTF_Text 对象，使用 TTF_Text 的地址作为键
+    // NOTE:谨慎使用地址作为键，他不是唯一的标识符(系统可能回收再分配相同地址)
+    std::unordered_map<uintptr_t, std::unique_ptr<TTF_Text, TTFTextDeleter>> text_cache_;
 
     TTF_TextEngine* text_engine_ = nullptr;     ///< @brief 使用 SDL3 引入的 TTF_TextEngine 来进行绘制
 
@@ -43,17 +63,21 @@ public:
 
     void close();           ///< @brief 显式关闭，清理 TTF_TextEngine 并关闭 SDL_ttf
 
+    void clearCache() { text_cache_.clear(); } ///< @brief 清空缓存
+
+    // --- 一次性绘制的版本 // (只接受右值?) ---
+
     /**
      * @brief 绘制 UI 上的字符串    (不随相机移动)
-     * 
+     *
      * @param text UTF-8 字符串内容
      * @param font_id 字体 id
      * @param font_size 字体大小
      * @param position 字符串左上角的屏幕位置
      * @param color 文本颜色 (默认为白色)
      */
-    void drawUIText(std::string_view text, entt::id_type font_id, int font_size,
-                    const glm::vec2& position, const engine::utils::FColor& color = {1.0f, 1.0f, 1.0f, 1.0f});
+    void drawUIText(std::string&& text, entt::id_type font_id, int font_size,
+                    const glm::vec2 &position, const engine::utils::FColor &color = {1.0f, 1.0f, 1.0f, 1.0f});
 
     /**
      * @brief 绘制地图上的字符串 (随相机移动)
@@ -64,9 +88,9 @@ public:
      * @param font_size 字体大小
      * @param position 字符串左上角的屏幕位置
      * @param color 文本颜色 (默认为白色)
-     */ 
-    void drawText(const Camera& camera, std::string_view text, entt::id_type font_id, int font_size,
-                  const glm::vec2& position, const engine::utils::FColor& color = {1.0f, 1.0f, 1.0f, 1.0f});
+     */
+    void drawText(const Camera &camera, std::string&& text, entt::id_type font_id, int font_size,
+                  const glm::vec2 &position, const engine::utils::FColor &color = {1.0f, 1.0f, 1.0f, 1.0f});
 
     /**
      * @brief 获取文本尺寸
@@ -76,13 +100,30 @@ public:
      * @param font_size 字体大小
      * @return 文本的尺寸
      */
-    glm::vec2 getTextSize(std::string_view text, entt::id_type font_id, int font_size, std::string_view font_path = "");
+    glm::vec2 getTextSize(std::string&& text, entt::id_type font_id, int font_size, std::string_view font_path = "");
+
+    // --- 使用缓存绘制的版本 // (只接受左值引用?) ---
+
+    void drawUIText(const std::string &text, entt::id_type font_id, int font_size,
+                    const glm::vec2 &position, const engine::utils::FColor &color = {1.0f, 1.0f, 1.0f, 1.0f}, bool is_dirty = true);
+
+    void drawText(const Camera &camera, const std::string &text, entt::id_type font_id, int font_size,
+                  const glm::vec2 &position, const engine::utils::FColor &color = {1.0f, 1.0f, 1.0f, 1.0f}, bool is_dirty = true);
+
+    glm::vec2 getTextSize(const std::string &text, entt::id_type font_id, int font_size, std::string_view font_path = "", bool is_dirty = true);
 
     // 禁用拷贝和移动语义
     TextRenderer(const TextRenderer&) = delete;
     TextRenderer& operator=(const TextRenderer&) = delete;
     TextRenderer(TextRenderer&&) = delete;
     TextRenderer& operator=(TextRenderer&&) = delete;
+
+private:
+    ///< @brief 尝试获取缓存中的 TTF_Text 对象，失败则返回空指针
+    TTF_Text *getTTFText(const std::string &text);
+
+    ///< @brief 创建一个新的 TTF_Text 对象并加入到缓存中
+    TTF_Text *createTTFText(const std::string &text, TTF_Font *font);
 };
 
 }   // namespace engine::render

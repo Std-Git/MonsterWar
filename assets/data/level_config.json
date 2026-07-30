@@ -8,14 +8,37 @@
         "waves": [
             {
                 "enemy_types": {
-                    "zombie": 5
+                    "normal_zombie": 1
                 },
-                "next_wave_interval": 20.0,
+                "next_wave_interval": 1.0,
                 "spawn_interval": 0.8
             },
             {
                 "enemy_types": {
-                    "zombie": 10
+                    "normal_zombie": 3
+                },
+                "next_wave_interval": 20.0,
+                "spawn_interval": 0.8
+            }
+        ]
+    },
+    {
+        "name": "Level 2",
+        "map_path": "assets/maps/level1.tmj",
+        "prep_time": 1.0,
+        "enemy_level": 1,
+        "enemy_rarity": 1,
+        "waves": [
+            {
+                "enemy_types": {
+                    "normal_zombie": 5
+                },
+                "next_wave_interval": 1.0,
+                "spawn_interval": 0.8
+            },
+            {
+                "enemy_types": {
+                    "normal_zombie": 5
                 },
                 "next_wave_interval": 20.0,
                 "spawn_interval": 0.8

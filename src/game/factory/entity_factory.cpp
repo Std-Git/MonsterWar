@@ -37,7 +37,7 @@ entt::entity EntityFactory::createPlayerUnit(entt::id_type class_id, const glm::
     const auto& blueprint = blueprint_manager_.getPlayerClassBlueprint(class_id);
     // --- 添加组件 ---
     // 添加 Transform 组件
-    addTransformComponent(entity, position);
+    addTransformComponent(entity, position, blueprint.sprite_.scale_);
 
     // 添加 Sprite 组件
     addSpriteComponent(entity, blueprint.sprite_);
@@ -58,7 +58,7 @@ entt::entity EntityFactory::createPlayerUnit(entt::id_type class_id, const glm::
     addProjectileIDComponent(entity, blueprint.projectile_id_);
 
     // 添加 Skill 组件
-    addSkillComponent(entity, blueprint.player_.skill_id_);
+    //addSkillComponent(entity, blueprint.player_.skill_id_);
 
     // 补充其他必要组件
     registry_.emplace<game::component::ClassNameComponent>(entity, class_id, blueprint.display_info_.name_);
@@ -75,7 +75,7 @@ entt::entity EntityFactory::createEnemyUnit(entt::id_type class_id, const glm::v
     const auto& blueprint = blueprint_manager_.getEnemyClassBlueprint(class_id);
     // --- 添加组件 ---
     // 添加 Transform 组件
-    addTransformComponent(entity, position);
+    addTransformComponent(entity, position, blueprint.sprite_.scale_);
 
     // 添加 Sprite 组件
     addSpriteComponent(entity, blueprint.sprite_);
@@ -101,6 +101,7 @@ entt::entity EntityFactory::createEnemyUnit(entt::id_type class_id, const glm::v
     registry_.emplace<game::defs::HasHealthBarTag>(entity);
 
     // 未来可添加其他组件
+    // spdlog::warn("create enemy unit: {}", blueprint.display_info_.name_);
 
     return entity;
 }
@@ -113,7 +114,7 @@ entt::entity EntityFactory::createProjectile(entt::id_type id, const glm::vec2 &
     // 依次添加必要组件
     // 添加 ProjectileComponent
     registry_.emplace<game::component::ProjectileComponent>(entity, 
-        target, 
+        target,
         damage,
         start_position, 
         target_position, 
@@ -124,7 +125,7 @@ entt::entity EntityFactory::createProjectile(entt::id_type id, const glm::vec2 &
     // 添加 SpriteComponent
     addSpriteComponent(entity, blueprint.sprite_);
     // 添加 TransformComponent
-    addTransformComponent(entity, start_position);
+    addTransformComponent(entity, start_position, blueprint.sprite_.scale_);
     // 添加 AudioComponent
     addAudioComponent(entity, blueprint.sounds_);
     // 添加 RenderComponent(让投射物位于主图层+1, 即可以遮住角色)
@@ -136,7 +137,7 @@ entt::entity EntityFactory::createUnitPrep(entt::id_type name_id, entt::id_type 
 {
     auto entity = registry_.create();
     const auto& blueprint = blueprint_manager_.getPlayerClassBlueprint(class_id);
-    addTransformComponent(entity, position);
+    addTransformComponent(entity, position, blueprint.sprite_.scale_);
     addSpriteComponent(entity, blueprint.sprite_);
     // 直接添加UnitPrepComponent
     registry_.emplace<game::component::UnitPrepComponent>(entity, 
@@ -256,8 +257,23 @@ void EntityFactory::addAnimationComponent(entt::entity entity,
             // 创建动画帧并插入动画帧容器
             frames.emplace_back(source_rect, anim_blueprint.ms_per_frame_);
         }
+        // ---------- 新增：提取动画级别的尺寸和偏移 ----------
+        std::optional<glm::vec2> anim_size;
+        std::optional<glm::vec2> anim_offset;
+        // 仅当 width 和 height 同时存在时才设置 size
+        if (anim_blueprint.width_.has_value() && anim_blueprint.height_.has_value())
+        {
+            anim_size = glm::vec2(*anim_blueprint.width_, *anim_blueprint.height_);
+        }
+        // 仅当 offset_x 和 offset_y 同时存在时才设置 offset
+        if (anim_blueprint.offset_x_.has_value() && anim_blueprint.offset_y_.has_value())
+        {
+            anim_offset = glm::vec2(*anim_blueprint.offset_x_, *anim_blueprint.offset_y_);
+        }
+        // --------------------------------------------------
+
         // 将创建好的动画帧容器插入动画 map 容器 (可以直接使用蓝图的事件信息)
-        animations.emplace(anim_id, engine::component::Animation(std::move(frames), anim_blueprint.events_));
+        animations.emplace(anim_id, engine::component::Animation(std::move(frames), anim_blueprint.events_, true, anim_size, anim_offset));
     }
     // 通过动画 map 容器创建动画组件
     registry_.emplace<engine::component::AnimationComponent>(entity, std::move(animations), default_animation_id);

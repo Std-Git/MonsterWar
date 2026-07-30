@@ -1,0 +1,213 @@
+#include "select_card_ui.h"
+#include "../data/ui_config.h"
+#include "../data/session_data.h"
+#include "../data/game_stats.h"
+#include "../factory/blueprint_manager.h"
+#include "../../engine/core/context.h"
+#include "../../engine/core/game_state.h"
+#include "../../engine/ui/ui_element.h"
+#include "../../engine/ui/ui_panel.h"
+#include "../../engine/ui/ui_image.h"
+#include "../../engine/ui/ui_button.h"
+#include "../../engine/ui/ui_label.h"
+#include "../../engine/ui/ui_manager.h"
+#include "../../engine/input/input_manager.h"
+#include <entt/core/hashed_string.hpp>
+#include <entt/entity/registry.hpp>
+#include <entt/signal/dispatcher.hpp>
+#include <spdlog/spdlog.h>
+
+using namespace entt::literals;
+
+namespace game::ui
+{
+    SelectCardUI::SelectCardUI(entt::registry &registry,
+                               engine::ui::UIManager &ui_manager,
+                               engine::core::Context &context)
+        : registry_(registry), ui_manager_(ui_manager), context_(context)
+    {
+        // 构造函数直接初始化(创建单位肖像UI),可省去init() 函数
+        createUnitsCardUI();
+        // -- 注册事件函数
+        // context_.getDispatcher().sink<game::defs::RemoveUICardEvent>().connect<&UnitsCardUI::onRemoveUICardEvent>(this);
+        spdlog::trace("UnitsCardUI 构造完成");
+    }
+
+    SelectCardUI::~SelectCardUI()
+    {
+        // context_.getDispatcher().sink<game::defs::RemoveUICardEvent>().disconnect<&UnitsCardUI::onRemoveUICardEvent>(this);
+    }
+
+    void SelectCardUI::update(float delta_time)
+    {
+        updateCardCover();
+        // 检测是否按下移动肖像面板的按键
+        auto &input_manager = context_.getInputManager();
+        if (input_manager.isActionDown("move_left"_hs))
+        {
+            moveCardPanelLeft(delta_time);
+        }
+        else if (input_manager.isActionDown("move_right"_hs))
+        {
+            moveCardPanelRight(delta_time);
+        }
+    }
+
+    void SelectCardUI::updateCardCover()
+    {
+        // 获取 game_stats
+        auto &game_stats = registry_.ctx().get<game::data::GameStats &>();
+        // 获取anchor_panel 中的所有子元素 (frame_panel)
+        auto &frame_panels = anchor_panel_->getChildren();
+        for (auto &frame_panel : frame_panels)
+        {
+            // 获取 frame_panel 中的 cover_panel
+            auto cover_panel = frame_panel->getChildById("cover_panel"_hs);
+            // 设置cover_panel 的可见性 (frame_panel 的 order_index_已经设置为出击cost耗费值)
+            if (cover_panel)
+            {
+                cover_panel->setVisible(game_stats.cost_ < frame_panel->getOrderIndex());
+            }
+        }
+    }
+
+    void SelectCardUI::createUnitsCardUI()
+    {
+
+        if (!ui_manager_.init(context_.getGameState().getLogicalSize()))
+            return;
+
+        auto ui_config = registry_.ctx().get<std::shared_ptr<game::data::UIConfig>>();
+        auto session_data = registry_.ctx().get<std::shared_ptr<game::data::SessionData>>();
+        auto blueprint_manager = registry_.ctx().get<std::shared_ptr<game::factory::BlueprintManager>>();
+
+        // 获取单位面板的间隔，角色map，角色数量
+        auto padding = ui_config->getUnitPanelPadding();
+        auto &unit_map = session_data->getUnitMap();
+        auto unit_num = unit_map.size();
+
+        //  -- 在屏幕下方创建一个panel UI 条，用于显示角色肖像 --
+        // 获取窗口大小和角色肖像框大小
+        auto window_size = context_.getGameState().getLogicalSize();
+        auto frame_size = ui_config->getUnitPanelFrameSize();
+        // 根据角色数量，角色肖像框大小，间隔计算panel的位置和大小
+        auto shovel_pos = glm::vec2(-1.2f, window_size.y - 33.76);
+        /*auto shovel_button = std::make_unique<engine::ui::UIButton>(context_,
+                                                                    ui_config->getCard(entt::id_type("Shovel1")),
+                                                                    ui_config->getCard(entt::id_type("Shovel1")),
+                                                                    ui_config->getCard(entt::id_type("Shovel1")),
+                                                                    shovel_pos, 
+                                                                    ui_config->getCard(entt::id_type("Shovel1")).getSourceRect());*/
+
+        auto pos = glm::vec2(0.0f, window_size.y - frame_size.y - 2 * padding);
+        auto size = glm::vec2(unit_num * frame_size.x + (unit_num - 1) * padding, frame_size.y + 2 * padding);
+        auto anchor_panel = std::make_unique<engine::ui::UIPanel>(pos, size);
+        // 设置背景色
+        anchor_panel->setBackgroundColor(engine::utils::FColor(0.1f, 0.1f, 0.1f, 0.1f));
+        // 设置ID, 以后即可根据ID找到该panel
+        anchor_panel->setId("anchor_panel"_hs);
+
+        // 依次添加角色肖像，每个肖像由四部分依次叠加：Card, frame, icon, cost, 可以通过一个frame_panel 定位(位于上层anchor_panel之中)
+        int index = 0;
+        for (auto &[name_id, unit_data] : unit_map)
+        {
+            auto card = ui_config->getCard(name_id);
+            // auto frame = ui_config->getCardFrame(unit_data.rarity_);
+            // auto icon = ui_config->getIcon(unit_data.class_id_);
+            auto cost = blueprint_manager->getPlayerClassBlueprint(unit_data.class_id_).player_.cost_;
+            cost = static_cast<int>(std::round(engine::utils::statModify(static_cast<float>(cost), 1, unit_data.rarity_))); // 只有稀有度对 cost 有影响
+
+            // 创建每个肖像的frame_panel
+            auto frame_pos = glm::vec2(padding + index * (frame_size.x + padding), padding);
+            auto frame_panel = std::make_unique<engine::ui::UIPanel>(frame_pos, frame_size);
+            frame_panel->setId(name_id);
+
+            // 依次添加四个元素，为了能够交互，将frame 设置为按钮，并绑定点击事件
+            // frame_panel->addChild(std::make_unique<engine::ui::UIImage>(card, glm::vec2(0.0f, 0.0f), frame_size));
+            frame_panel->addChild(std::make_unique<engine::ui::UIButton>(context_, card, card, card, glm::vec2(0.0f, 0.0f), frame_size, [this, name_id, &unit_data, cost]() { // 按钮点击回调：发送单位准备事件
+                context_.getDispatcher().enqueue(game::defs::PrepUnitEvent{name_id, unit_data.class_id_, cost});
+            },
+                                                                         [this, name_id]() { // 按钮悬停回调：发送单位肖像悬停进入事件
+                                                                             context_.getDispatcher().enqueue(game::defs::UICardHoverEnterEvent{name_id});
+                                                                         },
+                                                                         [this]() { // 按钮悬停离开回调：发送单位肖像悬停离开事件
+                                                                             context_.getDispatcher().enqueue(game::defs::UICardHoverLeaveEvent{});
+                                                                         }));
+            // frame_panel->addChild(std::make_unique<engine::ui::UIImage>(icon, glm::vec2(0.0f, 0.0f), frame_size / 2.0f));
+            frame_panel->addChild(std::make_unique<engine::ui::UILabel>(context_.getTextRenderer(),
+                                                                        std::to_string(cost),
+                                                                        ui_config->getUnitPanelFontPath(),
+                                                                        ui_config->getUnitPanelFontSize(),
+                                                                        engine::utils::FColor::orange(),
+                                                                        ui_config->getUnitPanelFontOffset()));
+            // 最后添加一个灰色的遮盖panel,cost 不足以支撑该角色出击时显示
+            auto cover_panel = std::make_unique<engine::ui::UIPanel>(glm::vec2(0.0f, 0.0f), frame_size);
+            cover_panel->setBackgroundColor(engine::utils::FColor(0.0f, 0.0f, 0.0f, 0.2f));
+            cover_panel->setId("cover_panel"_hs);
+            frame_panel->addChild(std::move(cover_panel));
+
+            // 将frame_panel 添加到anchor_panel中，并使用cost 作为排序键
+            anchor_panel->addChild(std::move(frame_panel), cost);
+            index++;
+        }
+        // 将 anchor_panel 添加到ui_manager中
+        ui_manager_.addElement(std::move(anchor_panel));
+
+        // 移动赋值后需要找到anchor_panel,并将指针赋值给成员变量anchor_panel_
+        anchor_panel_ = static_cast<engine::ui::UIPanel *>(ui_manager_.getRootElement()->getChildById("anchor_panel"_hs));
+
+        anchor_panel_->sortChildrenByOrderIndex(); // 对anchor_panel 中的子元素(frame_panel)进行排序
+        arrangeUnitsCardUI();                      // 按顺序排列anchor_panel中的子元素(frame_panel)的位置
+    }
+
+    void SelectCardUI::arrangeUnitsCardUI()
+    {
+        // 获取ui_config
+        auto ui_config = registry_.ctx().get<std::shared_ptr<game::data::UIConfig>>();
+        // 获取单位面板的间隔、大小
+        auto padding = ui_config->getUnitPanelPadding();
+        auto frame_size = ui_config->getUnitPanelFrameSize();
+
+        // 遍历panel 中的子元素(定位panel)，并依次设定位置
+        for (size_t i = 0; i < anchor_panel_->getChildren().size(); i++)
+        {
+            auto &child = anchor_panel_->getChildren()[i];
+            child->setPosition(glm::vec2(padding + i * (frame_size.x + padding), padding));
+        }
+        // 更新panel 的size
+        anchor_panel_->setSize(glm::vec2(padding + anchor_panel_->getChildren().size() * (frame_size.x + padding),
+                                         frame_size.y + 2 * padding));
+    }
+
+    void SelectCardUI::moveCardPanelRight(float delta_time)
+    {
+        // 获取panel的位置
+        auto panel_position = anchor_panel_->getPosition();
+        // 如果位置为负就向右移，最多到达0
+        panel_position.x = glm::min(0.0f, panel_position.x + delta_time * 400.0f);
+        anchor_panel_->setPosition(panel_position);
+    }
+
+    void SelectCardUI::moveCardPanelLeft(float delta_time)
+    {
+        // 获取窗口大小
+        const auto &window_size = context_.getGameState().getLogicalSize();
+        // 获取panel的位置
+        auto panel_position = anchor_panel_->getPosition();
+        const auto &panel_size = anchor_panel_->getSize();
+        // 如果面板宽度小于窗口宽度，则不移动
+        if (panel_size.x < window_size.x)
+            return;
+
+        // 如果右端超出屏幕就向左移动，右端最多到达窗口宽度
+        panel_position.x = glm::max(window_size.x - panel_size.x, panel_position.x - delta_time * 400.0f);
+        anchor_panel_->setPosition(panel_position);
+    }
+
+    void SelectCardUI::onRemoveUICardEvent(const game::defs::RemoveUICardEvent &event)
+    {
+        anchor_panel_->removeChildById(event.name_id_);
+        arrangeUnitsCardUI();
+    }
+
+} // namespace game::ui

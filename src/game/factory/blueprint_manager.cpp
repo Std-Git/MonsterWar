@@ -307,6 +307,7 @@ data::SpriteBlueprint BlueprintManager::parseSprite(const nlohmann::json& json)
         engine::utils::Rect{glm::vec2(json.value("x",0), json.value("y", 0)), glm::vec2(width, height)},
         glm::vec2(json.value("size_x", width), json.value("size_y", height)),
         glm::vec2(json.value("offset_x", 0), json.value("offset_y", 0)),
+        glm::vec2(json.value("scale_x", 1.0f), json.value("scale_y", 1.0f)),
         json.value("face_right", true)
     };
 }
@@ -329,12 +330,17 @@ std::unordered_map<entt::id_type, data::AnimationBlueprint> BlueprintManager::pa
             }
         }
         // 创建单个动画蓝图，并插入容器
-        data::AnimationBlueprint animation
-        {
+        data::AnimationBlueprint animation{
             anim_data.value("duration", 100.0f),
             anim_data.value("row", 0),
             std::move(frames),
-            std::move(events)
+            std::move(events),
+            // 读取可选字段
+            anim_data.contains("width") ? std::optional<float>(anim_data["width"]) : std::nullopt,
+            anim_data.contains("height") ? std::optional<float>(anim_data["height"]) : std::nullopt,
+            anim_data.contains("offset_x") ? std::optional<float>(anim_data["offset_x"]) : std::nullopt,
+            anim_data.contains("offset_y") ? std::optional<float>(anim_data["offset_y"]) : std::nullopt
+
         };
         animations.emplace(anim_name_id, animation);
     }
@@ -357,7 +363,12 @@ data::AnimationBlueprint BlueprintManager::parseOneAnimation(const nlohmann::jso
         anim_data.value("duration", 100.0f),
         anim_data.value("row", 0),
         std::move(frames),
-        std::move(events)
+        std::move(events),
+        // 读取可选字段
+        anim_data.contains("width") ? std::optional<float>(anim_data["width"]) : std::nullopt,
+        anim_data.contains("height") ? std::optional<float>(anim_data["height"]) : std::nullopt,
+        anim_data.contains("offset_x") ? std::optional<float>(anim_data["offset_x"]) : std::nullopt,
+        anim_data.contains("offset_y") ? std::optional<float>(anim_data["offset_y"]) : std::nullopt
     };
 }
 

@@ -58,7 +58,7 @@ struct PrepUnitEvent
 };
 
 /// @brief 移除角色肖像事件 <next>
-struct RemoveUIPortraitEvent
+struct RemoveUICardEvent
 {
     entt::id_type name_id_{entt::null};     ///< @brief 角色名称 ID
 };
@@ -88,13 +88,13 @@ struct SkillDurationEndEvent
 };
 
 /// @brief UI肖像鼠标悬浮进入事件
-struct UIPortraitHoverEnterEvent
+struct UICardHoverEnterEvent
 {
     entt::id_type name_id_{entt::null};     ///< @brief 角色名称 ID
 };
 
 /// @brief UI肖像鼠标悬浮离开事件
-struct UIPortraitHoverLeaveEvent{};
+struct UICardHoverLeaveEvent{};
 
 /// @brief 升级单位事件
 struct UpgradeUnitEvent

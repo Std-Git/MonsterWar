@@ -20,8 +20,8 @@ bool UIConfig::loadFromFile(std::string_view path)
 
     try {
         //loadIcon(json["icon"]);
-        loadPortrait(json["card"]);
-        //loadPortraitFrame(json["portrait_frame"]);
+        loadCard(json["card"]);
+        //loadCardFrame(json["card_frame"]);
         loadLayout(json["layout"]);
     } catch (const std::exception& e) {
         spdlog::error("载入 UI config 失败：{}", e.what());
@@ -44,7 +44,7 @@ void UIConfig::loadIcon(nlohmann::json& json)
     }
 }
 
-void UIConfig::loadPortrait(nlohmann::json& json)
+void UIConfig::loadCard(nlohmann::json& json)
 {
     for (auto& [key, value] : json.items()) {
         entt::id_type id = entt::hashed_string(key.c_str());
@@ -53,11 +53,11 @@ void UIConfig::loadPortrait(nlohmann::json& json)
             static_cast<float>(value["y"]),
             static_cast<float>(value["width"]),
             static_cast<float>(value["height"])};
-        portrait_map_[id] = engine::render::Image(texture_path, src_rect, false);
+        card_map_[id] = engine::render::Image(texture_path, src_rect, false);
     }
 }
 
-void UIConfig::loadPortraitFrame(nlohmann::json& json)
+void UIConfig::loadCardFrame(nlohmann::json& json)
 {
     for (auto& [key, value] : json.items()) {
         auto texture_path = value["sprite_sheet"].get<std::string>();
@@ -66,7 +66,7 @@ void UIConfig::loadPortraitFrame(nlohmann::json& json)
             static_cast<float>(value["y"]),
             static_cast<float>(value["width"]),
             static_cast<float>(value["height"])};
-        portrait_frame_map_[level] = engine::render::Image(texture_path, src_rect, false);
+        card_frame_map_[level] = engine::render::Image(texture_path, src_rect, false);
     }
 }
 
@@ -78,6 +78,7 @@ void UIConfig::loadLayout(nlohmann::json& json)
     spdlog::warn("{}, {}", unit_panel_frame_size_.x, unit_panel_frame_size_.y);
     unit_panel_font_size_ = json["unit_panel"]["font_size"].get<int>();
     unit_panel_font_path_ = json["unit_panel"]["font_path"].get<std::string>();
+    spdlog::warn("{} {}", unit_panel_font_size_, unit_panel_font_path_);
     unit_panel_font_offset_ = {json["unit_panel"]["font_offset"]["x"].get<float>(),
                                json["unit_panel"]["font_offset"]["y"].get<float>()};
 }
@@ -92,23 +93,23 @@ engine::render::Image& UIConfig::getIcon(entt::id_type id)
     }
 }
 
-engine::render::Image& UIConfig::getPortrait(entt::id_type id)
+engine::render::Image& UIConfig::getCard(entt::id_type id)
 {
-    if (auto it = portrait_map_.find(id); it != portrait_map_.end()) {
+    if (auto it = card_map_.find(id); it != card_map_.end()) {
         return it->second;
     } else {
-        spdlog::error("Portrait 未找到：{}", id);
-        return portrait_map_.begin()->second;
+        spdlog::error("Card 未找到：{}", id);
+        return card_map_.begin()->second;
     }
 }
 
-engine::render::Image& UIConfig::getPortraitFrame(int level)
+engine::render::Image& UIConfig::getCardFrame(int level)
 {
-    if (auto it = portrait_frame_map_.find(level); it != portrait_frame_map_.end()) {
+    if (auto it = card_frame_map_.find(level); it != card_frame_map_.end()) {
         return it->second;
     } else {
-        spdlog::error("Portrait frame 未找到：{}", level);
-        return portrait_frame_map_.begin()->second;
+        spdlog::error("Card frame 未找到：{}", level);
+        return card_frame_map_.begin()->second;
     }
 }
 

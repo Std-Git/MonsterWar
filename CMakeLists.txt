@@ -109,6 +109,8 @@ src/game/scene/game_scene.cpp
 src/game/scene/title_scene.cpp
 src/game/scene/end_scene.cpp
 src/game/scene/level_clear_scene.cpp
+src/game/scene/select_card_scene.cpp
+#src/game/scene/select_card_scene.cpp
 # Game - Spawner
 src/game/spawner/enemy_spawner.cpp
 # Game - System
@@ -131,8 +133,10 @@ src/game/system/render_range_system.cpp
 src/game/system/debug_ui_system.cpp
 src/game/system/selection_system.cpp
 src/game/system/skill_system.cpp
+src/game/system/grid_system.cpp
 # Game - UI
-src/game/ui/units_portrait_ui.cpp
+src/game/ui/plants_card_ui.cpp
+src/game/ui/select_card_ui.cpp
 )
 
 # Windows平台添加资源文件
@@ -146,6 +150,8 @@ endif()
 
 # 创建可执行文件
 add_executable(${TARGET} ${SOURCES} ${IMGUI_SOURCES})
+
+#target_compile_options(${TARGET} PRIVATE -g -O0 -fsanitize=address -fno-omit-frame-pointer)
 
 # 链接所有依赖库
 target_link_libraries(${TARGET}

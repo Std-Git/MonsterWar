@@ -25,10 +25,13 @@
 #include "../system/debug_ui_system.h"
 #include "../system/selection_system.h"
 #include "../system/skill_system.h"
-#include "../ui/units_portrait_ui.h"
+#include "../ui/plants_card_ui.h"
 #include "../../engine/audio/audio_player.h"
 #include "../../engine/core/context.h"
 #include "../../engine/core/game_state.h"
+#include "../../engine/input/input_manager.h"
+#include "../../engine/render/camera.h"
+#include "../../engine/render/text_renderer.h"
 #include "../../engine/system/render_system.h"
 #include "../../engine/system/movement_system.h"
 #include "../../engine/system/animation_system.h"
@@ -37,6 +40,7 @@
 #include "../../engine/loader/level_loader.h"
 #include "../../engine/ui/ui_manager.h"
 #include <entt/core/hashed_string.hpp>
+#include <entt/entity/fwd.hpp>
 #include <entt/signal/sigh.hpp>
 #include <spdlog/spdlog.h>
 
@@ -55,6 +59,8 @@ namespace game::scene
           ui_config_(std::move(ui_config)),
           level_config_(std::move(level_config))
     {
+        // 切换主场景时先清空文本渲染缓存
+        context_.getTextRenderer().clearCache();
         spdlog::info("GameScene 构造完成");
     }
 
@@ -72,12 +78,13 @@ namespace game::scene
         if (!initInputConnections())    { spdlog::error("初始化输入连接失败"); return false; }
         if (!initEntityFactory())       { spdlog::error("初始化实体工厂失败"); return false; }
         if (!initRegistryContext())     { spdlog::error("初始化注册表上下文失败"); return false; }
-        if (!initUnitsPortraitUI())     { spdlog::error("初始化单位肖像UI失败"); return false; }
+        if (!initPlantsCardUI())        { spdlog::error("初始化玩家卡片UI失败"); return false; }
         if (!initSystems())             { spdlog::error("初始化系统失败"); return false; }
         if (!initEnemySpawner())        { spdlog::error("初始化敌人生成器失败"); return false; }
 
         context_.getGameState().setState(engine::core::State::Playing);
         context_.getAudioPlayer().playMusic("battle_bgm"_hs);
+        context_.getCamera().setPosition(glm::vec2(-65.0f, -57.0f));
         return Scene::init();
     }
 
@@ -94,7 +101,7 @@ namespace game::scene
             place_unit_system_->update(delta_time);
             ysort_system_->update(registry_);
             selection_system_->update();
-            units_portrait_ui_->update(delta_time);
+            plants_card_ui_->update(delta_time);
             Scene::update(delta_time);
             return;
         }
@@ -116,7 +123,7 @@ namespace game::scene
 
         // 场景中其他更新函数
         enemy_spawner_->update(delta_time);
-        units_portrait_ui_->update(delta_time);
+        plants_card_ui_->update(delta_time);
 
         Scene::update(delta_time);
     }
@@ -142,11 +149,15 @@ namespace game::scene
     void GameScene::clean()
     {
         auto &dispatcher = context_.getDispatcher();
-        //auto &input_manager = context_.getInputManager();
+        auto &input_manager = context_.getInputManager();
         // 断开所有事件连接
         dispatcher.disconnect(this);
         // 断开输入信号连接
-        //input_manager.onAction("pause"_hs).disconnect<&GameScene::onClearAllPlayers>(this);
+        input_manager.onAction("move_left"_hs, engine::input::ActionState::HELD).disconnect<&GameScene::onCameraMoveLeft>(this);
+        input_manager.onAction("move_right"_hs, engine::input::ActionState::HELD).disconnect<&GameScene::onCameraMoveRight>(this);
+        input_manager.onAction("move_up"_hs, engine::input::ActionState::HELD).disconnect<&GameScene::onCameraMoveUp>(this);
+        input_manager.onAction("move_down"_hs, engine::input::ActionState::HELD).disconnect<&GameScene::onCameraMoveDown>(this);
+        input_manager.onAction("attack"_hs, engine::input::ActionState::HELD).disconnect<&GameScene::onRenderText>(this);
         Scene::clean();
     }
 
@@ -231,9 +242,13 @@ namespace game::scene
 
     bool GameScene::initInputConnections()
     {
-        //auto &input_manager = context_.getInputManager();
+        auto &input_manager = context_.getInputManager();
         spdlog::info("初始化输入连接");
-        // input_manager.onAction("pause"_hs).connect<&GameScene::onClearAllPlayers>(this);
+        input_manager.onAction("move_left"_hs, engine::input::ActionState::HELD).connect<&GameScene::onCameraMoveLeft>(this);
+        input_manager.onAction("move_right"_hs, engine::input::ActionState::HELD).connect<&GameScene::onCameraMoveRight>(this);
+        input_manager.onAction("move_up"_hs, engine::input::ActionState::HELD).connect<&GameScene::onCameraMoveUp>(this);
+        input_manager.onAction("move_down"_hs, engine::input::ActionState::HELD).connect<&GameScene::onCameraMoveDown>(this);
+        input_manager.onAction("attack"_hs, engine::input::ActionState::HELD).connect<&GameScene::onRenderText>(this);
         // 未来可添加输入控制，记得在close函数中断开
         return true;
     }
@@ -257,11 +272,11 @@ namespace game::scene
         return true;
     }
 
-    bool GameScene::initUnitsPortraitUI()
+    bool GameScene::initPlantsCardUI()
     {
         try
         {
-            units_portrait_ui_ = std::make_unique<game::ui::UnitsPortraitUI>(registry_, *ui_manager_, context_);
+            plants_card_ui_ = std::make_unique<game::ui::PlantsCardUI>(registry_, *ui_manager_, context_);
         }
         catch (const std::exception &e)
         {
@@ -279,13 +294,11 @@ namespace game::scene
             blueprint_manager_ = std::make_shared<game::factory::BlueprintManager>(context_.getResourceManager());
             if (!blueprint_manager_->loadEnemyClassBlueprints("assets/data/enemy_data.json") ||
                 !blueprint_manager_->loadPlayerClassBlueprints("assets/data/player_data.json") ||
-                !blueprint_manager_->loadProjectileBlueprints("assets/data/projectile_data.json") ||
-                !blueprint_manager_->loadEffectBlueprints("assets/data/effect_data.json") || 
-                !blueprint_manager_->loadSkillBlueprints("assets/data/skill_data.json"))
-            {
-                spdlog::error("加载蓝图失败");
-                return false;
-            }
+                !blueprint_manager_->loadProjectileBlueprints("assets/data/projectile_data.json")) //  ||!blueprint_manager_->loadEffectBlueprints("assets/data/effect_data.json") || !blueprint_manager_->loadSkillBlueprints("assets/data/skill_data.json")
+                {
+                    spdlog::error("加载蓝图失败");
+                    return false;
+                }
         }
         entity_factory_ = std::make_unique<game::factory::EntityFactory>(registry_, *blueprint_manager_);
         spdlog::info("实体工厂初始化完成");
@@ -314,14 +327,14 @@ namespace game::scene
         animation_event_system_ = std::make_unique<game::system::AnimationEventSystem>(registry_, dispatcher);
         combat_resolve_system_ = std::make_unique<game::system::CombatResolveSystem>(registry_, dispatcher);
         projectile_system_ = std::make_unique<game::system::ProjectileSystem>(registry_, dispatcher, *entity_factory_);
-        effect_system_ = std::make_unique<game::system::EffectSystem>(registry_, dispatcher, *entity_factory_);
+        // effect_system_ = std::make_unique<game::system::EffectSystem>(registry_, dispatcher, *entity_factory_);
         health_bar_system_ = std::make_unique<game::system::HealthBarSystem>();
         game_rule_system_ = std::make_unique<game::system::GameRuleSystem>(registry_, dispatcher);
         place_unit_system_ = std::make_unique<game::system::PlaceUnitSystem>(registry_, *entity_factory_, context_);
         render_range_system_ = std::make_unique<game::system::RenderRangeSystem>();
         debug_ui_system_ = std::make_unique<game::system::DebugUISystem>(registry_, context_);
         selection_system_ = std::make_unique<game::system::SelectionSystem>(registry_, context_);
-        skill_system_ = std::make_unique<game::system::SkillSystem>(registry_, dispatcher, *entity_factory_);
+        // skill_system_ = std::make_unique<game::system::SkillSystem>(registry_, dispatcher, *entity_factory_);
         spdlog::info("系统初始化完成");
         return true;
     }
@@ -387,6 +400,46 @@ namespace game::scene
     {
         spdlog::info("游戏结束");
         requestPushScene(std::make_unique<game::scene::EndScene>(context_, event.is_win_));
+    }
+
+    bool GameScene::onCameraMoveLeft()
+    {
+        context_.getCamera().move(glm::vec2(-20.0f, 0.0f));
+        spdlog::debug("Camera position: {}, {}", context_.getCamera().getPosition().x, context_.getCamera().getPosition().y);
+        return true;
+    }
+
+    bool GameScene::onCameraMoveRight()
+    {
+        context_.getCamera().move(glm::vec2(20.0f, 0.0f));
+        spdlog::debug("Camera position: {}, {}", context_.getCamera().getPosition().x, context_.getCamera().getPosition().y);
+        return true;
+    }
+
+    bool GameScene::onCameraMoveUp()
+    {
+        context_.getCamera().move(glm::vec2(0.0f, -20.0f));
+        spdlog::debug("Camera position: {}, {}", context_.getCamera().getPosition().x, context_.getCamera().getPosition().y);
+        return true;
+    }
+
+    bool GameScene::onCameraMoveDown()
+    {
+        context_.getCamera().move(glm::vec2(0.0f, 20.0f));
+        spdlog::debug("Camera position: {}, {}", context_.getCamera().getPosition().x, context_.getCamera().getPosition().y);
+        return true;
+    }
+
+    bool GameScene::onRenderText()
+    {
+        // ui_config->getUnitPanelFontPath(),
+        // entt::hashed_string(font_path.data())
+        /*context_.getTextRenderer().drawUIText("Hello, World!",
+                                              entt::hashed_string(ui_config_->getUnitPanelFontPath().data()),
+                                              16,
+                                              glm::vec2(100.0f, 100.0f),
+                                              engine::utils::FColor::white());*/
+        return true;
     }
 
 } // namespace game::scene

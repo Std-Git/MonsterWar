@@ -1,25 +1,46 @@
 {
     "card": {
+        "Empty Slot": {
+            "sprite_sheet": "assets/textures/UI/Cards/Empty Slot.png",
+            "x": 0,
+            "y": 0,
+            "width": 115,
+            "height": 82
+        },
+        "Shovel1": {
+            "sprite_sheet": "assets/textures/UI/Cards/Shovel1.png",
+            "x": 0,
+            "y": 0,
+            "width": 180,
+            "height": 134
+        },
+        "Shovel2": {
+            "sprite_sheet": "assets/textures/UI/Cards/Shovel2.png",
+            "x": 0,
+            "y": 0,
+            "width": 180,
+            "height": 134
+        },
         "豌豆射手": {
             "sprite_sheet": "assets/textures/UI/Cards/Peashooter.png",
             "x": 0,
             "y": 0,
-            "width": 230,
-            "height": 164
+            "width": 115,
+            "height": 82
         }
     },
     "layout": {
         "unit_panel": {
-            "padding": 10,
+            "padding": 0,
             "frame_size": {
-                "width": 230,
-                "height": 164
+                "width": 50.6,
+                "height": 36.08
             },
-            "font_size": 40,
+            "font_size": 16,
             "font_path": "assets/fonts/VonwaonBitmap-16px.ttf",
             "font_offset": {
-                "x": 16,
-                "y": 72
+                "x": 25,
+                "y": 20
             }
         }
     }

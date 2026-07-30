@@ -8,6 +8,7 @@
 #include "../../engine/core/game_state.h"
 #include "../../engine/audio/audio_player.h"
 #include "../../engine/utils/events.h"
+#include "../../engine/render/camera.h"
 #include "../../engine/system/render_system.h"
 #include "../../engine/system/ysort_system.h"
 #include "../../engine/system/animation_system.h"
@@ -49,7 +50,8 @@ bool TitleScene::init()
     context_.getGameState().setState(engine::core::State::Title);
     context_.getTime().setTimeScale(1.0f);  // 重置游戏速度
 
-    context_.getAudioPlayer().playMusic("title_bgm"_hs);    // 设置标题场景背景音乐
+    context_.getAudioPlayer().playMusic("title_bgm"_hs); // 设置标题场景背景音乐
+    context_.getCamera().setPosition(glm::vec2(-315.0f, -57.0f));
 
     return engine::scene::Scene::init();
 }

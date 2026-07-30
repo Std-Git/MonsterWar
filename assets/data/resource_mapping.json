@@ -12,8 +12,9 @@
         "heal": "assets/audio/healing-balm.wav"
     },
     "music": {
-        "title_bgm": "assets/audio/HEROICCC(chosic.com).mp3",
-        "battle_bgm": "assets/audio/4 Battle Track INTRO TomMusic.ogg",
+        "title_bgm": "assets/audio/Laura Shigihara - Crazy Dave IN-GAME.flac",
+        "select_card_bgm": "assets/audio/Laura Shigihara - Choose Your Seeds IN-GAME.flac",
+        "battle_bgm": "assets/audio/Laura Shigihara - Grasswalk IN-GAME.flac",
         "win": "assets/audio/level-win.mp3",
         "lose": "assets/audio/violin-lose-4.mp3"
     }
