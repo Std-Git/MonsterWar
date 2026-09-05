@@ -25,7 +25,7 @@ public:
      * @param texture_path 要显示的纹理路径
      * @param position 图像的局部位置
      * @param size 图像元素的大小，如果为{0，0}，则使用纹理的整个区域
-     * @param source_rect 可选：要绘制的文理部分(如果为空，则使用纹理的整个区域)
+     * @param source_rect 可选：要绘制的纹理部分(如果为空，则使用纹理的整个区域)
      * @param is_flipped 可选：精灵是否应该水平翻转
      */
     UIImage(std::string_view texure_path, 

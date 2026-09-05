@@ -13,6 +13,7 @@
 #include "../scene/title_scene.h"
 #include "../scene/level_clear_scene.h"
 #include "../scene/end_scene.h"
+#include "../scene/select_card_scene.h"
 #include "../../engine/audio/audio_player.h"
 #include "../../engine/component/name_component.h"
 #include "../../engine/core/context.h"
@@ -90,6 +91,13 @@ void DebugUISystem::updateEnd(game::scene::EndScene & end_scene)
     beginFrame();
     renderEndText(end_scene);
     renderEndButtons(end_scene);
+    endFrame();
+}
+
+void DebugUISystem::updateSelectCard(game::scene::SelectCardScene& )
+{
+    beginFrame();
+    renderDemoUI();
     endFrame();
 }
 
@@ -431,6 +439,10 @@ void DebugUISystem::renderDebugUI()
     if (ImGui::Button("COST + 100"))
     {
         game_stats.cost_ += 100;
+    }
+    if (ImGui::Button("COST - 100"))
+    {
+        game_stats.cost_ -= 100;
     }
     if (ImGui::Button("通关"))
     {
@@ -950,7 +962,7 @@ void DebugUISystem::onUICardHoverLeaveEvent()
     hovered_card_ = entt::null;
 }
 
-/*
+
 void DebugUISystem::renderDemoUI()
 {
     // -- 中文显示测试 --
@@ -972,6 +984,6 @@ void DebugUISystem::renderDemoUI()
     // 显示 ImGui 自带的 Demo 窗口
     ImGui::ShowDemoWindow();
 }
-*/
+
 
 }   // namespace game::system

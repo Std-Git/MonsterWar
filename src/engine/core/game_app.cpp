@@ -446,7 +446,7 @@ namespace engine::core
 
         // 为了正确显示中文，我们需要加载支持中文的字体
         ImFont *font = io.Fonts->AddFontFromFileTTF(
-            "assets/fonts/VonwaonBitmap-16px.ttf",            // 字体文件路径
+            config_->imgui_font_path_.c_str(),                // 字体文件路径
             16.0f,                                            // 字体大小
             nullptr,                                          // 字体配置参数
             io.Fonts->GetGlyphRangesChineseSimplifiedCommon() // 字符范围

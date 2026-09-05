@@ -32,5 +32,185 @@
         "sounds": {
             "emit": "arrow_shoot"
         }
+    },
+    "Sunflower": {
+        "name": "向日葵",
+        "description": "给你额外的阳光",
+        "hp": 300,
+        "atk": 0,
+        "def": 0,
+        "range": 120,
+        "atk_interval": 1.5,
+        "type": "ranged",
+        "projectile": "pea",
+        "healer": false,
+        "block": 0,
+        "cost": 50,
+        "skill": "speed_up",
+        "sprite_sheet": "assets/textures/Plants/Sunflower.png",
+        "face_right": true,
+        "width": 120,
+        "height": 130,
+        "offset_x": -25,
+        "offset_y": -50,
+        "scale_x": 0.5,
+        "scale_y": 0.5,
+        "animation": {
+            "idle": {
+                "row": 0,
+                "frames": [0,1,2,3,4,5,6,7,8,9,10,11],
+                "width": 120,
+                "height": 130,
+                "offset_x": -30,
+                "offset_y": -52
+            },
+            "attack": {
+                "row": 1,
+                "frames": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+                "events": { "emit": 5 },
+                "width": 130,
+                "height": 160,
+                "offset_x": -33,
+                "offset_y": -67
+            }
+        },
+        "sounds": {
+            "emit": "arrow_shoot"
+        }
+    },
+    "Wallnut": {
+        "name": "坚果墙",
+        "description": "防御你的基地",
+        "hp": 300,
+        "atk": 0,
+        "def": 0,
+        "range": 120,
+        "atk_interval": 1.5,
+        "type": "ranged",
+        "projectile": "pea",
+        "healer": false,
+        "block": 0,
+        "cost": 50,
+        "skill": "speed_up",
+        "sprite_sheet": "assets/textures/Plants/Sunflower.png",
+        "face_right": true,
+        "width": 120,
+        "height": 130,
+        "offset_x": -25,
+        "offset_y": -50,
+        "scale_x": 0.5,
+        "scale_y": 0.5,
+        "animation": {
+            "idle": {
+                "row": 0,
+                "frames": [0,1,2,3,4,5,6,7,8,9,10,11],
+                "width": 120,
+                "height": 130,
+                "offset_x": -30,
+                "offset_y": -52
+            },
+            "attack": {
+                "row": 1,
+                "frames": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+                "events": { "emit": 5 },
+                "width": 130,
+                "height": 160,
+                "offset_x": -33,
+                "offset_y": -67
+            }
+        },
+        "sounds": {
+            "emit": "arrow_shoot"
+        }
+    },
+    "Potato Mine": {
+        "name": "土豆地雷",
+        "description": "在敌人接近时爆炸",
+        "hp": 300,
+        "atk": 0,
+        "def": 0,
+        "range": 120,
+        "atk_interval": 1.5,
+        "type": "ranged",
+        "projectile": "pea",
+        "healer": false,
+        "block": 0,
+        "cost": 25,
+        "skill": "speed_up",
+        "sprite_sheet": "assets/textures/Plants/Sunflower.png",
+        "face_right": true,
+        "width": 120,
+        "height": 130,
+        "offset_x": -25,
+        "offset_y": -50,
+        "scale_x": 0.5,
+        "scale_y": 0.5,
+        "animation": {
+            "idle": {
+                "row": 0,
+                "frames": [0,1,2,3,4,5,6,7,8,9,10,11],
+                "width": 120,
+                "height": 130,
+                "offset_x": -30,
+                "offset_y": -52
+            },
+            "attack": {
+                "row": 1,
+                "frames": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+                "events": { "emit": 5 },
+                "width": 130,
+                "height": 160,
+                "offset_x": -33,
+                "offset_y": -67
+            }
+        },
+        "sounds": {
+            "emit": "arrow_shoot"
+        }
+    },
+    "Cherry Bomb": {
+        "name": "樱桃炸弹",
+        "description": "对3x3范围的僵尸造成巨额伤害",
+        "hp": 300,
+        "atk": 0,
+        "def": 0,
+        "range": 120,
+        "atk_interval": 1.5,
+        "type": "ranged",
+        "projectile": "pea",
+        "healer": false,
+        "block": 0,
+        "cost": 150,
+        "skill": "speed_up",
+        "sprite_sheet": "assets/textures/Plants/Sunflower.png",
+        "face_right": true,
+        "width": 120,
+        "height": 130,
+        "offset_x": -25,
+        "offset_y": -50,
+        "scale_x": 0.5,
+        "scale_y": 0.5,
+        "animation": {
+            "idle": {
+                "row": 0,
+                "frames": [0,1,2,3,4,5,6,7,8,9,10,11],
+                "width": 120,
+                "height": 130,
+                "offset_x": -30,
+                "offset_y": -52
+            },
+            "attack": {
+                "row": 1,
+                "frames": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+                "events": { "emit": 5 },
+                "width": 130,
+                "height": 160,
+                "offset_x": -33,
+                "offset_y": -67
+            }
+        },
+        "sounds": {
+            "emit": "arrow_shoot"
+        }
     }
 }

@@ -157,6 +157,7 @@ void Renderer::drawUIImage(const Image &image, const glm::vec2 &position, const 
     {
         dest_rect.w = size.value().x;
         dest_rect.h = size.value().y;
+        //spdlog::warn("dest_rect.w:{}, dest_rect.h:{}", dest_rect.w, dest_rect.h);
     }
     else
     {

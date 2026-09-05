@@ -122,6 +122,79 @@ inline float distanceSquared(const glm::vec2& a, const glm::vec2& b)
 }
 
 /**
+ * @brief 平滑移动(先快后慢)
+ * @param start glm::vec2 起始位置
+ * @param end glm::vec2 结束位置
+ * @param anim_elapsed 动画已经过去的时间
+ * @param anim_duration 动画总时间
+ * @return 平滑值
+ */
+inline glm::vec2 easeOutCubic(const glm::vec2& start, const glm::vec2& end, float anim_elapsed, float anim_duration) {
+    float t = std::clamp(anim_elapsed / anim_duration, 0.0f, 1.0f);
+
+    float f = t - 1.0f;
+    float eased =  f * f * f + 1.0f;  // 1 - (1-t)^3
+    return glm::vec2(start.x + (end.x - start.x) * eased, start.y + (end.y - start.y) * eased);
+}
+
+/**
+ * @brief 平滑移动(先快后慢)
+ * @param start float 起始位置
+ * @param end float 结束位置
+ * @param anim_elapsed 动画已经过去的时间
+ * @param anim_duration 动画总时间
+ * @return 平滑值
+ */
+inline float easeOutCubic(float start, float end, float anim_elapsed, float anim_duration)
+{
+    float t = std::clamp(anim_elapsed / anim_duration, 0.0f, 1.0f);
+
+    float f = t - 1.0f;
+    float eased = f * f * f + 1.0f; // 1 - (1-t)^3
+    return start + (end - start) * eased;
+}
+
+/**
+ * @brief 平滑移动(慢->快->慢)
+ * @param start glm::vec2 起始位置
+ * @param end glm::vec2 结束位置
+ * @param anim_elapsed 动画已经过去的时间
+ * @param anim_duration 动画总时间
+ * @return 平滑值
+ */
+inline glm::vec2 easeInOutCubic(const glm::vec2 &start, const glm::vec2 &end, float anim_elapsed, float anim_duration)
+{
+    float t = std::clamp(anim_elapsed / anim_duration, 0.0f, 1.0f);
+
+    // t < 0.5 时: 4t^3 (加速阶段)
+    // t >= 0.5 时: 1 - (-2t+2)^3 / 2 (减速阶段)
+    float eased = (t < 0.5f)
+                      ? 4.0f * t * t * t
+                      : 1.0f - ((-2.0f * t + 2.0f) * (-2.0f * t + 2.0f) * (-2.0f * t + 2.0f)) * 0.5f;
+    return glm::vec2(start.x + (end.x - start.x) * eased, start.y + (end.y - start.y) * eased);
+}
+
+/**
+ * @brief 平滑移动(慢->快->慢)
+ * @param start float 起始位置
+ * @param end float 结束位置
+ * @param anim_elapsed 动画已经过去的时间
+ * @param anim_duration 动画总时间
+ * @return 平滑值
+ */
+inline float easeInOutCubic(float start, float end, float anim_elapsed, float anim_duration)
+{
+    float t = std::clamp(anim_elapsed / anim_duration, 0.0f, 1.0f);
+
+    // t < 0.5 时: 4t^3 (加速阶段)
+    // t >= 0.5 时: 1 - (-2t+2)^3 / 2 (减速阶段)
+    float eased = (t < 0.5f)
+                      ? 4.0f * t * t * t
+                      : 1.0f - ((-2.0f * t + 2.0f) * (-2.0f * t + 2.0f) * (-2.0f * t + 2.0f)) * 0.5f;
+    return start + (end - start) * eased;
+}
+
+/**
  * @brief 打乱容器中元素的顺序 (Fisher-Yates 洗牌算法)
  * @tparam RandomIt 随机访问迭代器类型
  * @param first 容器起始迭代器

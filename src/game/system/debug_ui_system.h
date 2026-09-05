@@ -12,6 +12,7 @@ namespace game::scene
     class TitleScene;
     class LevelClearScene;
     class EndScene;
+    class SelectCardScene;
 }
 
 namespace game::system
@@ -39,6 +40,7 @@ public:
     void updateTitle(game::scene::TitleScene &title_scene);     ///< @brief 针对TitleScene的更新 (直接传入场景引用)
     void updateLevelClear(game::scene::LevelClearScene& level_clear_scene); ///< @brief 针对LevelClearScene的更新
     void updateEnd(game::scene::EndScene& end_scene);                       ///< @brief 针对EndScene的更新
+    void updateSelectCard(game::scene::SelectCardScene& select_card_scene); ///< @brief 针对EndScene的更新
 
 private:
     // 封装开始，结束帧的方法
@@ -46,7 +48,7 @@ private:
     void endFrame();
 
     // 封装每一个UI显示模块
-    //void renderDemoUI();
+    void renderDemoUI();
     // --- GameScene ---
     void renderHoveredCard();
     void renderHoveredUnit();

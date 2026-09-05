@@ -3,7 +3,7 @@
 namespace game::component
 {
 /**
- * @brief 敌人组件，包含目标节点 ID 和自身速度
+ * @brief 僵尸组件，包含目标节点 ID 和自身速度，所在草坪行数
  */
 struct EnemyComponent
 {

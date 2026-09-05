@@ -1,6 +1,10 @@
 {
     "unit": {
-        "豌豆射手": {"class": "Peashooter", "level": 1, "rarity": 1}
+        "豌豆射手": {"class": "Peashooter", "level": 1, "rarity": 1},
+        "向日葵": {"class": "Sunflower", "level": 1, "rarity": 1},
+        "坚果墙": {"class": "Wallnut", "level": 1, "rarity": 1},
+        "樱桃炸弹": {"class": "Cherry Bomb", "level": 1, "rarity": 1},
+        "土豆地雷": {"class": "Potato Mine", "level": 1, "rarity": 1}
     },
     "level": 1,
     "point": 0,

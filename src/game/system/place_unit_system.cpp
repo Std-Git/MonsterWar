@@ -178,7 +178,9 @@ bool PlaceUnitSystem::onPlaceUnit()
         registry_.emplace_or_replace<game::defs::DeadTag>(entity);
 
         // 通知UI移除对应肖像 <next>
-        context_.getDispatcher().enqueue(game::defs::RemoveUICardEvent{unit_data.name_id_});
+        // 发送单位放置事件，让UI类处理冷却
+        context_.getDispatcher().enqueue(game::defs::UnitPlacedEvent{unit_data.name_id_});
+        //context_.getDispatcher().enqueue(game::defs::RemoveUICardEvent{unit_data.name_id_});
 
         // --- 渲染图层修正：确保玩家所在图层大于放置点图标的图层 ---
         const auto& render_place = registry_.get<engine::component::RenderComponent>(target_place_entity_);

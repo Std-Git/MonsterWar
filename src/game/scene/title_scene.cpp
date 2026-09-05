@@ -1,5 +1,6 @@
 #include "title_scene.h"
 #include "game_scene.h"
+#include "select_card_scene.h"
 #include "../data/ui_config.h"
 #include "../data/session_data.h"
 #include "../../engine/ui/ui_manager.h"
@@ -50,7 +51,7 @@ bool TitleScene::init()
     context_.getGameState().setState(engine::core::State::Title);
     context_.getTime().setTimeScale(1.0f);  // 重置游戏速度
 
-    context_.getAudioPlayer().playMusic("title_bgm"_hs); // 设置标题场景背景音乐
+    context_.getAudioPlayer().playMusic("title_bgm"_hs, -1); // 设置标题场景背景音乐
     context_.getCamera().setPosition(glm::vec2(-315.0f, -57.0f));
 
     return engine::scene::Scene::init();
@@ -110,9 +111,9 @@ bool TitleScene::initBlueprintManager()
         blueprint_manager_ = std::make_shared<game::factory::BlueprintManager>(context_.getResourceManager());
         if (!blueprint_manager_->loadEnemyClassBlueprints("assets/data/zombie_data.json") ||
             !blueprint_manager_->loadPlayerClassBlueprints("assets/data/plant_data.json") ||
-            !blueprint_manager_->loadProjectileBlueprints("assets/data/projectile_data.json") ||
-            !blueprint_manager_->loadEffectBlueprints("assets/data/effect_data.json") ||
-            !blueprint_manager_->loadSkillBlueprints("assets/data/skill_data.json"))
+            !blueprint_manager_->loadProjectileBlueprints("assets/data/projectile_data.json"))
+        /*!blueprint_manager_->loadEffectBlueprints("assets/data/effect_data.json") ||
+            !blueprint_manager_->loadSkillBlueprints("assets/data/skill_data.json")*/
         {
             spdlog::error("加载蓝图失败");
             return false;
@@ -185,13 +186,19 @@ void TitleScene::onStartGameClick()
         session_data_->setLevelClear(false);
         session_data_->addOneLevel();
     }
-    requestReplaceScene(std::make_unique<game::scene::GameScene>(
+    /*requestReplaceScene(std::make_unique<game::scene::GameScene>(
         context_,
         blueprint_manager_,
         session_data_,
         ui_config_,
         level_config_)
-    );
+    );*/
+    requestReplaceScene(std::make_unique<game::scene::SelectCardScene>(
+        context_,
+        blueprint_manager_,
+        session_data_,
+        ui_config_,
+        level_config_));
 }
 
 void TitleScene::onConfirmRoleClick()

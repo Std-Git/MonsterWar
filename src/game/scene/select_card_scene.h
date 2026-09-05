@@ -4,12 +4,17 @@
 #include "../data/ui_config.h"
 #include "../data/session_data.h"
 #include "../data/level_config.h"
-#include "../factory/blueprint_manager.h"
 #include "../system/fwd.h"
 
 namespace engine::ui
 {
     class UIElement;
+}
+
+namespace game::factory
+{
+    class EntityFactory;
+    class BlueprintManager;
 }
 
 namespace game::ui
@@ -38,8 +43,8 @@ class SelectCardScene final : public engine::scene::Scene
 
     std::unique_ptr<game::ui::SelectCardUI> select_card_ui; // 封装的单位肖像UI，负责管理单位肖像UI的创建、更新和排列
 
-    bool show_unit_info_{false};        ///< @brief 是否显示角色列表UI
-    bool show_load_panel_{false};       ///< @brief 是否显示加载面板UI
+    float elapsed_time_{0.0f};
+    bool message_logged_{false};
 
 public:
     SelectCardScene(engine::core::Context& context,
@@ -59,17 +64,12 @@ private:
     [[nodiscard]] bool initLevelConfig();
     [[nodiscard]] bool initBlueprintManager();
     [[nodiscard]] bool initUIConfig();
+    //[[nodiscard]] bool initEntityFactory();
     [[nodiscard]] bool loadLevel();
     [[nodiscard]] bool initSystems();
     [[nodiscard]] bool initRegistryContext();
     [[nodiscard]] bool initUI();
     [[nodiscard]] bool initSelectCardUI();
-
-    // 按钮回调函数 (未来通过游戏UI调用)
-    void onStartGameClick();
-    void onConfirmRoleClick();
-    void onLoadGameClick();
-    void onQuitClick();
 };
 
 }   // namespace game::scene

@@ -57,6 +57,12 @@ struct PrepUnitEvent
     int cost_{0};                           ///< @brief 费用
 };
 
+/// @brief 单位已放置事件（植物被成功种下时触发，用于启动卡牌冷却）
+struct UnitPlacedEvent
+{
+    entt::id_type name_id_{entt::null};     ///< @brief 单位名称 ID
+};
+
 /// @brief 移除角色肖像事件 <next>
 struct RemoveUICardEvent
 {

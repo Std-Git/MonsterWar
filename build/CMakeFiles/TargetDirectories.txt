@@ -1,3 +1,9 @@
 D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/PvZ_EnChanted-Windows.dir
 D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/ALL_BUILD.dir
 D:/CMakeProgram/PvZ_EnChanted/build/CMakeFiles/ZERO_CHECK.dir
+D:/CMakeProgram/PvZ_EnChanted/build/_deps/glm-build/CMakeFiles/ALL_BUILD.dir
+D:/CMakeProgram/PvZ_EnChanted/build/_deps/glm-build/glm/CMakeFiles/glm.dir
+D:/CMakeProgram/PvZ_EnChanted/build/_deps/json-build/CMakeFiles/ALL_BUILD.dir
+D:/CMakeProgram/PvZ_EnChanted/build/_deps/spdlog-build/CMakeFiles/spdlog.dir
+D:/CMakeProgram/PvZ_EnChanted/build/_deps/spdlog-build/CMakeFiles/ALL_BUILD.dir
+D:/CMakeProgram/PvZ_EnChanted/build/_deps/EnTT-build/CMakeFiles/ALL_BUILD.dir

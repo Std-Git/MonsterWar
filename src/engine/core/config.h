@@ -30,6 +30,7 @@ namespace engine::core
         bool vsync_enabled_ = true; ///< @brief 是否启用垂直同步
         float imgui_main_scale_ = 1.0f; ///< @brief ImGui 主窗口缩放比例
         std::string imgui_style_ = "Dark"; ///< @brief ImGui 风格
+        std::string imgui_font_path_ = "assets/fonts/VonwaonBitmap-16px.ttf"; ///< @brief ImGui 字体路径
 
         // 性能设置
         int target_fps_ = 60; ///< @brief 目标 fps 设置， 0 表示不限制

@@ -110,7 +110,6 @@ src/game/scene/title_scene.cpp
 src/game/scene/end_scene.cpp
 src/game/scene/level_clear_scene.cpp
 src/game/scene/select_card_scene.cpp
-#src/game/scene/select_card_scene.cpp
 # Game - Spawner
 src/game/spawner/enemy_spawner.cpp
 # Game - System

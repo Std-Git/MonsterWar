@@ -4,18 +4,11 @@
             "sprite_sheet": "assets/textures/UI/Cards/Empty Slot.png",
             "x": 0,
             "y": 0,
-            "width": 115,
+            "width": 117,
             "height": 82
         },
-        "Shovel1": {
-            "sprite_sheet": "assets/textures/UI/Cards/Shovel1.png",
-            "x": 0,
-            "y": 0,
-            "width": 180,
-            "height": 134
-        },
-        "Shovel2": {
-            "sprite_sheet": "assets/textures/UI/Cards/Shovel2.png",
+        "Reset Seeds": {
+            "sprite_sheet": "assets/textures/UI/Cards/Reset Seeds.png",
             "x": 0,
             "y": 0,
             "width": 180,
@@ -26,7 +19,68 @@
             "x": 0,
             "y": 0,
             "width": 115,
-            "height": 82
+            "height": 82,
+            "cooldown": 5.0
+        },
+        "向日葵": {
+            "sprite_sheet": "assets/textures/UI/Cards/Sunflower.png",
+            "x": 0,
+            "y": 0,
+            "width": 115,
+            "height": 82,
+            "cooldown": 5.0
+        },
+        "坚果墙": {
+            "sprite_sheet": "assets/textures/UI/Cards/Wallnut.png",
+            "x": 0,
+            "y": 0,
+            "width": 115,
+            "height": 82,
+            "cooldown": 5.0
+        },
+        "土豆地雷": {
+            "sprite_sheet": "assets/textures/UI/Cards/Potato Mine.png",
+            "x": 0,
+            "y": 0,
+            "width": 115,
+            "height": 82,
+            "cooldown": 5.0
+        },
+        "樱桃炸弹": {
+            "sprite_sheet": "assets/textures/UI/Cards/CherryBomb.png",
+            "x": 0,
+            "y": 0,
+            "width": 115,
+            "height": 82,
+            "cooldown": 5.0
+        }
+    },
+    "display": {
+        "Choose Your Plants":{
+            "sprite_sheet": "assets/textures/UI/Cards/choose your plants.png",
+            "x": 0,
+            "y": 0,
+            "width": 291,
+            "height": 344
+        },
+        "underlay": {
+            "sprite_sheet": "assets/textures/UI/Cards/underlay.png",
+            "x": 0,
+            "y": 0,
+            "width": 261,
+            "height": 209
+        }
+    },
+    "button": {
+        "Shovel": {   
+            "normal":  { "sprite_sheet": "assets/textures/UI/Cards/Shovel1.png", "x":0, "y":0, "width":180, "height":134 },
+            "hover":   { "sprite_sheet": "assets/textures/UI/Cards/Shovel1.png", "x":0, "y":0, "width":180, "height":134 },
+            "pressed": { "sprite_sheet": "assets/textures/UI/Cards/Shovel2.png", "x":0, "y":0, "width":180, "height":134 }
+        },
+        "Let's Rock": {
+            "normal":  { "sprite_sheet": "assets/textures/UI/Cards/Let's Rock1.png", "x":0, "y":0, "width":95, "height":42 },
+            "hover":   { "sprite_sheet": "assets/textures/UI/Cards/Let's Rock2.png", "x":0, "y":0, "width":99, "height":46 },
+            "pressed": { "sprite_sheet": "assets/textures/UI/Cards/Let's Rock2.png", "x":0, "y":0, "width":99, "height":46 }
         }
     },
     "layout": {
@@ -37,11 +91,29 @@
                 "height": 36.08
             },
             "font_size": 16,
-            "font_path": "assets/fonts/VonwaonBitmap-16px.ttf",
+            "font_path": "assets/fonts/unifont-16.0.04.ttf",
             "font_offset": {
                 "x": 25,
                 "y": 20
             }
         }
-    }
+    },
+    "card_list": [
+        "豌豆射手",
+        "向日葵",
+        "豌豆射手",
+        "向日葵",
+        "豌豆射手",
+        "向日葵",
+        "豌豆射手",
+        "向日葵",
+        "坚果墙",
+        "樱桃炸弹",
+        "土豆地雷",
+        "豌豆射手",
+        "向日葵",
+        "坚果墙",
+        "樱桃炸弹",
+        "土豆地雷"
+    ]
 }

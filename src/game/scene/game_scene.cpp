@@ -292,13 +292,15 @@ namespace game::scene
         if (!blueprint_manager_)
         {
             blueprint_manager_ = std::make_shared<game::factory::BlueprintManager>(context_.getResourceManager());
-            if (!blueprint_manager_->loadEnemyClassBlueprints("assets/data/enemy_data.json") ||
-                !blueprint_manager_->loadPlayerClassBlueprints("assets/data/player_data.json") ||
-                !blueprint_manager_->loadProjectileBlueprints("assets/data/projectile_data.json")) //  ||!blueprint_manager_->loadEffectBlueprints("assets/data/effect_data.json") || !blueprint_manager_->loadSkillBlueprints("assets/data/skill_data.json")
-                {
+            if (!blueprint_manager_->loadEnemyClassBlueprints("assets/data/zombie_data.json") ||
+                !blueprint_manager_->loadPlayerClassBlueprints("assets/data/plant_data.json") ||
+                !blueprint_manager_->loadProjectileBlueprints("assets/data/projectile_data.json") ||
+                !blueprint_manager_->loadEffectBlueprints("assets/data/effect_data.json") ||
+                !blueprint_manager_->loadSkillBlueprints("assets/data/skill_data.json"))
+            {
                     spdlog::error("加载蓝图失败");
                     return false;
-                }
+            }
         }
         entity_factory_ = std::make_unique<game::factory::EntityFactory>(registry_, *blueprint_manager_);
         spdlog::info("实体工厂初始化完成");
@@ -404,28 +406,28 @@ namespace game::scene
 
     bool GameScene::onCameraMoveLeft()
     {
-        context_.getCamera().move(glm::vec2(-20.0f, 0.0f));
+        context_.getCamera().move(glm::vec2(-10.0f, 0.0f));
         spdlog::debug("Camera position: {}, {}", context_.getCamera().getPosition().x, context_.getCamera().getPosition().y);
         return true;
     }
 
     bool GameScene::onCameraMoveRight()
     {
-        context_.getCamera().move(glm::vec2(20.0f, 0.0f));
+        context_.getCamera().move(glm::vec2(10.0f, 0.0f));
         spdlog::debug("Camera position: {}, {}", context_.getCamera().getPosition().x, context_.getCamera().getPosition().y);
         return true;
     }
 
     bool GameScene::onCameraMoveUp()
     {
-        context_.getCamera().move(glm::vec2(0.0f, -20.0f));
+        context_.getCamera().move(glm::vec2(0.0f, -10.0f));
         spdlog::debug("Camera position: {}, {}", context_.getCamera().getPosition().x, context_.getCamera().getPosition().y);
         return true;
     }
 
     bool GameScene::onCameraMoveDown()
     {
-        context_.getCamera().move(glm::vec2(0.0f, 20.0f));
+        context_.getCamera().move(glm::vec2(0.0f, 10.0f));
         spdlog::debug("Camera position: {}, {}", context_.getCamera().getPosition().x, context_.getCamera().getPosition().y);
         return true;
     }

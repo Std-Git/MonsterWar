@@ -72,6 +72,8 @@ void Config::fromJson(const nlohmann::json& j)
         spdlog::info("ImGui 主窗口缩放比例已被设置为: {}", imgui_main_scale_);
         imgui_style_ = graphics_config.value("imgui_style", imgui_style_);
         spdlog::info("ImGui 风格已被设置为: {}", imgui_style_);
+        imgui_font_path_ = graphics_config.value("imgui_font_path", imgui_font_path_);
+        spdlog::info("ImGui 字体路径已被设置为: {}", imgui_font_path_);
     }
     if (j.contains("performance"))
     {
@@ -176,7 +178,8 @@ nlohmann::ordered_json Config::toJson() const
         {"graphics", {
             {"vsync", vsync_enabled_},
             {"imgui_main_scale", imgui_main_scale_},
-            {"imgui_style", imgui_style_}
+            {"imgui_style", imgui_style_},
+            {"imgui_font_path", imgui_font_path_}
         }},
         {"performance", {
             {"target_fps", target_fps_}

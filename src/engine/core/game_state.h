@@ -14,7 +14,8 @@ namespace engine::core
  */
 enum class State
 {
-    Title,      ///< @brief 标题界面
+    Title,      ///< @brief 标题界面,
+    SelectCards,///< @brief 选择卡牌界面
     Playing,    ///< @brief 正常游戏进行中
     Paused,     ///< @brief 游戏暂停 (通常覆盖菜单界面)
     GameOver,   ///< @brief 游戏结束界面
@@ -64,6 +65,7 @@ public:
     // -- 便捷查询方法 -- 
     
     bool isInTitle() const { return current_state_ == State::Title; }
+    bool isInSelectCards() const { return current_state_ == State::SelectCards; }
     bool isPlaying() const { return current_state_ == State::Playing; }
     bool isPaused() const { return current_state_ == State::Paused; }
     bool isGameOver() const { return current_state_ == State::GameOver; }

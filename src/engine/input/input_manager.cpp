@@ -53,7 +53,7 @@ namespace engine::input
             }
         }
 
-        // 2.处理所有待处理的 SDL 事件 (浙江设定 action_states_ 的值)
+        // 2.处理所有待处理的 SDL 事件 (这将设定 action_states_ 的值)
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
@@ -87,9 +87,27 @@ namespace engine::input
 
     void InputManager::processEvent(const SDL_Event &event)
     {
+        if (event.type == SDL_EVENT_QUIT)
+        {
+            quit();
+            return;
+        }
+        else if (event.type == SDL_EVENT_WINDOW_MOVED || event.type == SDL_EVENT_WINDOW_RESIZED)
+        {
+            // 拖拽窗口
+            dispatcher_->enqueue<engine::utils::WindowMovedEvent>();
+            return;
+        }
+        else if (event.type == SDL_EVENT_WINDOW_EXPOSED || event.type == SDL_EVENT_WINDOW_RESTORED)
+        {
+            // 窗口显示
+            dispatcher_->enqueue<engine::utils::WindowExposedEvent>();
+            return;
+        }
         // 如果 ImGui 捕获了鼠标，则不处理该事件(避免穿透到游戏中)
         if (ImGui::GetIO().WantCaptureMouse)
         {
+            //spdlog::warn("ImGui Want Capture Mouse");
             return;
         }
 
@@ -137,19 +155,6 @@ namespace engine::input
         case SDL_EVENT_MOUSE_MOTION: // 处理鼠标运动
             mouse_position_ = {event.button.x, event.button.y};
             SDL_RenderCoordinatesFromWindow(sdl_renderer_, mouse_position_.x, mouse_position_.y, &logical_mouse_position_.x, &logical_mouse_position_.y);
-            break;
-        case SDL_EVENT_WINDOW_MOVED:
-        case SDL_EVENT_WINDOW_RESIZED:
-            // 拖拽窗口
-            dispatcher_->enqueue<engine::utils::WindowMovedEvent>();
-            break;
-        case SDL_EVENT_WINDOW_EXPOSED:
-        case SDL_EVENT_WINDOW_RESTORED:
-            // 窗口显示
-            dispatcher_->enqueue<engine::utils::WindowExposedEvent>();
-            break;
-        case SDL_EVENT_QUIT:
-            quit();
             break;
         default:
             break;

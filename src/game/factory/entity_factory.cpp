@@ -247,13 +247,24 @@ void EntityFactory::addAnimationComponent(entt::entity entity,
     {
         // 创建动画帧容器
         std::vector<engine::component::AnimationFrame> frames;
+        // ---- 获取当前动画的帧宽高 ----
+        float frame_width = sprite_blueprint.src_rect_.size.x;
+        float frame_height = sprite_blueprint.src_rect_.size.y;
+        if (anim_blueprint.width_.has_value())
+            frame_width = *anim_blueprint.width_;
+        if (anim_blueprint.height_.has_value())
+            frame_height = *anim_blueprint.height_;
         // 依次读取蓝图中的每一帧
         for (const auto& frame_index : anim_blueprint.frames_)
         {
             engine::utils::Rect source_rect = sprite_blueprint.src_rect_;
             // 通过索引计算每一帧的源矩形区域
-            source_rect.position.x += frame_index * source_rect.size.x;
-            source_rect.position.y += anim_blueprint.row_ * source_rect.size.y;
+            source_rect.position.x += frame_index * frame_width;
+            // 行偏移：使用全局帧高（不是当前动画的帧高）
+            source_rect.position.y += anim_blueprint.row_ * sprite_blueprint.src_rect_.size.y;
+            // 源矩形尺寸设置为当前动画的宽高
+            source_rect.size.x = frame_width;
+            source_rect.size.y = frame_height;
             // 创建动画帧并插入动画帧容器
             frames.emplace_back(source_rect, anim_blueprint.ms_per_frame_);
         }
@@ -286,12 +297,20 @@ void EntityFactory::addOneAnimationComponent(entt::entity entity,
 {
     // 创建动画帧容器
     std::vector<engine::component::AnimationFrame> frames;
+    // ---- 获取当前动画的帧宽高 ----
+    float frame_width = sprite_blueprint.src_rect_.size.x;
+    float frame_height = sprite_blueprint.src_rect_.size.y;
+    if (animation_blueprint.width_.has_value())
+        frame_width = *animation_blueprint.width_;
+    if (animation_blueprint.height_.has_value())
+        frame_height = *animation_blueprint.height_;
+
     // 依次读取蓝图中的每一个动画帧，并插入容器
     for (const auto& frame_index : animation_blueprint.frames_)
     {
         engine::utils::Rect source_rect = sprite_blueprint.src_rect_;
-        source_rect.position.x += frame_index * source_rect.size.x;
-        source_rect.position.y += animation_blueprint.row_ * source_rect.size.y;
+        source_rect.position.x += frame_index * frame_width;
+        source_rect.position.y += animation_blueprint.row_ * frame_height;
         // 创建动画帧并插入动画帧容器
         frames.emplace_back(source_rect, animation_blueprint.ms_per_frame_);
     }

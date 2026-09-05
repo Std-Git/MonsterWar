@@ -10,7 +10,8 @@
     "graphics": {
         "vsync": true,
         "imgui_main_scale": 1.0,
-        "imgui_style": "Dark"
+        "imgui_style": "Dark",
+        "imgui_font_path": "assets/fonts/unifont-16.0.04.ttf"
     },
     "performance": {
         "target_fps": 60
@@ -47,20 +48,20 @@
         "attack": [
             "K",
             "MouseLeft"
+        ]
+    },
+    "imgui_input_mappings": {
+        "upgrade": [
+            "Q"
         ],
-        "imgui_input_mappings": {
-            "upgrade": [
-                "Q"
-            ],
-            "retreat": [
-                "E"
-            ],
-            "skill": [
-                "S"
-            ],
-            "pause": [
-                "Escape"
-            ]
-        }
+        "retreat": [
+            "E"
+        ],
+        "skill": [
+            "S"
+        ],
+        "pause": [
+            "Escape"
+        ]
     }
 }
