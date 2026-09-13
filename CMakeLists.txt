@@ -70,6 +70,7 @@ src/engine/resource/font_manager.cpp
 src/engine/render/renderer.cpp
 src/engine/render/camera.cpp
 src/engine/render/text_renderer.cpp
+src/engine/render/glint_renderer.cpp
 # Engine - Input
 src/engine/input/input_manager.cpp
 # Engine - Loader

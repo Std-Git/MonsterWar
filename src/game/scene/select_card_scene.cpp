@@ -100,7 +100,7 @@ void SelectCardScene::render()
     auto &renderer = context_.getRenderer();
     auto &camera = context_.getCamera();
 
-    render_system_->update(registry_, renderer, camera);
+    render_system_->update(registry_, renderer, camera, context_.getTime().getDeltaTime());
 
     Scene::render();
     debug_ui_system_->updateSelectCard(*this);

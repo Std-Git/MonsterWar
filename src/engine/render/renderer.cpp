@@ -1,8 +1,10 @@
 #include "renderer.h"
 #include "../resource/resource_manager.h"
 #include "../component/sprite_component.h"
+#include "../component/glint_component.h"
 #include "camera.h"
 #include "image.h"
+#include "glint_renderer.h"
 #include <SDL3/SDL.h>
 #include <stdexcept>
 #include <spdlog/spdlog.h>
@@ -12,6 +14,9 @@ using namespace entt::literals;
 
 namespace engine::render
 {
+
+// 析构函数：此处 GlintRenderer 为完整类型，unique_ptr 可安全释放其纹理资源（RAII）
+Renderer::~Renderer() = default;
 
 // 构造函数：执行初始化，增加 ResourceManager
 Renderer::Renderer(SDL_Renderer* sdl_renderer, engine::resource::ResourceManager* resource_manager)
@@ -134,6 +139,38 @@ void Renderer::drawRect(const Camera &camera, const glm::vec2 &position, const g
 
     // 恢复默认颜色
     setDrawColorFloat(0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+void Renderer::drawGlint(const Camera &camera, const component::Sprite &sprite, const glm::vec2 &position,
+                         const glm::vec2 &size, const float rotation, const component::GlintComponent &glint)
+{
+    // 懒创建表面流光渲染器（无异常保证，失败则本次为空操作）
+    if (!glint_renderer_)
+    {
+        glint_renderer_ = std::make_unique<GlintRenderer>(renderer_);
+        if (!glint_renderer_->isValid())
+        {
+            glint_renderer_.reset();
+            spdlog::warn("drawGlint: 表面流光渲染器不可用，已禁用");
+            return;
+        }
+    }
+
+    auto texture = resource_manager_->getTexture(sprite.texture_id_, sprite.texture_path_);
+    if (!texture)
+    {
+        spdlog::error("drawGlint: 无法为 ID {} 获取纹理", sprite.texture_id_);
+        return;
+    }
+
+    // 与 drawSprite 相同的相机变换与视口裁剪
+    glm::vec2 position_screen = camera.worldToScreen(position);
+    SDL_FRect dest_rect = {position_screen.x, position_screen.y, size.x, size.y};
+    if (!isRectInViewport(camera, dest_rect))
+    {
+        return;
+    }
+    glint_renderer_->draw(texture, sprite, position_screen, size, rotation, glint);
 }
 
 void Renderer::drawUIImage(const Image &image, const glm::vec2 &position, const std::optional<glm::vec2> &size)

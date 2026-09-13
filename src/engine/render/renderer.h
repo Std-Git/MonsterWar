@@ -4,6 +4,7 @@
 #include "../utils/math.h"
 #include <string>
 #include <optional> //  for std::optional
+#include <memory>
 
 struct SDL_Renderer;
 struct SDL_FRect;
@@ -11,6 +12,16 @@ struct SDL_FRect;
 namespace engine::resource
 {
     class ResourceManager;
+}
+
+namespace engine::component
+{
+    struct GlintComponent;
+}
+
+namespace engine::render
+{
+    class GlintRenderer;
 }
 
 namespace engine::render
@@ -42,6 +53,8 @@ public:
      */
     Renderer(SDL_Renderer* sdl_renderer, engine::resource::ResourceManager* resource_manager);
 
+    ~Renderer(); ///< @brief 析构函数（在 cpp 中定义，确保 GlintRenderer 完整类型可见）
+
     /**
      * @brief 绘制一个精灵
      * 
@@ -54,6 +67,22 @@ public:
      */
     void drawSprite(const Camera& camera, const component::Sprite& sprite, const glm::vec2& position,
                     const glm::vec2& size, const float rotation = 0.0f, const engine::utils::FColor& color = engine::utils::FColor::white());
+
+    /**
+     * @brief 在精灵之上叠加绘制表面流光（彩色斜向条纹滚动，供附魔等效果复用）
+     *
+     * 光效严格贴合精灵的非透明区域（透明像素零污染），颜色 / 速度 / 强度由组件参数控制。
+     *
+     * @param camera 游戏相机，用于坐标转换
+     * @param sprite 包含纹理 ID、源矩形和翻转状态的 Sprite 对象（与 drawSprite 相同）
+     * @param position 世界坐标中的左上角位置
+     * @param size 精灵的大小
+     * @param rotation 旋转角度（度）
+     * @param glint 流光参数（颜色 / 速度 / 强度 / 周期 / 累计时间）
+     */
+    void drawGlint(const Camera& camera, const component::Sprite& sprite, const glm::vec2& position,
+                   const glm::vec2& size, const float rotation,
+                   const component::GlintComponent& glint);
 
     /**
      * @brief 绘制填充圆形
@@ -122,6 +151,8 @@ public:
 private:
     std::optional<SDL_FRect> getImageSrcRect(const Image &image);       ///< @brief 获取 Image 的源矩形,用于具体绘制，出现错误则返回 std::nullopt 并跳过绘制 Image 的源矩形,用于具体绘制，出现错误则返回 std::nullopt 并跳过绘制
     bool isRectInViewport(const Camera& camera, const SDL_FRect& rect); ///< @brief 判断矩形是否在视口中, 用于视窗裁剪
+
+    std::unique_ptr<GlintRenderer> glint_renderer_;     ///< @brief 表面流光渲染器（懒创建，RAII 自动释放）
     
 };
 

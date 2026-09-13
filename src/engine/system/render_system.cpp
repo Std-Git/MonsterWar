@@ -4,12 +4,13 @@
 #include "../component/transform_component.h"
 #include "../component/sprite_component.h"
 #include "../component/render_component.h"
+#include "../component/glint_component.h"
 #include "../component/animation_component.h"
 #include <spdlog/spdlog.h>
 
 namespace engine::system
 {
-void RenderSystem::update(entt::registry &registry, render::Renderer &renderer, const render::Camera &camera)
+void RenderSystem::update(entt::registry &registry, render::Renderer &renderer, const render::Camera &camera, float delta_time)
 {
     //spdlog::trace("RenderSystem::update");
 
@@ -54,6 +55,13 @@ void RenderSystem::update(entt::registry &registry, render::Renderer &renderer, 
         auto final_size = size * transform.scale_;              // 大小 = 精灵的大小 * 变换组件的缩放
         // 绘制时应用Render组件中的颜色调整参数
         renderer.drawSprite(camera, sprite.sprite_, position, final_size, transform.rotation_, render.color_);
+
+        // 表面流光：若实体带有 GlintComponent，则在精灵之上叠加滚动流光
+        if (auto glint = registry.try_get<component::GlintComponent>(entity); glint && glint->enabled_)
+        {
+            glint->elapsed_ += delta_time; // 推进滚动时间（由组件自身累计，各实体独立）
+            renderer.drawGlint(camera, sprite.sprite_, position, final_size, transform.rotation_, *glint);
+        }
     }
 }
 
