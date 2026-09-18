@@ -40,7 +40,9 @@ public:
              glm::vec2 size = {0.0f, 0.0f},
              std::function<void()> click_callback = nullptr,
              std::function<void()> hover_enter_callback = nullptr,
-             std::function<void()> hover_leave_callback = nullptr);
+             std::function<void()> hover_leave_callback = nullptr,
+             std::string hover_sound_path = "ui_hover",
+             std::string click_sound_path = "ui_click");
     ~UIButton() override = default;
 
     // --- 重写基类方法：点击、悬停进入、悬停离开 ---

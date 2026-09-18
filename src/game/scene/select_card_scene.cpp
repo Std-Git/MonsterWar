@@ -58,7 +58,7 @@ bool SelectCardScene::init()
     context_.getGameState().setState(engine::core::State::SelectCards);
     context_.getTime().setTimeScale(1.0f);  // 重置游戏速度
 
-    context_.getAudioPlayer().playMusic("select_card_bgm"_hs, -1, 1000); // 设置标题场景背景音乐
+    context_.getAudioPlayer().playMusic("select_card_bgm"_hs, -1, 1000); // 设置选卡场景背景音乐
     context_.getCamera().setPosition(glm::vec2(-315.0f, -57.0f));
 
     return Scene::init();
@@ -66,29 +66,35 @@ bool SelectCardScene::init()
 
 void SelectCardScene::update(float delta_time)
 {
+    // 静态常量 lambda：编译期构造，运行时零开销
+    static constexpr auto easeInOutCubicVec2 =
+        [](const glm::vec2 &start, const glm::vec2 &end, float elapsed, float duration)
+    {
+        return engine::utils::easeInOutCubic(start, end, elapsed, duration);
+    };
+
     //spdlog::info("SelectCardScene::update start");
     engine::scene::Scene::update(delta_time);
     // 等待2秒后发送提示信息
     elapsed_time_ += delta_time;
-    if (elapsed_time_ >= 2.0f && !message_logged_)
+    // 2秒后启动相机平滑移动, 使用 isSmoothMoving 防止重复触发
+    if (elapsed_time_ >= 2.0f && !context_.getCamera().isSmoothMoving())
     {
-        // 201.0f
-        float desired_x = 101.0f;
-        float start_x = -315.0f;
-        
         auto &camera = context_.getCamera();
-        auto default_y = camera.getPosition().y;
-        //auto now_x = camera.getPosition().x;
-        auto progress = std::clamp((elapsed_time_ - 2.0f) / 2.5f, 0.0f, 1.0f);
-        camera.setPosition(engine::utils::easeInOutCubic(glm::vec2(start_x, default_y), glm::vec2(desired_x, default_y), elapsed_time_ - 2.0f, 2.5f));
-        if (elapsed_time_ >= 4.5f)
-        {
-            message_logged_ = true;
-        }
+        camera.smoothMoveTo(glm::vec2(101.0f, camera.getPosition().y), 2.5f, easeInOutCubicVec2);
     }
+
+    // 驱动相机平滑移动更新
+    context_.getCamera().update(delta_time);
+
     animation_system_->update(delta_time);
     movement_system_->update(registry_, delta_time);
     ysort_system_->update(registry_);
+    if (elapsed_time_ >= 4.5f && !message_logged_)
+    {
+        message_logged_ = true;
+        context_.getAudioPlayer().playSound("choose_panel"_hs);
+    }
     if (message_logged_)
         select_card_ui->update(delta_time);
     //spdlog::info("SelectCardScene::update end");
@@ -100,7 +106,7 @@ void SelectCardScene::render()
     auto &renderer = context_.getRenderer();
     auto &camera = context_.getCamera();
 
-    render_system_->update(registry_, renderer, camera);
+    render_system_->update(registry_, renderer, camera, context_.getTime().getDeltaTime());
 
     Scene::render();
     debug_ui_system_->updateSelectCard(*this);
@@ -251,6 +257,16 @@ bool SelectCardScene::initSelectCardUI()
         return false;
     }
     return true;
+}
+
+void SelectCardScene::onStartGameClick()
+{
+    requestReplaceScene(std::make_unique<game::scene::GameScene>(
+        context_,
+        blueprint_manager_,
+        session_data_,
+        ui_config_,
+        level_config_));
 }
 
 } // namespace game::scene

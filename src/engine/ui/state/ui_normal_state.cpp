@@ -24,7 +24,9 @@ void UINormalState::update(float, engine::core::Context & context)
     auto mouse_pos = input_manager.getLogicalMousePosition();
     if (owner_->isPointInside(mouse_pos))   // 如果鼠标在 UI 元素内，则切换到悬停状态
     {
-        owner_->playSound("ui_hover"_hs);
+        //owner_->playSound("ui_hover"_hs);
+        if (!owner_->getHoverSoundPath().empty())
+            owner_->playSound(entt::hashed_string(owner_->getHoverSoundPath().c_str()));
         owner_->setNextState(std::make_unique<UIHoverState>(owner_));
     }
 }

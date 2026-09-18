@@ -70,7 +70,7 @@ void TitleScene::render()
     auto &renderer = context_.getRenderer();
     auto &camera = context_.getCamera();
 
-    render_system_->update(registry_, renderer, camera);
+    render_system_->update(registry_, renderer, camera, context_.getTime().getDeltaTime());
 
     engine::scene::Scene::render();
     debug_ui_system_->updateTitle(*this);

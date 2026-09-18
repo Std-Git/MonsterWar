@@ -68,6 +68,7 @@ src/engine/resource/audio_manager.cpp
 src/engine/resource/font_manager.cpp
 # Engine - Render
 src/engine/render/renderer.cpp
+src/engine/render/glint_renderer.cpp
 src/engine/render/camera.cpp
 src/engine/render/text_renderer.cpp
 # Engine - Input

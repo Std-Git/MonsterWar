@@ -94,9 +94,10 @@ void DebugUISystem::updateEnd(game::scene::EndScene & end_scene)
     endFrame();
 }
 
-void DebugUISystem::updateSelectCard(game::scene::SelectCardScene& )
+void DebugUISystem::updateSelectCard(game::scene::SelectCardScene& select_card_scene)
 {
     beginFrame();
+    renderSelectCardUI(select_card_scene);
     renderDemoUI();
     endFrame();
 }
@@ -965,6 +966,13 @@ void DebugUISystem::onUICardHoverLeaveEvent()
 
 void DebugUISystem::renderDemoUI()
 {
+
+    // 显示 ImGui 自带的 Demo 窗口
+    ImGui::ShowDemoWindow();
+}
+
+void DebugUISystem::renderSelectCardUI(game::scene::SelectCardScene &select_card_scene)
+{
     // -- 中文显示测试 --
     static float volume_value = 0.5f;
     ImGui::Begin("窗口1");
@@ -973,6 +981,7 @@ void DebugUISystem::renderDemoUI()
     if (ImGui::Button("按钮1", ImVec2(200, 60)))
     {
         spdlog::info("按钮1被点击");
+        select_card_scene.onStartGameClick();
     }
     ImGui::SetWindowFontScale(1.0f);
     if (ImGui::SliderFloat("音量", &volume_value, 0.0f, 1.0f))
@@ -980,10 +989,6 @@ void DebugUISystem::renderDemoUI()
         spdlog::info("音量被调整: {}", volume_value);
     }
     ImGui::End();
-
-    // 显示 ImGui 自带的 Demo 窗口
-    ImGui::ShowDemoWindow();
 }
-
 
 }   // namespace game::system

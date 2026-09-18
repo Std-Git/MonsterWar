@@ -81,6 +81,12 @@
             "normal":  { "sprite_sheet": "assets/textures/UI/Cards/Let's Rock1.png", "x":0, "y":0, "width":95, "height":42 },
             "hover":   { "sprite_sheet": "assets/textures/UI/Cards/Let's Rock2.png", "x":0, "y":0, "width":99, "height":46 },
             "pressed": { "sprite_sheet": "assets/textures/UI/Cards/Let's Rock2.png", "x":0, "y":0, "width":99, "height":46 }
+        },
+        "Look Lawn": {
+            "normal":  { "sprite_sheet": "assets/textures/UI/Cards/Look Lawn1.png", "x":0, "y":0, "width":60, "height":69 },
+            "hover":   { "sprite_sheet": "assets/textures/UI/Cards/Look Lawn2.png", "x":0, "y":0, "width":60, "height":69 },
+            "pressed": { "sprite_sheet": "assets/textures/UI/Cards/Look Lawn2.png", "x":0, "y":0, "width":60, "height":69 },
+            "scale": 0.7
         }
     },
     "layout": {
@@ -91,7 +97,7 @@
                 "height": 36.08
             },
             "font_size": 16,
-            "font_path": "assets/fonts/unifont-16.0.04.ttf",
+            "font_path": "assets/fonts/VonwaonBitmap-16px.ttf",
             "font_offset": {
                 "x": 25,
                 "y": 20

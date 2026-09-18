@@ -68,7 +68,7 @@ namespace game::ui
         auto window_size = context_.getGameState().getLogicalSize();
 
         // 获取 "Empty Slot" 卡牌纹理信息
-        auto empty_card = ui_config->getCard(entt::hashed_string("Empty Slot"_hs));
+        auto empty_card = ui_config->getCard("Empty Slot"_hs);
         auto frame_size = ui_config->getUnitPanelFrameSize();
 
         // 创建左侧已选择卡牌的面板
@@ -90,7 +90,7 @@ namespace game::ui
             spdlog::warn("slot_size: {}, {}", empty_slot->getSourceRect().value().size.x, empty_slot->getSourceRect().value().size.y);
             empty_slots_panel->addChild(std::move(empty_slot));
         }
-        auto reset_button_image = ui_config->getCard(entt::hashed_string("Reset Seeds"_hs));
+        auto reset_button_image = ui_config->getCard("Reset Seeds"_hs);
         auto reset_button = std::make_unique<engine::ui::UIButton>(context_, reset_button_image, reset_button_image, reset_button_image, glm::vec2(0.0f, 18.0f + frame_size.y * EMPTY_SLOT_COUNT), frame_size,
                                                                    // 点击回调：重置所有槽位
                                                                    [this]()
@@ -139,7 +139,9 @@ namespace game::ui
 
                                                                        spdlog::warn("重置所有槽位和卡牌状态"); },
                                                                    nullptr,  // 悬停进入
-                                                                   nullptr); // 悬停离开);
+                                                                   nullptr,
+                                                                   "",
+                                                                   "menu1");
         empty_slots_panel->addChild(std::move(reset_button));
 
         // 将父面板添加到UI管理器
@@ -167,9 +169,9 @@ namespace game::ui
         auto ui_config = registry_.ctx().get<std::shared_ptr<game::data::UIConfig>>();
         auto session_data = registry_.ctx().get<std::shared_ptr<game::data::SessionData>>();
         // auto &unit_map = session_data->getUnitMap();
-        auto empty_card = ui_config->getCard(entt::hashed_string("Empty Slot"_hs));
+        auto empty_card = ui_config->getCard("Empty Slot"_hs);
         auto card_rect = empty_card.getSourceRect();
-        auto choose_image_size = ui_config->getCardDisplaySize(entt::hashed_string("Choose Your Plants"_hs));
+        auto choose_image_size = ui_config->getDisplaySize("Choose Your Plants"_hs);
         auto frame_size = ui_config->getUnitPanelFrameSize();
 
         // float padding_y = 10.0f;
@@ -201,17 +203,17 @@ namespace game::ui
         auto window_size = context_.getGameState().getLogicalSize();
 
         // 获取 "Choose Your Plants" 卡牌纹理和显示尺寸（统一使用 ui_config 的 getCardDisplaySize）
-        auto choose_card_id = entt::hashed_string("Choose Your Plants"_hs);
+        auto choose_card_id = "Choose Your Plants"_hs;
         auto choose_card = ui_config->getCard(choose_card_id);
-        auto panel_size = ui_config->getCardDisplaySize(choose_card_id);
+        auto panel_size = ui_config->getDisplaySize(choose_card_id);
         auto frame_size = ui_config->getUnitPanelFrameSize();
-        auto bg = ui_config->getCard(entt::hashed_string("underlay"_hs));
+        auto bg = ui_config->getCard("underlay"_hs);
 
         // 水平居中放置在屏幕顶部
         auto panel = std::make_unique<engine::ui::UIPanel>(
             glm::vec2(frame_size.x + 15.0f, window_size.y), panel_size);
         panel->setId("choose_card_panel"_hs);
-        panel->addChild(std::make_unique<engine::ui::UIImage>(bg, glm::vec2(15.0f, 153.0f), ui_config->getCardDisplaySize(entt::hashed_string("underlay"_hs))));
+        panel->addChild(std::make_unique<engine::ui::UIImage>(bg, glm::vec2(15.0f, 153.0f), ui_config->getDisplaySize("underlay"_hs)));
         panel->addChild(std::make_unique<engine::ui::UIImage>(choose_card, glm::vec2(0.0f, 0.0f), panel_size));
 
         // -- 创建可点击的卡牌按钮 --
@@ -260,10 +262,12 @@ namespace game::ui
                 [this, card_id, i]()
                 {
                     onCardClicked(card_id, i);
-                    spdlog::warn("Clicked");
                 },
                 nullptr,
-                nullptr);
+                nullptr,
+                "",
+                "seed_slot");
+            
             engine::ui::UIButton *button_ptr = button.get();
             spdlog::warn("Button Created");
             card_panel->addChild(std::move(button));
@@ -300,15 +304,29 @@ namespace game::ui
 
         auto rock_button = std::make_unique<engine::ui::UIButton>(
             context_,
-            ui_config->getButtonImage(entt::hashed_string("Let's Rock"), game::data::ButtonState::Normal),
-            ui_config->getButtonImage(entt::hashed_string("Let's Rock"), game::data::ButtonState::Hover),
-            ui_config->getButtonImage(entt::hashed_string("Let's Rock"), game::data::ButtonState::Pressed),
-            glm::vec2(window_size - ui_config->getCardDisplaySize(entt::hashed_string("Let's Rock"))),
-            ui_config->getCardDisplaySize(entt::hashed_string("Let's Rock")),
-            [](){
+            ui_config->getButtonImage("Let's Rock"_hs, game::data::ButtonState::Normal),
+            ui_config->getButtonImage("Let's Rock"_hs, game::data::ButtonState::Hover),
+            ui_config->getButtonImage("Let's Rock"_hs, game::data::ButtonState::Pressed),
+            glm::vec2(window_size - ui_config->getDisplaySize("Let's Rock"_hs)),
+            ui_config->getDisplaySize("Let's Rock"_hs),
+            []()
+            {
                 spdlog::warn("Let's Rock");
             });
         ui_manager_.addElement(std::move(rock_button));
+
+        auto view_button = std::make_unique<engine::ui::UIButton>(
+            context_,
+            ui_config->getButtonImage("Look Lawn"_hs, game::data::ButtonState::Normal),
+            ui_config->getButtonImage("Look Lawn"_hs, game::data::ButtonState::Hover),
+            ui_config->getButtonImage("Look Lawn"_hs, game::data::ButtonState::Pressed),
+            glm::vec2(window_size.x - ui_config->getDisplaySize("Look Lawn"_hs).x, 42.0f),
+            ui_config->getDisplaySize("Look Lawn"_hs),
+            []()
+            {
+                spdlog::warn("Look Lawn");
+            });
+        ui_manager_.addElement(std::move(view_button));
         spdlog::warn("选择植物面板创建完成, 尺寸={:.1f}x{:.1f}", panel_size.x, panel_size.y);
     }
 
@@ -557,7 +575,7 @@ namespace game::ui
                         // 1. 先创建 UIButton unique_ptr
                         auto card_slot = std::make_unique<engine::ui::UIButton>(
                             context_, card_img, card_img, card_img, glm::vec2(0.0f, 0.0f), frame_size,
-                            nullptr, nullptr, nullptr);
+                            nullptr, nullptr, nullptr, "", "seed");
 
                         // 3. 获取裸指针，此时 card_slot 已声明
                         engine::ui::UIButton *captured_button_ptr = card_slot.get();

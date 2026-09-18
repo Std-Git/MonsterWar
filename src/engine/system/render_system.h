@@ -20,12 +20,13 @@ class RenderSystem
 public:
     /**
      * @brief 更新渲染系统
-     * 
+     *
      * @param registry entt::registry 的引用
      * @param renderer Renderer 的引用
      * @param camera Camera 的引用
+     * @param delta_time 帧间时间差（秒），用于推进附魔光效滚动
      */
-    void update(entt::registry& registry, render::Renderer& renderer, const render::Camera& camera);
+    void update(entt::registry &registry, render::Renderer &renderer, const render::Camera &camera, float delta_time);
 };
 
 } // namespace engine::system

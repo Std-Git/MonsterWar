@@ -16,6 +16,7 @@
 #include "../component/enemy_component.h"
 #include "../component/class_name_component.h"
 #include "../component/unit_prep_component.h"
+#include "../component/enchant_glint_component.h"
 #include "../component/skill_component.h"
 #include <entt/entity/registry.hpp>
 #include <entt/core/hashed_string.hpp>
@@ -27,6 +28,21 @@ using namespace entt::literals;
 
 namespace game::factory
 {
+/// @brief 按稀有度选择附魔种类（1~5 依次对应五种附魔，越稀有光效越醒目；超出范围回落暗影）
+game::component::EnchantKind glintKindForRarity(int rarity) noexcept
+{
+    using game::component::EnchantKind;
+    switch (rarity)
+    {
+    case 1: return EnchantKind::Arcane; // 普通（青）
+    case 2: return EnchantKind::Frost;  // 稀有（蓝）
+    case 3: return EnchantKind::Holy;   // 史诗（金）
+    case 4: return EnchantKind::Flame;  // 传说（橙）
+    case 5: return EnchantKind::Shadow; // 神话（紫）
+    default: return EnchantKind::Shadow;
+    }
+}
+
 EntityFactory::EntityFactory(entt::registry& registry, 
     BlueprintManager& blueprint_manager)
     : registry_(registry), blueprint_manager_(blueprint_manager) {}
@@ -64,6 +80,11 @@ entt::entity EntityFactory::createPlayerUnit(entt::id_type class_id, const glm::
     registry_.emplace<game::component::ClassNameComponent>(entity, class_id, blueprint.display_info_.name_);
     registry_.emplace<engine::component::RenderComponent>(entity); // 使用默认主图层
     registry_.emplace<game::defs::HasHealthBarTag>(entity);
+    
+    // 附魔光效：观察用途——每个玩家单位都挂载，并按稀有度区分附魔颜色
+    game::component::EnchantGlintComponent glint;
+    glint.kind_ = glintKindForRarity(rarity);
+    game::component::applyEnchantGlint(registry_, entity, glint);
     // 未来可添加其他组件
 
     return entity;

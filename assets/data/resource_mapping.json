@@ -1,21 +1,26 @@
 {
     "sound": {
-        "ui_hover": "assets/audio/Fantasy_UI (1).wav",
-        "ui_click": "assets/audio/Piano_Ui (2).wav",
-        "unit_placed": "assets/audio/Fantasy_UI (10).wav",
-        "unit_upgrade": "assets/audio/Fantasy UI - Twilight (2).wav",
-        "arrow_shoot": "assets/audio/Bow Attack.wav",
-        "arrow_hit": "assets/audio/Bow Impact Hit 1.ogg",
-        "sword_hit": "assets/audio/Sword Impact Hit 1.ogg",
-        "spell_shoot": "assets/audio/Fireball 1.ogg",
-        "spell_hit": "assets/audio/fire-ball.wav",
-        "heal": "assets/audio/healing-balm.wav"
+        "ui_hover": "assets/audio/sound/Fantasy_UI (1).wav",
+        "ui_click": "assets/audio/sound/Piano_Ui (2).wav",
+        "unit_placed": "assets/audio/sound/Fantasy_UI (10).wav",
+        "unit_upgrade": "assets/audio/sound/Fantasy UI - Twilight (2).wav",
+        "arrow_shoot": "assets/audio/sound/Bow Attack.wav",
+        "arrow_hit": "assets/audio/sound/Bow Impact Hit 1.ogg",
+        "sword_hit": "assets/audio/sound/Sword Impact Hit 1.ogg",
+        "spell_shoot": "assets/audio/sound/Fireball 1.ogg",
+        "spell_hit": "assets/audio/sound/fire-ball.wav",
+        "heal": "assets/audio/sound/healing-balm.wav",
+        "seed": "assets/audio/sound/Seed.wav",
+        "seed_deny": "assets/audio/sound/Seed Deny.wav",
+        "seed_slot": "assets/audio/sound/Seed Slot.wav",
+        "choose_panel": "assets/audio/sound/choose_panel.wav",
+        "menu1": "assets/audio/sound/Menu1.wav"
     },
     "music": {
-        "title_bgm": "assets/audio/Laura Shigihara - Crazy Dave IN-GAME.flac",
-        "select_card_bgm": "assets/audio/Laura Shigihara - Choose Your Seeds IN-GAME.flac",
-        "battle_bgm": "assets/audio/Laura Shigihara - Grasswalk IN-GAME.flac",
-        "win": "assets/audio/level-win.mp3",
-        "lose": "assets/audio/violin-lose-4.mp3"
+        "title_bgm": "assets/audio/music/Laura Shigihara - Crazy Dave IN-GAME.flac",
+        "select_card_bgm": "assets/audio/music/Laura Shigihara - Choose Your Seeds IN-GAME.flac",
+        "battle_bgm": "assets/audio/music/Laura Shigihara - Grasswalk IN-GAME.flac",
+        "win": "assets/audio/sound/level-win.mp3",
+        "lose": "assets/audio/sound/violin-lose-4.mp3"
     }
 }

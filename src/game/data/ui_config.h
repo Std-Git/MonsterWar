@@ -91,7 +91,7 @@ public:
     [[nodiscard]] engine::render::Image& getCardFrame(int rarity);
     [[nodiscard]] float getCardCooldown(entt::id_type id) const;  ///< @brief 获取卡牌冷却时间(秒),未配置时返回默认值5.0
     [[nodiscard]] CardDisplayInfo getCardDisplayInfo(entt::id_type id) const; ///< @brief 获取卡牌显示信息(尺寸+缩放),未配置时返回默认值
-    [[nodiscard]] glm::vec2 getCardDisplaySize(entt::id_type id) const;       ///< @brief 获取卡牌最终显示尺寸(glm::vec2)，未配置时根据类型返回frame_size或源纹理尺寸
+    [[nodiscard]] glm::vec2 getDisplaySize(entt::id_type id) const;       ///< @brief 获取卡牌最终显示尺寸(glm::vec2)，未配置时根据类型返回frame_size或源纹理尺寸
     [[nodiscard]] const std::vector<entt::id_type> &getCardList() const { return card_list_; } ///< @brief 获取可选择的卡牌ID列表
     [[nodiscard]] engine::render::Image &getButtonImage(entt::id_type id, ButtonState state);  ///< @brief 获取按钮指定状态的图片，未找到时回退到Normal
     [[nodiscard]] float getUnitPanelPadding() const { return unit_panel_padding_; }

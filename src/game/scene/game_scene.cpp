@@ -29,6 +29,7 @@
 #include "../../engine/audio/audio_player.h"
 #include "../../engine/core/context.h"
 #include "../../engine/core/game_state.h"
+#include "../../engine/core/time.h"
 #include "../../engine/input/input_manager.h"
 #include "../../engine/render/camera.h"
 #include "../../engine/render/text_renderer.h"
@@ -134,7 +135,7 @@ namespace game::scene
         auto& camera = context_.getCamera();
 
         // 注意渲染顺序，保证正确的遮盖关系
-        render_system_->update(registry_, renderer, camera);
+        render_system_->update(registry_, renderer, camera, context_.getTime().getDeltaTime());
         health_bar_system_->update(registry_, renderer, camera);
         render_range_system_->update(registry_, renderer, camera);
 

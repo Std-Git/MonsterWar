@@ -70,6 +70,9 @@ private:
     [[nodiscard]] bool initRegistryContext();
     [[nodiscard]] bool initUI();
     [[nodiscard]] bool initSelectCardUI();
+
+    // 按钮回调函数 (未来通过游戏UI调用)
+    void onStartGameClick();
 };
 
 }   // namespace game::scene

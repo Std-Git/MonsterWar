@@ -79,4 +79,66 @@ std::optional<engine::utils::Rect> Camera::getLimitBounds() const
     return limit_bounds_;
 }
 
+void Camera::smoothMoveTo(glm::vec2 target, float duration,
+                          std::function<glm::vec2(const glm::vec2 &, const glm::vec2 &, float, float)> easing)
+{
+    target_position_ = target;
+    smooth_move_duration_ = duration;
+    smooth_move_elapsed_ = 0.0f;
+    smooth_move_start_ = position_;
+    easing_func_ = std::move(easing);
+}
+
+void Camera::update(float delta_time)
+{
+    if (!target_position_.has_value())
+        return;
+
+    smooth_move_elapsed_ += delta_time;
+
+    if (smooth_move_elapsed_ >= smooth_move_duration_)
+    {
+        // 移动完成, 设置到目标位置并钳制
+        position_ = target_position_.value();
+        glm::vec2 pos_before_clamp = position_;
+        clampPosition();
+
+        // 检查是否被阻挡
+        if (position_ != pos_before_clamp)
+        {
+            spdlog::warn("Camera 平滑移动被阻挡: 目标位置 ({}, {}) 被限制在 ({}, {})",
+                         pos_before_clamp.x, pos_before_clamp.y,
+                         position_.x, position_.y);
+        }
+
+        target_position_.reset();
+    }
+    else
+    {
+        // 插值移动
+        if (easing_func_)
+        {
+            position_ = easing_func_(smooth_move_start_.value(), target_position_.value(),
+                                     smooth_move_elapsed_, smooth_move_duration_);
+        }
+        else
+        {
+            // 没有提供缓动函数, 使用线性插值
+            position_ = glm::mix(smooth_move_start_.value(), target_position_.value(),
+                                 smooth_move_elapsed_ / smooth_move_duration_);
+        }
+        clampPosition();
+    }
+}
+
+void Camera::cancelSmoothMove()
+{
+    target_position_.reset();
+}
+
+bool Camera::isSmoothMoving() const
+{
+    return target_position_.has_value();
+}
+
 }   // namespace engine::render

@@ -15,9 +15,13 @@ namespace engine::ui
                        glm::vec2 size,
                        std::function<void()> click_callback,
                        std::function<void()> hover_enter_callback,
-                       std::function<void()> hover_leave_callback)
-        : UIInteractive(context, std::move(position), std::move(size)), click_callback_(std::move(click_callback)), hover_enter_callback_(std::move(hover_enter_callback)), 
-            hover_leave_callback_(std::move(hover_leave_callback))
+                       std::function<void()> hover_leave_callback,
+                       std::string hover_sound_path,
+                       std::string click_sound_path)
+        : UIInteractive(context, std::move(position), std::move(size), std::move(hover_sound_path), std::move(click_sound_path)), 
+          click_callback_(std::move(click_callback)), 
+          hover_enter_callback_(std::move(hover_enter_callback)),
+          hover_leave_callback_(std::move(hover_leave_callback))
     {
         // 注意正常、悬浮、按下都有默认的键名称，如果需要替换的话则覆盖该键下的值
         addImage("normal"_hs, std::move(normal_image));

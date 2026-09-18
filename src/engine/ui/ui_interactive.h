@@ -29,11 +29,13 @@ protected:
     std::unique_ptr<engine::ui::state::UIState> next_state_; ///< @brief 下一个状态，用于处理状态切换
     std::unordered_map<entt::id_type, engine::render::Image> images_;  ///< @brief 图片集合
     std::unordered_map<entt::id_type, entt::id_type> sounds_;   ///< @brief 音效集合，key为音效名称ID，value为音效ID
-    entt::id_type current_image_id_ = entt::null;          ///< @brief 当前显示的图片ID
-    bool interactive_ = true;                              ///< @brief 是否可交互
+    std::string hover_sound_path_;                          ///< @brief 悬停音效路径
+    std::string click_sound_path_;                          ///< @brief 点击音效路径
+    entt::id_type current_image_id_ = entt::null;           ///< @brief 当前显示的图片ID
+    bool interactive_ = true;                               ///< @brief 是否可交互
 
 public:
-    UIInteractive(engine::core::Context& context, glm::vec2 position = {0.0f, 0.0f}, glm::vec2 size = {0.0f, 0.0f});
+    UIInteractive(engine::core::Context& context, glm::vec2 position = {0.0f, 0.0f}, glm::vec2 size = {0.0f, 0.0f}, std::string_view hover_sound_path = "ui_hover", std::string_view click_sound_path = "ui_click");
     ~UIInteractive() override;
 
     virtual void clicked() {}   ///< @brief 如果有点击事件，则重写该方法
@@ -45,6 +47,10 @@ public:
     
     void setHoverSound(entt::id_type id, std::string_view path = "");       ///< @brief 设置悬停音效
     void setClickSound(entt::id_type id, std::string_view path = "");       ///< @brief 设置点击音效
+    void setHoverSoundPath(std::string_view path) { hover_sound_path_ = path;}  ///< @brief 设置悬停音效路径
+    void setClickSoundPath(std::string_view path) { click_sound_path_ = path;}  ///< @brief 设置点击音效路径
+    std::string getHoverSoundPath() const { return hover_sound_path_; }     ///< @brief 获取悬停音效路径
+    std::string getClickSoundPath() const { return click_sound_path_; }     ///< @brief 获取点击音效路径
     void playSound(entt::id_type name_id);                                  ///< @brief 播放音效
 
     // -- Getters and setters -- 
@@ -52,7 +58,6 @@ public:
     void setState(std::unique_ptr<engine::ui::state::UIState> state);                           ///< @brief 设置当前状态
     void setNextState(std::unique_ptr<engine::ui::state::UIState> state);                       ///< @brief 设置下一个状态
     engine::ui::state::UIState* getState() const { return state_.get(); }                       ///< @brief 获取当前状态
-
 
     void setInteractive(bool interactive) { interactive_ = interactive; }                       ///< @brief 设置是否可交互
     bool isInteractive() const { return interactive_; }                                         ///< @brief 获取是否可交互

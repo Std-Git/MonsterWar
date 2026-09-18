@@ -49,6 +49,8 @@ private:
 
     // 封装每一个UI显示模块
     void renderDemoUI();
+    void renderSelectCardUI(game::scene::SelectCardScene& select_card_scene);
+
     // --- GameScene ---
     void renderHoveredCard();
     void renderHoveredUnit();

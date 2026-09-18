@@ -183,7 +183,7 @@ void UIConfig::loadButton(nlohmann::json &json)
         info.type = CardType::Button;
         info.display_width = static_cast<float>(normal["width"]);
         info.display_height = static_cast<float>(normal["height"]);
-        info.scale = 1.0f;
+        info.scale = value.contains("scale") ? value["scale"].get<float>() : 1.0f;
         card_display_info_[id] = info;
 
         button_map_[id] = std::move(images);
@@ -241,7 +241,7 @@ CardDisplayInfo UIConfig::getCardDisplayInfo(entt::id_type id) const
     return CardDisplayInfo{}; // 返回默认值(Card类型display=0, scale=1.0)
 }
 
-glm::vec2 UIConfig::getCardDisplaySize(entt::id_type id) const
+glm::vec2 UIConfig::getDisplaySize(entt::id_type id) const
 {
     auto info = getCardDisplayInfo(id);
 
@@ -255,8 +255,11 @@ glm::vec2 UIConfig::getCardDisplaySize(entt::id_type id) const
     }
     else if (info.type == CardType::Button)
     {
-        // Button 类型：使用按钮 normal 状态图片的原始宽高
-        return glm::vec2(info.display_width, info.display_height);
+        // Button 类型：使用 display_width/height + scale
+        float w = info.display_width;
+        float h = info.display_height;
+        float scale = info.scale > 0.0f ? info.scale : 1.0f;
+        return glm::vec2(w * scale, h * scale);
     }
     else
     {

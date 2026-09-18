@@ -14,8 +14,8 @@ namespace engine::ui
 
 UIInteractive::~UIInteractive() = default;
 
-UIInteractive::UIInteractive(engine::core::Context& context, glm::vec2 position, glm::vec2 size)
-    : UIElement(std::move(position), std::move(size)), context_(context)
+UIInteractive::UIInteractive(engine::core::Context &context, glm::vec2 position, glm::vec2 size, std::string_view hover_sound_path, std::string_view click_sound_path)
+    : UIElement(std::move(position), std::move(size)), context_(context), hover_sound_path_(hover_sound_path), click_sound_path_(click_sound_path)
 {
     spdlog::trace("UIInteractive 构造完成");
 }
