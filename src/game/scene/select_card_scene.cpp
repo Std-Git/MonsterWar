@@ -109,7 +109,7 @@ void SelectCardScene::render()
     render_system_->update(registry_, renderer, camera, context_.getTime().getDeltaTime());
 
     Scene::render();
-    debug_ui_system_->updateSelectCard(*this);
+    //debug_ui_system_->updateSelectCard(*this);
     //spdlog::info("SelectCardScene::render end");
 }
 

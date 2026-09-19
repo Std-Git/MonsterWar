@@ -78,6 +78,9 @@ namespace engine::input
                 }
             }
         }
+        // 4.复位 ImGui 活动帧标记：本帧是否拦截鼠标由上一帧 render 阶段的状态决定，
+        //    复位后若本帧 render 不再渲染 ImGui (如关闭调试 UI)，下一帧将彻底放行鼠标事件
+        imgui_active_ = false;
     }
 
     void InputManager::quit()
@@ -104,8 +107,12 @@ namespace engine::input
             dispatcher_->enqueue<engine::utils::WindowExposedEvent>();
             return;
         }
-        // 如果 ImGui 捕获了鼠标，则不处理该事件(避免穿透到游戏中)
-        if (ImGui::GetIO().WantCaptureMouse)
+        ////如果 ImGui 捕获了鼠标，则不处理该事件(避免穿透到游戏中)
+        // 仅当存在 ImGui 活动帧且其请求捕获鼠标时，才拦截事件（避免穿透到游戏）
+        // 没有活动帧时 (imgui_active_ == false) 直接放行：
+        // ImGui 的 io.WantCaptureMouse 只在 NewFrame 内更新，无活动帧时会冻结为旧值，
+        // 若直接依赖该值会把鼠标事件永久拦截，导致游戏 UI 检测不到鼠标
+        if (imgui_active_ && ImGui::GetIO().WantCaptureMouse)
         {
             //spdlog::warn("ImGui Want Capture Mouse");
             return;

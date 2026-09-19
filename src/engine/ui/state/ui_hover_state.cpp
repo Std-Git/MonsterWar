@@ -26,7 +26,7 @@ void UIHoverState::enter()
 {
     owner_->setCurrentImage("hover"_hs);
     owner_->hover_enter();
-    spdlog::debug("切换到悬停状态");
+    //spdlog::debug("切换到悬停状态");
 }
 
 void UIHoverState::update(float, engine::core::Context& context)

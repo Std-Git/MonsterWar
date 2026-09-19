@@ -33,6 +33,7 @@ namespace game::ui
         // createUnitsCardUI();
         createEmptySlots();
         createChooseCardPanel();
+        createRightSideBar();
         // -- 注册事件函数
         // context_.getDispatcher().sink<game::defs::RemoveUICardEvent>().connect<&UnitsCardUI::onRemoveUICardEvent>(this);
         spdlog::trace("UnitsCardUI 构造完成");
@@ -178,16 +179,24 @@ namespace game::ui
         // float spacing = 0.0f;
 
         // 起始X：屏幕左侧外侧
-        float slots_default_y = empty_slots_panel_->getPosition().y;
-        glm::vec2 slots_start_pos = glm::vec2(-frame_size.x, slots_default_y);
-        glm::vec2 slots_end_pos = glm::vec2(0.0f, slots_default_y);
+        // def_x:default_x
+        float slots_def_y = empty_slots_panel_->getPosition().y;
+        glm::vec2 slots_start_pos = glm::vec2(-frame_size.x, slots_def_y);
+        glm::vec2 slots_end_pos = glm::vec2(0.0f, slots_def_y);
 
         empty_slots_panel_->setPosition(engine::utils::easeOutCubic(slots_start_pos, slots_end_pos, slots_anim_elapsed_, SLOTS_ANIM_DURATION));
 
-        float choose_default_x = choose_card_panel_->getPosition().x;
-        glm::vec2 choose_start_pos = glm::vec2(choose_default_x, window_size.y);
-        glm::vec2 choose_end_pos = glm::vec2(choose_default_x, window_size.y - choose_image_size.y);
+        float choose_def_x = choose_card_panel_->getPosition().x;
+        glm::vec2 choose_start_pos = glm::vec2(choose_def_x, window_size.y);
+        glm::vec2 choose_end_pos = glm::vec2(choose_def_x, window_size.y - choose_image_size.y);
         choose_card_panel_->setPosition(engine::utils::easeOutCubic(choose_start_pos, choose_end_pos, slots_anim_elapsed_, SLOTS_ANIM_DURATION));
+
+        float right_side_bar_def_y = 0.0f;
+        float final_x = ui_config->getDisplaySize("Let's Rock"_hs).x;
+        glm::vec2 right_side_bar_start_pos = glm::vec2(window_size.x, right_side_bar_def_y);
+        glm::vec2 right_side_bar_end_pos = glm::vec2(window_size.x - final_x, right_side_bar_def_y);
+        right_side_bar_panel_->setPosition(engine::utils::easeOutCubic(right_side_bar_start_pos, right_side_bar_end_pos, slots_anim_elapsed_, SLOTS_ANIM_DURATION));
+        spdlog::warn("空卡槽滑入动画中, 当前位置: {:.1f}, {:.1f}", right_side_bar_panel_->getPosition().x, right_side_bar_panel_->getPosition().y);
 
         // 动画完成
         if (std::clamp(slots_anim_elapsed_ / SLOTS_ANIM_DURATION, 0.0f, 1.0f) >= 1.0f)
@@ -301,33 +310,48 @@ namespace game::ui
 
         ui_manager_.addElement(std::move(panel));
         choose_card_panel_ = static_cast<engine::ui::UIPanel *>(ui_manager_.getRootElement()->getChildById("choose_card_panel"_hs));
+        spdlog::warn("选择植物面板创建完成, 尺寸={:.1f}x{:.1f}", panel_size.x, panel_size.y);
+    }
+
+    void SelectCardUI::createRightSideBar()
+    {
+        auto ui_config = registry_.ctx().get<std::shared_ptr<game::data::UIConfig>>();
+        auto window_size = context_.getGameState().getLogicalSize();
+        auto rock_button_size = ui_config->getDisplaySize("Let's Rock"_hs);
+
+        auto panel = std::make_unique<engine::ui::UIPanel>(
+            glm::vec2(window_size.x, window_size.y), glm::vec2(rock_button_size.x, window_size.y));
+        panel->setId("right_side_bar_panel"_hs);
 
         auto rock_button = std::make_unique<engine::ui::UIButton>(
             context_,
             ui_config->getButtonImage("Let's Rock"_hs, game::data::ButtonState::Normal),
             ui_config->getButtonImage("Let's Rock"_hs, game::data::ButtonState::Hover),
             ui_config->getButtonImage("Let's Rock"_hs, game::data::ButtonState::Pressed),
-            glm::vec2(window_size - ui_config->getDisplaySize("Let's Rock"_hs)),
+            glm::vec2(0.0f, window_size.y - rock_button_size.y),
             ui_config->getDisplaySize("Let's Rock"_hs),
             []()
             {
                 spdlog::warn("Let's Rock");
             });
-        ui_manager_.addElement(std::move(rock_button));
+        panel->addChild(std::move(rock_button));
 
         auto view_button = std::make_unique<engine::ui::UIButton>(
             context_,
             ui_config->getButtonImage("Look Lawn"_hs, game::data::ButtonState::Normal),
             ui_config->getButtonImage("Look Lawn"_hs, game::data::ButtonState::Hover),
             ui_config->getButtonImage("Look Lawn"_hs, game::data::ButtonState::Pressed),
-            glm::vec2(window_size.x - ui_config->getDisplaySize("Look Lawn"_hs).x, 42.0f),
+            glm::vec2(rock_button_size.x - ui_config->getDisplaySize("Look Lawn"_hs).x, 42.0f),
             ui_config->getDisplaySize("Look Lawn"_hs),
             []()
             {
                 spdlog::warn("Look Lawn");
             });
-        ui_manager_.addElement(std::move(view_button));
-        spdlog::warn("选择植物面板创建完成, 尺寸={:.1f}x{:.1f}", panel_size.x, panel_size.y);
+        panel->addChild(std::move(view_button));
+
+        ui_manager_.addElement(std::move(panel));
+        right_side_bar_panel_ = static_cast<engine::ui::UIPanel *>(ui_manager_.getRootElement()->getChildById("right_side_bar_panel"_hs));
+        spdlog::warn("右侧边栏创建完成.");
     }
 
     void SelectCardUI::onCardClicked(entt::id_type card_id, int card_index)
@@ -500,10 +524,10 @@ namespace game::ui
         }
         // 6. 移动卡牌并更新数据
         int current_slot = slot_index;
-        for (auto &[src_slot, card_idx] : cards_to_move)
+        for (auto &[src_slot, card_idx2] : cards_to_move)
         {
             // 更新映射
-            slot_to_card_index_[current_slot] = card_idx;
+            slot_to_card_index_[current_slot] = card_idx2;
             slot_occupied_[current_slot] = true;
             // 获取卡牌按钮
             auto *button = placed_card_images_[src_slot];

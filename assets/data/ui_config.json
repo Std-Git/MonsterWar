@@ -87,7 +87,18 @@
             "hover":   { "sprite_sheet": "assets/textures/UI/Cards/Look Lawn2.png", "x":0, "y":0, "width":60, "height":69 },
             "pressed": { "sprite_sheet": "assets/textures/UI/Cards/Look Lawn2.png", "x":0, "y":0, "width":60, "height":69 },
             "scale": 0.7
+        },
+        "Up Arrow": {
+            "normal":  { "sprite_sheet": "assets/textures/UI/Cards/up arrow.png", "x":0, "y":0, "width":27, "height":26 },
+            "hover":   { "sprite_sheet": "assets/textures/UI/Cards/up arrow.png", "x":0, "y":0, "width":27, "height":26 },
+            "pressed": { "sprite_sheet": "assets/textures/UI/Cards/up arrow.png", "x":0, "y":0, "width":27, "height":26 }
+        },
+        "Down Arrow": {
+            "normal":  { "sprite_sheet": "assets/textures/UI/Cards/down arrow.png", "x":0, "y":0, "width":26, "height":25 },
+            "hover":   { "sprite_sheet": "assets/textures/UI/Cards/down arrow.png", "x":0, "y":0, "width":26, "height":25 },
+            "pressed": { "sprite_sheet": "assets/textures/UI/Cards/down arrow.png", "x":0, "y":0, "width":26, "height":25 }
         }
+
     },
     "layout": {
         "unit_panel": {

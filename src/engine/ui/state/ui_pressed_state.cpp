@@ -29,7 +29,7 @@ void UIPressedState::enter()
     // owner_->playSound("ui_click"_hs);
     if (!owner_->getClickSoundPath().empty())
         owner_->playSound(entt::hashed_string(owner_->getClickSoundPath().c_str()));
-    spdlog::debug("切换到按下状态");
+    //spdlog::debug("切换到按下状态");
 }
 
 bool UIPressedState::onMouseReleased()

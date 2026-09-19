@@ -62,6 +62,13 @@ namespace engine::input
         glm::vec2 mouse_position_; ///< @brief 鼠标位置 (针对屏幕坐标)
         glm::vec2 logical_mouse_position_; ///< @brief 鼠标位置 (针对逻辑坐标)
 
+        /**
+         * @brief ImGui 活动帧标记：由 ImGui 渲染系统在每帧 render 阶段设置，update 末尾复位
+         * @note ImGui 的 io.WantCaptureMouse 只在 ImGui::NewFrame() 内更新；
+           没有活动帧时该值会冻结，故用本标记显式限定"拦截鼠标事件"的生效范围
+         */
+        bool imgui_active_ = false;
+
     public:
         /**
          * @brief 构造函数
@@ -92,7 +99,14 @@ namespace engine::input
         glm::vec2 getLogicalMousePosition() const; ///< @brief 获取鼠标位置 (逻辑坐标)
 
         ImGuiKeyChord getShortcutForAction(entt::id_type action_name_id) const; ///< @brief 获取动作对应的ImGui快捷键
-        std::string getActionKeyName(entt::id_type action_name_id) const; ///< @brief 获取动作对应的按键名称字符串 (如 "W" 等)
+        std::string getActionKeyName(entt::id_type action_name_id) const;       ///< @brief 获取动作对应的按键名称字符串 (如 "W" 等)
+        /** 
+         * @brief 设置 ImGui 活动帧标记
+         * @param active 当前是否正在渲染 ImGui 帧 (由 DebugUISystem 等 ImGui 渲染系统在帧开始时调用)
+         * @note 仅当存在 ImGui 活动帧时才允许其捕获鼠标；
+           没有 ImGui 帧的场景 (如关闭调试 UI 后) 鼠标事件必须正常穿透到游戏 UI
+         */
+        void setImGuiActive(bool active) noexcept { imgui_active_ = active; }
 
     private:
         void processEvent(const SDL_Event &event);                   ///< @brief 处理 SDL 事件 (将按键转换为动作状态)

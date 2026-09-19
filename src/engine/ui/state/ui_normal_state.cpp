@@ -15,7 +15,7 @@ namespace engine::ui::state
 void UINormalState::enter()
 {
     owner_->setCurrentImage("normal"_hs);
-    spdlog::debug("切换到正常状态");
+    //spdlog::debug("切换到正常状态");
 }
 
 void UINormalState::update(float, engine::core::Context & context)

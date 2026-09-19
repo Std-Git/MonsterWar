@@ -83,7 +83,9 @@ entt::entity EntityFactory::createPlayerUnit(entt::id_type class_id, const glm::
     
     // 附魔光效：观察用途——每个玩家单位都挂载，并按稀有度区分附魔颜色
     game::component::EnchantGlintComponent glint;
-    glint.kind_ = glintKindForRarity(rarity);
+    glint.kind_ = game::component::EnchantKind::Shadow;
+    glint.intensity_ = 0.3f;
+    glint.speed_ = 60.0f;
     game::component::applyEnchantGlint(registry_, entity, glint);
     // 未来可添加其他组件
 

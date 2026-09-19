@@ -107,7 +107,10 @@ void DebugUISystem::beginFrame()
     // 开始新帧
     ImGui_ImplSDLRenderer3_NewFrame();
     ImGui_ImplSDL3_NewFrame();
-    ImGui::NewFrame();
+    ImGui::NewFrame(); 
+    // 标记 ImGui 活动帧：本帧存在 ImGui 时允许其捕获鼠标；
+    // 该标记会在 InputManager::update 末尾复位，若后续场景不再渲染 ImGui，鼠标事件将自动放行
+    context_.getInputManager().setImGuiActive(true);
 
     // 关闭逻辑分辨率 (ImGui 目前对于SDL逻辑分辨率支持不好，所以使用时先关闭)
     if (!context_.getGameState().disableLogicalPresentation())
@@ -966,7 +969,6 @@ void DebugUISystem::onUICardHoverLeaveEvent()
 
 void DebugUISystem::renderDemoUI()
 {
-
     // 显示 ImGui 自带的 Demo 窗口
     ImGui::ShowDemoWindow();
 }

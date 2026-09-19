@@ -42,7 +42,9 @@ class SelectCardUI
     static constexpr float SLOTS_ANIM_DURATION{0.5f};   ///< @brief 空卡槽动画持续时间(秒)
     static constexpr int EMPTY_SLOT_COUNT{8};  ///< @brief 空卡槽数量
 
-    engine::ui::UIPanel *choose_card_panel_; ///< @brief 选择植物面板
+    engine::ui::UIPanel *choose_card_panel_;    ///< @brief 选择植物面板
+    engine::ui::UIPanel *right_side_bar_panel_; ///< @brief 右侧栏面板
+    
     // -- 卡牌点选相关成员 --
     /** @brief 选择面板中的卡牌按钮信息 */
     struct CardButtonInfo
@@ -102,8 +104,10 @@ public:
 
 private:
     void createEmptySlots();         ///< @brief 创建左侧灰色空卡槽(从屏幕左侧外侧滑入)
+    void createChooseCardPanel();   ///< @brief 创建"Choose Your Plants"背景面板
+    void createRightSideBar();      ///< @brief 创建右侧边栏UI控件
+
     void updateChooseSceneAnimation(float delta_time); ///< @brief 更新空卡槽滑入动画
-    void createChooseCardPanel(); ///< @brief 创建"Choose Your Plants"背景面板
 
     // 卡牌点选相关
     void onCardClicked(entt::id_type card_id, int card_index); ///< @brief 卡牌点击回调
